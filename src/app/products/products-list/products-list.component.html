@@ -1,1 +1,35 @@
-<p>products-list works!</p>
+<div class="parent">
+  <mat-card *ngFor="let product of products$ | async">
+    <div class="media-grid">
+      <figure class="product-figure">
+        <div class="product-badge" *ngIf="product.status === 'sale'">
+          <span>Sale</span>
+        </div>
+        <img
+          src="assets/images/{{ product.image }}.jpg"
+          height="245px"
+          alt="{{ product.name }}"
+        />
+      </figure>
+    </div>
+    <mat-card-content class="pa-1">
+      <div class="product-details">
+        <div>
+          <p class="ma-0">{{ product.name }}</p>
+          <p class="ma-0 pa-0 text-md">{{ product.description }}</p>
+        </div>
+        <div class="mat-text-primary text-xl">
+          <span
+            class="strikethrough mat-text-muted text-sm"
+            *ngIf="product.discounted === 'discounted'"
+            >$ {{ product.discount }}</span
+          >
+          <span> $ {{ product.price }}</span>
+        </div>
+        <button mat-icon-button color="accent">
+          <mat-icon>add_shopping_cart</mat-icon>
+        </button>
+      </div>
+    </mat-card-content>
+  </mat-card>
+</div>

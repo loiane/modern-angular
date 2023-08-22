@@ -39,3 +39,21 @@ $background: map-get($angular-shop-theme, background);
 
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+.pa-1 {
+  padding: 1rem 1rem !important;
+}
+
+.ma-0 {
+  margin: 0 0 !important;
+}
+
+.text-sm { font-size: 70% !important; }
+.text-md { font-size: 80% !important; }
+.text-xl { font-size: 120% !important; }
+.mat-text-muted {
+  color: rgba(0, 0, 0, 0.54) !important;
+}
+.mat-text-primary {
+  color: #673AB7 !important;
+}

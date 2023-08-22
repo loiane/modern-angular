@@ -1,4 +1,7 @@
 import { Component } from '@angular/core';
+import { Observable } from 'rxjs';
+import { Product } from '../product';
+import { ProductsService } from '../products.service';
 
 @Component({
   selector: 'app-products-list',
@@ -7,4 +10,9 @@ import { Component } from '@angular/core';
 })
 export class ProductsListComponent {
 
+  products$: Observable<Product[]>;
+
+  constructor(private service: ProductsService) {
+    this.products$ = this.service.load();
+  }
 }
