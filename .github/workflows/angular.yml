@@ -26,8 +26,6 @@ jobs:
 
       - name: Install dependencies
         run: npm install --prod
-        working-directory: crud-angular
 
       - name: Build
         run: npm run build
-        working-directory: crud-angular
