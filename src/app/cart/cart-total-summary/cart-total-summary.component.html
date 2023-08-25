@@ -1,1 +1,30 @@
-<p>cart-total-summary works!</p>
+<mat-card>
+  <mat-card-header>
+    <mat-card-title class="text-xl">CART TOTAL</mat-card-title>
+  </mat-card-header>
+  <mat-card-content>
+    <div>
+      <div class="sub-total">
+        <span>Total Price</span>
+        <span>{{ total | currency : "USD" : true }}</span>
+      </div>
+      <div class="sub-total">
+        <span>Delivery</span>
+        <span>{{ total | currency : "USD" : true }}</span>
+      </div>
+      <div class="sub-total">
+        <span>Tax</span>
+        <span>{{ total | currency : "USD" : true }}</span>
+      </div>
+      <div class="sub-total">
+        <span class="total">Total</span>
+        <span class="total">{{ total | currency : "USD" : true }}</span>
+      </div>
+    </div>
+  </mat-card-content>
+  <mat-card-actions class="checkout"
+    ><button mat-raised-button color="primary">
+      Checkout
+    </button></mat-card-actions
+  >
+</mat-card>

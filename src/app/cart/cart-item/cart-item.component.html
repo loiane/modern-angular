@@ -1,5 +1,30 @@
-<mat-list role="list">
-  <mat-list-item role="listitem">Item 1</mat-list-item>
-  <mat-list-item role="listitem">Item 2</mat-list-item>
-  <mat-list-item role="listitem">Item 3</mat-list-item>
-</mat-list>
+<div class="parent">
+  <div class="product-details">
+    <img src="assets/images/1.jpg" height="100px" alt="" />
+    <div>
+      <p class="ma-0">Product Name</p>
+      <p class="ma-0 pa-0 text-md" style="padding-top: 5px">
+        Product Description
+      </p>
+    </div>
+  </div>
+  <div>
+    <mat-form-field>
+      <mat-label>Quantity</mat-label>
+      <mat-select>
+        <mat-option *ngFor="let qty of quantityOptions">{{ qty }}</mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+  <div>
+    <div>
+      <p class="ma-0" style="font-weight: bold">$10.00</p>
+      <p class="ma-0 pa-0 text-md" style="padding-top: 5px">$10.00 each</p>
+    </div>
+  </div>
+  <div>
+    <button mat-mini-fab aria-label="Remove Product From Cart" color="warn">
+      <mat-icon>delete</mat-icon>
+    </button>
+  </div>
+</div>

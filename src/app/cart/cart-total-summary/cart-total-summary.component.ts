@@ -7,4 +7,5 @@ import { Component } from '@angular/core';
 })
 export class CartTotalSummaryComponent {
 
+  total = 10.00;
 }
