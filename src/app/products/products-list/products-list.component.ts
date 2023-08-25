@@ -18,6 +18,6 @@ export class ProductsListComponent {
   }
 
   addProductToCart(product: Product): void {
-    this.cartService.addProduct();
+    this.cartService.addProduct(product);
   }
 }

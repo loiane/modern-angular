@@ -1,11 +1,9 @@
 <mat-card>
   <mat-card-header>
-    <mat-card-title class="text-xl">CART TOTAL</mat-card-title>
+    <mat-card-title class="text-xl">CART ITEMS</mat-card-title>
   </mat-card-header>
   <mat-card-content>
-    <app-cart-item></app-cart-item>
-    <app-cart-item></app-cart-item>
-    <app-cart-item></app-cart-item>
-    <app-cart-item></app-cart-item>
+    <div>{{ cartTotal }}</div>
+    <div *ngFor="let cartItem of cartItems">{{ cartItem.quantity }}</div>
   </mat-card-content>
 </mat-card>
