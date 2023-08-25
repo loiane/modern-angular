@@ -1,0 +1,20 @@
+.cart-summary {
+  display: flex;
+  flex-direction: row;
+}
+
+.cart-items {
+  width: 70%;
+  height: 100vh;
+  border: green solid 5px;
+  text-align: center;
+  margin: 50px;
+}
+
+.cart-total {
+  width: 30%;
+  padding: 30px;
+  height: 100vh;
+  border: green solid 5px;
+  margin: 50px;
+}

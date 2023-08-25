@@ -4,33 +4,10 @@
   </button>
   <div class="branding">Angular Coffee Shop</div>
   <span class="example-spacer"></span>
-  <button mat-icon-button [matMenuTriggerFor]="cart" mat-icon-button>
+  <button mat-icon-button [routerLink]="['/cart']">
     <mat-icon>shopping_cart</mat-icon>
     <span class="notification-label" *ngIf="cartCount$ | async as count">{{
       count > 0 ? count : ""
     }}</span>
   </button>
-  <mat-menu #cart="matMenu" x-position="before">
-    <button mat-menu-item [routerLink]="['/checkout']">
-      <mat-icon>settings</mat-icon>
-      Checkout
-    </button>
-  </mat-menu>
-  <button [matMenuTriggerFor]="user" mat-icon-button>
-    <mat-icon>person</mat-icon>
-  </button>
-  <mat-menu #user="matMenu" x-position="before">
-    <button mat-menu-item>
-      <mat-icon>settings</mat-icon>
-      Manage Products
-    </button>
-    <button mat-menu-item>
-      <mat-icon>account_box</mat-icon>
-      Profile
-    </button>
-    <button mat-menu-item>
-      <mat-icon>exit_to_app</mat-icon>
-      Sign Out
-    </button>
-  </mat-menu>
 </mat-toolbar>

@@ -26,7 +26,11 @@
           >
           <span> $ {{ product.price }}</span>
         </div>
-        <button mat-icon-button color="accent">
+        <button
+          mat-icon-button
+          color="accent"
+          (click)="addProductToCart(product)"
+        >
           <mat-icon>add_shopping_cart</mat-icon>
         </button>
       </div>

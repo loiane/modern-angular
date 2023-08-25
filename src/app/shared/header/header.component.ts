@@ -1,3 +1,4 @@
+import { CartService } from './../../cart/cart.service';
 import { Component } from '@angular/core';
 import { Observable } from 'rxjs';
 
@@ -9,5 +10,8 @@ import { Observable } from 'rxjs';
 export class HeaderComponent {
 
   cartCount$ = new Observable<number>();
-  searchQuery = '';
+
+  constructor(private cartService: CartService) {
+    this.cartCount$ = this.cartService.getCartCount();
+  }
 }
