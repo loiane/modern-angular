@@ -5,20 +5,18 @@
   <mat-card-content>
     <div>
       <div class="sub-total">
-        <span>Total Price</span>
-        <span>{{ total }}</span>
-      </div>
-      <div class="sub-total">
-        <span>Delivery</span>
-        <span>{{ total }}</span>
+        <span>Subtotal Price</span>
+        <span>{{ cartService.cartSubTotal$ | async | currency : "USD" }}</span>
       </div>
       <div class="sub-total">
         <span>Tax</span>
-        <span>{{ total }}</span>
+        <span>{{ cartService.cartTax$ | async | currency : "USD" }}</span>
       </div>
       <div class="sub-total">
         <span class="total">Total</span>
-        <span class="total">{{ total }}</span>
+        <span class="total">{{
+          cartService.cartTotal$ | async | currency : "USD"
+        }}</span>
       </div>
     </div>
   </mat-card-content>

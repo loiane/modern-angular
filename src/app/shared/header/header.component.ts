@@ -9,9 +9,9 @@ import { Observable } from 'rxjs';
 })
 export class HeaderComponent {
 
-  cartCount$ = new Observable<number>();
+  cartCount$: Observable<number>;
 
   constructor(private cartService: CartService) {
-    this.cartCount$ = this.cartService.getCartCount();
+    this.cartCount$ = this.cartService.cartCount$;
   }
 }

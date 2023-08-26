@@ -7,6 +7,7 @@ import { CartListComponent } from './cart-list/cart-list.component';
 import { CartRoutingModule } from './cart-routing.module';
 import { CartComponent } from './cart/cart.component';
 import { CartTotalSummaryComponent } from './cart-total-summary/cart-total-summary.component';
+import { FormsModule } from '@angular/forms';
 
 
 @NgModule({
@@ -19,7 +20,8 @@ import { CartTotalSummaryComponent } from './cart-total-summary/cart-total-summa
   imports: [
     CommonModule,
     CartRoutingModule,
-    AppMaterialModule
+    AppMaterialModule,
+    FormsModule
   ]
 })
 export class CartModule { }
