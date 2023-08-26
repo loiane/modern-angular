@@ -1,27 +1,55 @@
-# AngularShop
+# Angular Shop
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 16.2.0.
+![Angular Build](https://github.com/loiane/angular-shop/actions/workflows/angular.yml/badge.svg?branch=main)
 
-## Development server
+Sample project created to showcase the latest Angular features:
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+- Standalone Components and API (Angular v14 and v15)
+- Typed Forms (Angular v14)
+- Signals (Angular v16)
+- Input Validation (Angular v16)
 
-## Code scaffolding
+## Branches
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+- main: latest code with all features mentiones above
+- standalone-components: standalone components and types forms
+- signals: standalone + signals
 
-## Build
+## ⌨️ Editor / IDE
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+- Visual Studio Code
+- Angular Extensions [link](https://marketplace.visualstudio.com/items?itemName=loiane.angular-extension-pack)
 
-## Running unit tests
+## Screenshots
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+Main page with products list:
 
-## Running end-to-end tests
+<p align="center">
+  <img src="./docs/products.jpeg" alt="Main Page" width="100%">
+</p>
 
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
+Cart page:
 
-## Further help
+<p align="center">
+  <img src="./docs/cart.jpeg" alt="Cart Page" width="100%">
+</p>
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+## Executing the code locally
+
+You need to have Node.js / NPM installed locally.
+
+1. Install all the required dependencies:
+
+```
+npm install
+```
+
+2. Execute the project:
+
+```
+npm run start
+```
+
+This command will run the Angular project with a proxy to the Java server, without requiring CORS.
+
+Open your browser and access **http://localhost:4200** (Angular default port).
