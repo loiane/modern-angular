@@ -25,6 +25,14 @@ export class ProductsService {
     return this.http.get<Product[]>(this.API);
   }
 
+  create(product: Product): Observable<Product> {
+    if (this.isLocal) {
+      this.products.push(product);
+      return of(product);
+    }
+    return this.http.post<Product>(this.API, product);
+  }
+
   private addProducts(i: number): void {
     this.products.push({
       id: `${i}`,
