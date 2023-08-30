@@ -17,7 +17,6 @@ import { MatCardModule } from '@angular/material/card';
 export class CartListComponent implements OnInit {
 
   cartItems$: Observable<CartItem[]> = of([]);
-  cartTotal = 0;
 
   private cartService = inject(CartService);
 
