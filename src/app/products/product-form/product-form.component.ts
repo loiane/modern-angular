@@ -1,24 +1,18 @@
-import { Location, NgIf, NgFor } from '@angular/common';
-import { Component } from '@angular/core';
-import {
-  FormControl,
-  FormGroup,
-  NonNullableFormBuilder,
-  Validators,
-  ReactiveFormsModule,
-} from '@angular/forms';
+import { Location, NgFor, NgIf } from '@angular/common';
+import { Component, inject } from '@angular/core';
+import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { MatButtonModule } from '@angular/material/button';
+import { MatCardModule } from '@angular/material/card';
+import { MatOptionModule } from '@angular/material/core';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { MatSelectModule } from '@angular/material/select';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
+import { MatToolbarModule } from '@angular/material/toolbar';
 
 import { Product } from '../product';
 import { ProductsService } from '../products.service';
 import { FormUtilsService } from './../../shared/form/form-utils.service';
-import { MatButtonModule } from '@angular/material/button';
-import { MatOptionModule } from '@angular/material/core';
-import { MatSelectModule } from '@angular/material/select';
-import { MatInputModule } from '@angular/material/input';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatToolbarModule } from '@angular/material/toolbar';
-import { MatCardModule } from '@angular/material/card';
 
 @Component({
   selector: 'app-product-form',
@@ -64,13 +58,12 @@ export class ProductFormComponent {
     discount: new FormControl(0),
   });
 
-  constructor(
-    private formBuilder: NonNullableFormBuilder,
-    private snackBar: MatSnackBar,
-    private location: Location,
-    private productsService: ProductsService,
-    public formUtils: FormUtilsService
-  ) {
+  formUtils = inject(FormUtilsService);
+  private snackBar = inject(MatSnackBar);
+  private location = inject(Location);
+  private productsService = inject(ProductsService);
+
+  constructor() {
     this.generateImages();
   }
 

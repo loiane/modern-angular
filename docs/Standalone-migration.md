@@ -220,3 +220,20 @@ export const APP_ROUTES: Routes = [
   }
 ];
 ```
+
+### Inject
+
+Classic DI:
+
+```
+constructor(private service: ProductsService, private cartService: CartService) {}
+```
+
+After standalone components - new option:
+
+```
+private service = inject(ProductsService);
+private cartService = inject(CartService);
+
+constructor() {}
+```
