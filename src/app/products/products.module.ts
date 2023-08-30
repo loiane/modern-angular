@@ -9,15 +9,13 @@ import { ReactiveFormsModule } from '@angular/forms';
 
 
 @NgModule({
-  declarations: [
-    ProductsListComponent,
-    ProductFormComponent
-  ],
-  imports: [
-    CommonModule,
-    ProductsRoutingModule,
-    AppMaterialModule,
-    ReactiveFormsModule
-  ]
+    imports: [
+        CommonModule,
+        ProductsRoutingModule,
+        AppMaterialModule,
+        ReactiveFormsModule,
+        ProductsListComponent,
+        ProductFormComponent
+    ]
 })
 export class ProductsModule { }

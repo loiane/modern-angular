@@ -11,17 +11,15 @@ import { FormsModule } from '@angular/forms';
 
 
 @NgModule({
-  declarations: [
-    CartComponent,
-    CartItemComponent,
-    CartListComponent,
-    CartTotalSummaryComponent
-  ],
-  imports: [
-    CommonModule,
-    CartRoutingModule,
-    AppMaterialModule,
-    FormsModule
-  ]
+    imports: [
+        CommonModule,
+        CartRoutingModule,
+        AppMaterialModule,
+        FormsModule,
+        CartComponent,
+        CartItemComponent,
+        CartListComponent,
+        CartTotalSummaryComponent
+    ]
 })
 export class CartModule { }

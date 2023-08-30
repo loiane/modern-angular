@@ -6,14 +6,12 @@ import { HeaderComponent } from './header/header.component';
 import { AppMaterialModule } from './app-material.module';
 
 @NgModule({
-  declarations: [
-    HeaderComponent
-  ],
-  imports: [
-    CommonModule,
-    RouterModule,
-    AppMaterialModule
-  ],
-  exports: [HeaderComponent]
+    imports: [
+        CommonModule,
+        RouterModule,
+        AppMaterialModule,
+        HeaderComponent
+    ],
+    exports: [HeaderComponent]
 })
 export class SharedModule { }
