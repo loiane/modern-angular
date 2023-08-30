@@ -3,8 +3,8 @@
     <mat-card-title class="text-xl">CART ITEMS</mat-card-title>
   </mat-card-header>
   <mat-card-content>
-    <div *ngFor="let cartItem of cartItems$ | async">
-      <app-cart-item [cartItem]="cartItem"></app-cart-item>
+    <div *ngFor="let cartItem of cartItems()">
+      <app-cart-item [item]="cartItem"></app-cart-item>
     </div>
   </mat-card-content>
 </mat-card>

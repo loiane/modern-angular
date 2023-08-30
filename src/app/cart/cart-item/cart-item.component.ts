@@ -17,7 +17,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 })
 export class CartItemComponent {
 
-  @Input() cartItem!: CartItem;
+  @Input({ required: true, alias: 'item' }) cartItem !: CartItem;
 
   quantityOptions = [1, 2, 3, 4, 5];
 

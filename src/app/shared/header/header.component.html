@@ -9,7 +9,7 @@
   </button>
   <button mat-icon-button [routerLink]="['/cart']">
     <mat-icon>shopping_cart</mat-icon>
-    <span class="notification-label" *ngIf="cartCount$ | async as count">{{
+    <span class="notification-label" *ngIf="cartCount() as count">{{
       count > 0 ? count : ""
     }}</span>
   </button>
