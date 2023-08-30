@@ -17,5 +17,5 @@ import { CartService } from './../../cart/cart.service';
 export class HeaderComponent {
 
   private cartService = inject(CartService);
-  cartCount$ = this.cartService.cartCount$;
+  cartCount = this.cartService.cartCount;
 }

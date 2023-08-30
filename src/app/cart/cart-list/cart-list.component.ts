@@ -1,11 +1,9 @@
-import { Component, OnInit, inject } from '@angular/core';
-import { Observable, of } from 'rxjs';
-
-import { CartItem } from '../cart-item';
-import { CartService } from '../cart.service';
-import { CartItemComponent } from '../cart-item/cart-item.component';
-import { NgFor, AsyncPipe } from '@angular/common';
+import { AsyncPipe, NgFor } from '@angular/common';
+import { Component, inject } from '@angular/core';
 import { MatCardModule } from '@angular/material/card';
+
+import { CartItemComponent } from '../cart-item/cart-item.component';
+import { CartService } from '../cart.service';
 
 @Component({
   selector: 'app-cart-list',
@@ -14,13 +12,10 @@ import { MatCardModule } from '@angular/material/card';
   standalone: true,
   imports: [MatCardModule, NgFor, CartItemComponent, AsyncPipe]
 })
-export class CartListComponent implements OnInit {
-
-  cartItems$: Observable<CartItem[]> = of([]);
+export class CartListComponent {
 
   private cartService = inject(CartService);
 
-  ngOnInit() {
-    this.cartItems$ = this.cartService.getCartItems();
-  }
+  cartItems = this.cartService.cartItems;
+
 }
