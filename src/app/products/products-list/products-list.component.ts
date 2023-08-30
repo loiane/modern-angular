@@ -1,12 +1,12 @@
-import { CartService } from './../../cart/cart.service';
+import { AsyncPipe, NgFor, NgIf } from '@angular/common';
 import { Component, inject } from '@angular/core';
-import { Observable } from 'rxjs';
-import { Product } from '../product';
-import { ProductsService } from '../products.service';
-import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
-import { NgFor, NgIf, AsyncPipe } from '@angular/common';
+import { MatIconModule } from '@angular/material/icon';
+
+import { Product } from '../product';
+import { ProductsService } from '../products.service';
+import { CartService } from './../../cart/cart.service';
 
 @Component({
   selector: 'app-products-list',
