@@ -192,3 +192,31 @@ And also delete:
 
 - cart.module.ts
 - products.module.ts
+
+#### Lazy loading a standalone component
+
+Any route can lazily load its routed, standalone component by using loadComponent. So instead of creating a CART_ROUTES file, we can lazy load the component directly in the APP_ROUTES and remove the `cart.routes.ts` file:
+
+Before:
+
+```
+// app.routes.ts
+export const APP_ROUTES: Routes = [
+  {
+    path: 'cart',
+    loadChildren: () => import('./cart/cart.routes').then(m => m.CART_ROUTES)
+  }
+];
+```
+
+After:
+
+```
+// app.routes.ts
+export const APP_ROUTES: Routes = [
+  {
+    path: 'cart',
+    loadComponent: () => import('./cart/cart/cart.component').then(c => c.CartComponent)
+  }
+];
+```

@@ -6,10 +6,10 @@ export const APP_ROUTES: Routes = [
   },
   {
     path: 'products',
-    loadChildren: () => import('./products/products.routes').then(m => m.PRODUCT_ROUTES)
+    loadChildren: () => import('./products/products.routes').then(r => r.PRODUCT_ROUTES)
   },
   {
     path: 'cart',
-    loadChildren: () => import('./cart/cart.routes').then(m => m.CART_ROUTES)
+    loadComponent: () => import('./cart/cart/cart.component').then(c => c.CartComponent)
   }
 ];
