@@ -1,21 +1,25 @@
-import { CartService } from './../../cart/cart.service';
-import { Component } from '@angular/core';
-import { Observable } from 'rxjs';
+import { AsyncPipe, NgFor, NgIf } from '@angular/common';
+import { Component, inject } from '@angular/core';
+import { MatButtonModule } from '@angular/material/button';
+import { MatCardModule } from '@angular/material/card';
+import { MatIconModule } from '@angular/material/icon';
+
 import { Product } from '../product';
 import { ProductsService } from '../products.service';
+import { CartService } from './../../cart/cart.service';
 
 @Component({
   selector: 'app-products-list',
   templateUrl: './products-list.component.html',
-  styleUrls: ['./products-list.component.scss']
+  styleUrls: ['./products-list.component.scss'],
+  standalone: true,
+  imports: [NgFor, MatCardModule, NgIf, MatButtonModule, MatIconModule, AsyncPipe]
 })
 export class ProductsListComponent {
 
-  products$: Observable<Product[]>;
-
-  constructor(private service: ProductsService, private cartService: CartService) {
-    this.products$ = this.service.load();
-  }
+  private service = inject(ProductsService);
+  private cartService = inject(CartService);
+  products$ = this.service.load();
 
   addProductToCart(product: Product): void {
     this.cartService.addProduct(product);

@@ -1,17 +1,21 @@
+import { AsyncPipe, NgIf } from '@angular/common';
+import { Component, inject } from '@angular/core';
+import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { RouterLink } from '@angular/router';
+
 import { CartService } from './../../cart/cart.service';
-import { Component } from '@angular/core';
-import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
-  styleUrls: ['./header.component.scss']
+  styleUrls: ['./header.component.scss'],
+  standalone: true,
+  imports: [MatToolbarModule, MatButtonModule, RouterLink, MatIconModule, NgIf, AsyncPipe]
 })
 export class HeaderComponent {
 
-  cartCount$: Observable<number>;
-
-  constructor(private cartService: CartService) {
-    this.cartCount$ = this.cartService.cartCount$;
-  }
+  private cartService = inject(CartService);
+  cartCount$ = this.cartService.cartCount$;
 }
