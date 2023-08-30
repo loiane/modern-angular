@@ -11,8 +11,8 @@ Sample project created to showcase the latest Angular features:
 
 ## Branches
 
-- classic: code with ngModules and RxJS for computed properties
-- main: latest code with all features mentiones above
+- [classic](https://github.com/loiane/angular-shop/tree/classic): code with ngModules and RxJS for computed properties
+- [main](https://github.com/loiane/angular-shop/tree/main): latest code with all features mentioned above
 - standalone-components: standalone components and types forms
 - signals: standalone + signals
 
