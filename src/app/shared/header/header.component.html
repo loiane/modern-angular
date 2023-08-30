@@ -4,6 +4,9 @@
   </button>
   <div class="branding">Angular Coffee Shop</div>
   <span class="example-spacer"></span>
+  <button mat-icon-button [routerLink]="['/products/new']">
+    <mat-icon>add</mat-icon>
+  </button>
   <button mat-icon-button [routerLink]="['/cart']">
     <mat-icon>shopping_cart</mat-icon>
     <span class="notification-label" *ngIf="cartCount$ | async as count">{{
