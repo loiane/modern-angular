@@ -23,8 +23,172 @@ Run the migration in the order listed below, verifying that your code builds and
 
 - Find and remove any remaining NgModule declarations: since the "Remove unnecessary NgModules" step cannot remove all modules automatically, you may have to remove the remaining declarations manually.
 
-#### Convert declarations to standalone
+#### Convert routes to standalone
+
+After the migration, the feature modules created will still exist, as they still have the routing configuration. We can also migrate the routing config to standalone, and this step needs to be done manually, it's not supported by the schematic.
+
+##### Cart Routing Module
 
 Before:
 
+```
+// cart-routing.module.ts
+import { NgModule } from '@angular/core';
+import { RouterModule, Routes } from '@angular/router';
+
+import { CartComponent } from './cart/cart.component';
+
+const routes: Routes = [
+  { path: '', component: CartComponent }
+];
+
+@NgModule({
+  imports: [RouterModule.forChild(routes)],
+  exports: [RouterModule]
+})
+export class CartRoutingModule { }
+
+```
+
 After:
+
+```
+// cart.routes.ts
+import { Routes } from '@angular/router';
+
+import { CartComponent } from './cart/cart.component';
+
+export const CART_ROUTES: Routes = [
+  { path: '', component: CartComponent }
+]
+```
+
+##### Products Routing Module
+
+Before:
+
+```
+// products-routing.module.ts
+import { NgModule } from '@angular/core';
+import { RouterModule, Routes } from '@angular/router';
+
+import { ProductsListComponent } from './products-list/products-list.component';
+import { ProductFormComponent } from './product-form/product-form.component';
+
+const routes: Routes = [
+  { path: '', component: ProductsListComponent },
+  { path: 'new', component: ProductFormComponent }
+];
+
+@NgModule({
+  imports: [RouterModule.forChild(routes)],
+  exports: [RouterModule]
+})
+export class ProductsRoutingModule { }
+```
+
+After:
+
+```
+// products.routes.ts
+import { Routes } from '@angular/router';
+
+import { ProductFormComponent } from './product-form/product-form.component';
+import { ProductsListComponent } from './products-list/products-list.component';
+
+
+export const CART_ROUTES: Routes = [
+  { path: '', component: ProductsListComponent },
+  { path: 'new', component: ProductFormComponent }
+]
+```
+
+##### App Routing Module
+
+Before:
+
+```
+// app-routing.module.ts
+import { NgModule } from '@angular/core';
+import { RouterModule, Routes } from '@angular/router';
+
+const routes: Routes = [
+  {
+    path: '', pathMatch: 'full', redirectTo: 'products'
+  },
+  {
+    path: 'products',
+    loadChildren: () => import('./products/products.module').then(m => m.ProductsModule)
+  },
+  {
+    path: 'cart',
+    loadChildren: () => import('./cart/cart.module').then(m => m.CartModule)
+  }
+];
+
+@NgModule({
+  imports: [RouterModule.forRoot(routes)],
+  exports: [RouterModule]
+})
+export class AppRoutingModule { }
+
+```
+
+After:
+
+```
+// app.routes.ts
+import { Routes } from '@angular/router';
+
+export const APP_ROUTES: Routes = [
+  {
+    path: '', pathMatch: 'full', redirectTo: 'products'
+  },
+  {
+    path: 'products',
+    loadChildren: () => import('./products/products.routes').then(m => m.PRODUCT_ROUTES)
+  },
+  {
+    path: 'cart',
+    loadChildren: () => import('./cart/cart.routes').then(m => m.CART_ROUTES)
+  }
+];
+```
+
+Remove app-routing.module from `main.ts`
+
+Before:
+
+```
+bootstrapApplication(AppComponent, {
+  providers: [
+    importProvidersFrom(BrowserModule, AppRoutingModule),
+    provideNoopAnimations(),
+    provideHttpClient(withInterceptorsFromDi())
+  ]
+})
+```
+
+After:
+
+```
+bootstrapApplication(AppComponent, {
+  providers: [
+    importProvidersFrom(BrowserModule),
+    provideNoopAnimations(),
+    provideHttpClient(withInterceptorsFromDi()),
+    provideRouter(APP_ROUTES)
+  ]
+})
+```
+
+Now we can safely delete the following files:
+
+- cart-routing.module.ts
+- products-routing.module.ts
+- app-routing.module.ts
+
+And also delete:
+
+- cart.module.ts
+- products.module.ts
