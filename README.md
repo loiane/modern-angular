@@ -13,7 +13,7 @@ Sample project created to showcase the latest Angular features:
 
 - [classic](https://github.com/loiane/angular-shop/tree/classic): code with ngModules and RxJS for computed properties
 - [main](https://github.com/loiane/angular-shop/tree/main): latest code with all features mentioned above
-- standalone-components: standalone components and types forms
+- [standalone-components](https://github.com/loiane/angular-shop/tree/standalone-components): standalone components and types forms
 - signals: standalone + signals
 
 ## ⌨️ Editor / IDE
