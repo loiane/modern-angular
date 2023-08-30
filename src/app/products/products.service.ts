@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { Product } from './product';
 import { HttpClient } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
@@ -12,8 +12,7 @@ export class ProductsService {
 
   private readonly API = `/products`;
   private readonly isLocal = true;
-
-  constructor(private http: HttpClient) { }
+  private http = inject(HttpClient);
 
   load(): Observable<Product[]> {
     if (this.isLocal) {
