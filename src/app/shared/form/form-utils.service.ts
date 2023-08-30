@@ -40,6 +40,16 @@ export class FormUtilsService {
       return `Field cannot be less than ${requiredLength} characters long.`;
     }
 
+    if (field?.hasError('min') && field.errors) {
+      const requiredValue = field.errors['min']['min'];
+      return 'Minium value is ' + requiredValue;
+    }
+
+    if (field?.hasError('max') && field.errors) {
+      const requiredValue = field.errors['max']['max'];
+      return 'Maxium value is ' + requiredValue;
+    }
+
     return field['errors'] ? 'Error' : '';
   }
 }
