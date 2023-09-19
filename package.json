@@ -25,9 +25,15 @@
     "zone.js": "~0.13.3"
   },
   "devDependencies": {
+<<<<<<< HEAD
     "@angular-devkit/build-angular": "^16.2.6",
     "@angular/cli": "~16.2.6",
     "@angular/compiler-cli": "^16.2.9",
+=======
+    "@angular-devkit/build-angular": "^16.2.2",
+    "@angular/cli": "~16.2.2",
+    "@angular/compiler-cli": "^16.2.5",
+>>>>>>> f427e69 (updated angular 16.2.4 -> 16.2.5)
     "@types/jasmine": "~4.3.6",
     "jasmine-core": "~5.1.1",
     "karma": "~6.4.0",
