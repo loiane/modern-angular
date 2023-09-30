@@ -19,11 +19,9 @@
         [value]="cartItem.quantity"
         (selectionChange)="onQuantityChange($event.value, cartItem)"
       >
-        <mat-option
-          *ngFor="let quantity of quantityOptions"
-          [value]="quantity"
-          >{{ quantity }}</mat-option
-        >
+        @for(quantity of quantityOptions; track quantity) {
+        <mat-option [value]="quantity">{{ quantity }}</mat-option>
+        }
       </mat-select>
     </mat-form-field>
   </div>

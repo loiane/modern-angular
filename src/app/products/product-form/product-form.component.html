@@ -6,27 +6,29 @@
         <mat-label>Name</mat-label>
         <input matInput formControlName="name" #name />
         <mat-hint align="end">{{ name.value.length }} / 100</mat-hint>
-        <mat-error *ngIf="form.get('name')?.invalid">{{
-          formUtils.getErrorMessage(form, "name")
-        }}</mat-error>
+        @if(form.get('name')?.invalid) {
+        <mat-error>{{ formUtils.getErrorMessage(form, "name") }}</mat-error>
+        }
       </mat-form-field>
 
       <mat-form-field class="full-width">
         <mat-label>Description</mat-label>
         <input matInput formControlName="description" #description />
         <mat-hint align="end">{{ description.value.length }} / 100</mat-hint>
-        <mat-error *ngIf="form.get('description')?.invalid">{{
+        @if(form.get('description')?.invalid) {
+        <mat-error>{{
           formUtils.getErrorMessage(form, "description")
         }}</mat-error>
+        }
       </mat-form-field>
 
       <div class="row">
         <mat-form-field class="column">
           <mat-label>Price</mat-label>
           <input matInput formControlName="price" type="number" />
-          <mat-error *ngIf="form.get('price')?.invalid">{{
-            formUtils.getErrorMessage(form, "price")
-          }}</mat-error>
+          @if(form.get('price')?.invalid) {
+          <mat-error>{{ formUtils.getErrorMessage(form, "price") }}</mat-error>
+          }
         </mat-form-field>
 
         <mat-form-field class="column">
@@ -48,9 +50,11 @@
         <mat-form-field class="column">
           <mat-label>Discount</mat-label>
           <input matInput formControlName="discount" type="number" />
-          <mat-error *ngIf="form.get('discount')?.invalid">{{
+          @if(form.get('discount')?.invalid) {
+          <mat-error>{{
             formUtils.getErrorMessage(form, "discount")
           }}</mat-error>
+          }
         </mat-form-field>
 
         <mat-form-field class="column">
@@ -66,9 +70,9 @@
               {{ image }}
             </mat-option>
           </mat-select>
-          <mat-error *ngIf="form.get('image')?.invalid">{{
-            formUtils.getErrorMessage(form, "image")
-          }}</mat-error>
+          @if(form.get('image')?.invalid) {
+          <mat-error>{{ formUtils.getErrorMessage(form, "image") }}</mat-error>
+          }
         </mat-form-field>
       </div>
     </form>

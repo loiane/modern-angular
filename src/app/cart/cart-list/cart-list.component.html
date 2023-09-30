@@ -3,8 +3,8 @@
     <mat-card-title class="text-xl">CART ITEMS</mat-card-title>
   </mat-card-header>
   <mat-card-content>
-    <div *ngFor="let cartItem of cartItems()">
-      <app-cart-item [item]="cartItem"></app-cart-item>
-    </div>
+    @for(cartItem of cartItems(); track cartItem.id) {
+    <app-cart-item [item]="cartItem"></app-cart-item>
+    }
   </mat-card-content>
 </mat-card>

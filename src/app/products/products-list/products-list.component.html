@@ -1,10 +1,13 @@
 <div class="parent">
-  <mat-card *ngFor="let product of products$ | async">
+  @for (product of products; track product.id) {
+  <mat-card>
     <div class="media-grid">
       <figure class="product-figure">
-        <div class="product-badge" *ngIf="product.status === 'sale'">
+        @if (product.status === 'sale') {
+        <div class="product-badge">
           <span>Sale</span>
         </div>
+        }
         <img
           src="assets/images/{{ product.image }}.jpg"
           height="245px"
@@ -36,4 +39,5 @@
       </div>
     </mat-card-content>
   </mat-card>
+  }
 </div>

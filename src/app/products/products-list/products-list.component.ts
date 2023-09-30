@@ -20,6 +20,13 @@ export class ProductsListComponent {
   private service = inject(ProductsService);
   private cartService = inject(CartService);
   products$ = this.service.load();
+  products: Product[] = [];
+
+  constructor() {
+    this.products$.subscribe(products => {
+      this.products = products;
+    });
+  }
 
   addProductToCart(product: Product): void {
     this.cartService.addProduct(product);
