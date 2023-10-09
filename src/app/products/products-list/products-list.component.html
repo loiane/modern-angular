@@ -1,5 +1,5 @@
 <div class="parent">
-  @for (product of products; track product.id) {
+  @for (product of products$ | async; track product.id) {
   <mat-card>
     <div class="media-grid">
       <figure class="product-figure">

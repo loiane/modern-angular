@@ -7,6 +7,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { Product } from '../product';
 import { ProductsService } from '../products.service';
 import { CartService } from './../../cart/cart.service';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-products-list',
@@ -19,13 +20,10 @@ export class ProductsListComponent {
 
   private service = inject(ProductsService);
   private cartService = inject(CartService);
-  products$ = this.service.load();
-  products: Product[] = [];
+  products$: Observable<Product[]>;
 
   constructor() {
-    this.products$.subscribe(products => {
-      this.products = products;
-    });
+    this.products$ = this.service.load();
   }
 
   addProductToCart(product: Product): void {
