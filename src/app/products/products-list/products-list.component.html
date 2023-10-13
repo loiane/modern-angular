@@ -22,11 +22,10 @@
           <p class="ma-0 pa-0 text-md">{{ product.description }}</p>
         </div>
         <div class="mat-text-primary text-xl">
-          <span
-            class="strikethrough mat-text-muted text-sm"
-            *ngIf="product.discounted === 'discounted'"
+          @if (product.discounted === 'discounted') {
+          <span class="strikethrough mat-text-muted text-sm"
             >$ {{ product.discount }}</span
-          >
+          >}
           <span> $ {{ product.price }}</span>
         </div>
         <button
