@@ -1,4 +1,4 @@
-import { computed, Injectable, signal } from '@angular/core';
+import { computed, effect, Injectable, signal } from '@angular/core';
 
 import { Product } from '../products/product';
 import { CartItem } from './cart-item';
@@ -19,19 +19,25 @@ export class CartService {
 
   cartTotal = computed(() => this.cartSubTotal() + this.cartTax());
 
+  e = effect(() => console.log('cartCount updated', this.cartCount()));
+  i = effect(() => console.log('cartItems updated', this.cartItems()));
+
+
   addProduct(product: Product): void {
     const indexFound = this.cartItems().findIndex((p) => p.product.id === product.id);
     if (indexFound >= 0) {
-      this.cartItems.mutate((items) => items[indexFound].quantity += 1);
+      this.cartItems.update((items) => items.map((p) => p.product.id === product.id ? { ...p, quantity: p.quantity++ } : p));
+      //this.cartItems.mutate((items) => items[indexFound].quantity += 1);
     } else {
-      this.cartItems.mutate((items) => items.push({ product, quantity: 1 }));
+      //this.cartItems.mutate((items) => items.push({ product, quantity: 1 }));
+      this.cartItems.update((items) => [...items, { product, quantity: 1 }]);
     }
   }
 
   updateCartQuantity(cartItem: CartItem): void {
     const indexFound = this.cartItems().findIndex((p) => p.product.id === cartItem.product.id);
     if (indexFound >= 0) {
-      this.cartItems.mutate((items) => items[indexFound] = cartItem);
+      this.cartItems.update((items) => items.map((p) => p.product.id === cartItem.product.id ? cartItem : p));
     }
   }
 
