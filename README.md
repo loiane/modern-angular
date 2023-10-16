@@ -54,3 +54,9 @@ npm run start
 This command will run the Angular project with a proxy to the Java server, without requiring CORS.
 
 Open your browser and access **http://localhost:4200** (Angular default port).
+
+### Ng update to upgrade Angular version
+
+```
+ng update @angular/cli @angular/core @angular/cdk @angular/material --force
+```
