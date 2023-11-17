@@ -1,10 +1,13 @@
 <div class="parent">
-  <mat-card *ngFor="let product of products$ | async">
+  @for (product of products$ | async; track product) {
+  <mat-card>
     <div class="media-grid">
       <figure class="product-figure">
-        <div class="product-badge" *ngIf="product.status === 'sale'">
+        @if (product.status === 'sale') {
+<div class="product-badge">
           <span>Sale</span>
         </div>
+}
         <img
           src="assets/images/{{ product.image }}.jpg"
           height="245px"
@@ -19,11 +22,13 @@
           <p class="ma-0 pa-0 text-md">{{ product.description }}</p>
         </div>
         <div class="mat-text-primary text-xl">
-          <span
+          @if (product.discounted === 'discounted') {
+<span
             class="strikethrough mat-text-muted text-sm"
-            *ngIf="product.discounted === 'discounted'"
+           
             >$ {{ product.discount }}</span
           >
+}
           <span> $ {{ product.price }}</span>
         </div>
         <button
@@ -36,4 +41,5 @@
       </div>
     </mat-card-content>
   </mat-card>
+}
 </div>
