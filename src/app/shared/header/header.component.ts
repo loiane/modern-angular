@@ -1,4 +1,4 @@
-import { AsyncPipe, NgIf } from '@angular/common';
+import { AsyncPipe } from '@angular/common';
 import { Component, inject } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
@@ -12,7 +12,7 @@ import { CartService } from './../../cart/cart.service';
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.scss'],
   standalone: true,
-  imports: [MatToolbarModule, MatButtonModule, RouterLink, MatIconModule, NgIf, AsyncPipe]
+  imports: [MatToolbarModule, MatButtonModule, RouterLink, MatIconModule, AsyncPipe]
 })
 export class HeaderComponent {
 

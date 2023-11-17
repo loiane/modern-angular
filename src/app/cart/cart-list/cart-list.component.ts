@@ -1,4 +1,4 @@
-import { AsyncPipe, NgFor } from '@angular/common';
+import { AsyncPipe } from '@angular/common';
 import { Component, inject } from '@angular/core';
 import { MatCardModule } from '@angular/material/card';
 
@@ -10,7 +10,7 @@ import { CartService } from '../cart.service';
   templateUrl: './cart-list.component.html',
   styleUrls: ['./cart-list.component.scss'],
   standalone: true,
-  imports: [MatCardModule, NgFor, CartItemComponent, AsyncPipe]
+  imports: [MatCardModule, CartItemComponent, AsyncPipe]
 })
 export class CartListComponent {
 
