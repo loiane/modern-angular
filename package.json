@@ -10,7 +10,7 @@
   },
   "private": true,
   "dependencies": {
-    "@angular/animations": "^17.0.6",
+    "@angular/animations": "^17.0.7",
     "@angular/cdk": "^17.0.3",
     "@angular/common": "^17.0.6",
     "@angular/compiler": "^17.0.6",
