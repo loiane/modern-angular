@@ -8,6 +8,7 @@ Sample project created to showcase the latest Angular features:
 - Typed Forms (Angular v14)
 - Signals (Angular v16)
 - Input Validation (Angular v16)
+- New Control Flow (Angular v17)
 
 ## Branches
 
