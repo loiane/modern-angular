@@ -2,7 +2,7 @@
 
 ![Angular Build](https://github.com/loiane/angular-shop/actions/workflows/angular.yml/badge.svg?branch=main)
 
-Sample project created to showcase the latest Angular features:
+Sample project created to showcase the latest and modern Angular features:
 
 - Standalone Components and API (Angular v14 and v15)
 - Typed Forms (Angular v14)
