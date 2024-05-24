@@ -12,15 +12,15 @@
 // Define the palettes for your theme using the Material Design palettes available in palette.scss
 // (imported above). For each palette, you can optionally specify a default, lighter, and darker
 // hue. Available color palettes: https://material.io/design/color/
-$angular-shop-primary: mat.define-palette(mat.$cyan-palette, 800, 800);
-$angular-shop-accent: mat.define-palette(mat.$teal-palette, 400);
+$angular-shop-primary: mat.m2-define-palette(mat.$m2-cyan-palette, 800, 800);
+$angular-shop-accent: mat.m2-define-palette(mat.$m2-teal-palette, 400);
 
 // The warn palette is optional (defaults to red).
-$angular-shop-warn: mat.define-palette(mat.$red-palette);
+$angular-shop-warn: mat.m2-define-palette(mat.$m2-red-palette);
 
 // Create the theme object. A theme consists of configurations for individual
 // theming systems such as "color" or "typography".
-$angular-shop-theme: mat.define-light-theme((
+$angular-shop-theme: mat.m2-define-light-theme((
   color: (
     primary: $angular-shop-primary,
     accent: $angular-shop-accent,
