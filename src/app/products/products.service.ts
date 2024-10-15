@@ -12,7 +12,7 @@ export class ProductsService {
 
   private readonly API = `/products`;
   private readonly isLocal = true;
-  private http = inject(HttpClient);
+  private readonly http = inject(HttpClient);
 
   load(): Observable<Product[]> {
     if (this.isLocal) {
@@ -26,6 +26,7 @@ export class ProductsService {
 
   create(product: Product): Observable<Product> {
     if (this.isLocal) {
+      product.id = this.rescueLastId();
       this.products.push(product);
       return of(product);
     }
@@ -43,5 +44,16 @@ export class ProductsService {
       description: ['B & W', 'Grey', 'Black', 'Green', 'Black'][Math.floor(Math.random() * 5)],
       image: `${i}`
     });
+  }
+
+  private rescueLastId(): string {
+    if (this.products.length === 0) {
+      return '1';
+    }
+  
+    const maxId = Math.max(...this.products.map(p => parseInt(p.id, 10) || 0));
+    const newId = (maxId + 1).toString();
+    
+    return newId;
   }
 }
