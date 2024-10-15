@@ -7,18 +7,19 @@ import { MatIconModule } from '@angular/material/icon';
 import { Product } from '../product';
 import { ProductsService } from '../products.service';
 import { CartService } from './../../cart/cart.service';
+import { RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-products-list',
   templateUrl: './products-list.component.html',
   styleUrls: ['./products-list.component.scss'],
   standalone: true,
-  imports: [MatCardModule, MatButtonModule, MatIconModule, AsyncPipe]
+  imports: [MatCardModule, MatButtonModule, MatIconModule, AsyncPipe, RouterModule]
 })
 export class ProductsListComponent {
 
-  private service = inject(ProductsService);
-  private cartService = inject(CartService);
+  private readonly service = inject(ProductsService);
+  private readonly cartService = inject(CartService);
   products$ = this.service.load();
 
   addProductToCart(product: Product): void {
