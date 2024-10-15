@@ -30,7 +30,24 @@ export class ProductsService {
       this.products.push(product);
       return of(product);
     }
-    return this.http.post<Product>(this.API, product);
+    return of(product);
+  }
+
+  getById(id: string): Observable<Product | undefined> {
+    const product = this.products.find(p => p.id === id);
+    return of(product);
+  }
+
+  update(product: Product): Observable<Product | undefined> {
+    if (this.isLocal) {
+      const index = this.products.findIndex(p => p.id === product.id);
+      if (index !== -1) {
+        this.products[index] = product;        
+        return of(product);            
+      }
+      return of(undefined); 
+    }    
+    return of(undefined); 
   }
 
   private addProducts(i: number): void {
