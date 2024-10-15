@@ -1,6 +1,8 @@
 <mat-card>
-  <mat-toolbar color="primary">Product Details</mat-toolbar>
-  <mat-card-content>
+  <mat-toolbar color="primary">
+    {{ form.get('id')?.value ? 'Edit Product' : 'Create Product' }}
+  </mat-toolbar>
+    <mat-card-content>
     <form [formGroup]="form" class="min-width">
       <mat-form-field class="full-width">
         <mat-label>Name</mat-label>
@@ -92,7 +94,8 @@
       (click)="onSubmit()"
       type="submit"
     >
-      Save
+    {{ form.get('id')?.value ? 'Update' : 'Save' }}
+      
     </button>
     <button
       mat-raised-button
