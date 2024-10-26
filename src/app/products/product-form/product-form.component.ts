@@ -9,6 +9,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatToolbarModule } from '@angular/material/toolbar';
+import { ActivatedRoute } from '@angular/router';
 
 import { Product } from '../product';
 import { ProductsService } from '../products.service';
@@ -57,12 +58,23 @@ export class ProductFormComponent {
   });
 
   formUtils = inject(FormUtilsService);
-  private snackBar = inject(MatSnackBar);
-  private location = inject(Location);
-  private productsService = inject(ProductsService);
+  private readonly snackBar = inject(MatSnackBar);
+  private readonly location = inject(Location);
+  private readonly productsService = inject(ProductsService);
+  private readonly route = inject(ActivatedRoute);
 
   constructor() {
     this.generateImages();
+
+    const productId = this.route.snapshot.paramMap.get('id');
+
+    if (productId) {
+      this.productsService.getById(productId).subscribe((product) => {
+        if (product) {
+          this.form.patchValue(product);
+        }
+      });
+    }
   }
 
   private generateImages() {
@@ -73,18 +85,28 @@ export class ProductFormComponent {
 
   onSubmit() {
     if (this.form.valid) {
-      this.productsService.create(this.form.value as Product).subscribe({
-        next: () => this.onSuccess(),
-        error: () => this.onError(),
-      });
+      const product = this.form.value as Product;
+
+      if (product.id) {
+        this.productsService.update(product).subscribe({
+          next: () => this.onSuccess('Product updated successfully!'),
+          error: () => this.onError(),
+        });
+      } else {
+        this.productsService.create(product).subscribe({
+          next: () => this.onSuccess('Product created successfully!'),
+          error: () => this.onError(),
+        });
+      }
     } else {
       this.formUtils.validateAllFormFields(this.form);
     }
   }
 
-  private onSuccess() {
-    this.snackBar.open('Product saved successfully!', '', { duration: 5000 });
+  private onSuccess(message: string) {
+    this.snackBar.open(message, '', { duration: 5000 });
     this.form.reset();
+    this.location.back();
   }
 
   private onError() {

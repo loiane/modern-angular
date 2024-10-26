@@ -34,6 +34,13 @@
         <button
           mat-icon-button
           color="accent"
+          [routerLink]="['/products/edit', product.id]"
+        >
+          <mat-icon>edit</mat-icon>
+        </button>
+        <button
+          mat-icon-button
+          color="accent"
           (click)="addProductToCart(product)"
         >
           <mat-icon>add_shopping_cart</mat-icon>
