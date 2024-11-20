@@ -9,11 +9,10 @@ import { ProductsService } from '../products.service';
 import { CartService } from './../../cart/cart.service';
 
 @Component({
-  selector: 'app-products-list',
-  templateUrl: './products-list.component.html',
-  styleUrls: ['./products-list.component.scss'],
-  standalone: true,
-  imports: [MatCardModule, MatButtonModule, MatIconModule, AsyncPipe]
+    selector: 'app-products-list',
+    templateUrl: './products-list.component.html',
+    styleUrls: ['./products-list.component.scss'],
+    imports: [MatCardModule, MatButtonModule, MatIconModule, AsyncPipe]
 })
 export class ProductsListComponent {
 

@@ -15,21 +15,20 @@ import { ProductsService } from '../products.service';
 import { FormUtilsService } from './../../shared/form/form-utils.service';
 
 @Component({
-  selector: 'app-product-form',
-  templateUrl: './product-form.component.html',
-  styleUrls: ['./product-form.component.scss'],
-  standalone: true,
-  imports: [
-    MatCardModule,
-    MatToolbarModule,
-    ReactiveFormsModule,
-    MatFormFieldModule,
-    MatInputModule,
-    MatSelectModule,
-    MatOptionModule,
-    MatButtonModule,
-    MatSnackBarModule
-],
+    selector: 'app-product-form',
+    templateUrl: './product-form.component.html',
+    styleUrls: ['./product-form.component.scss'],
+    imports: [
+        MatCardModule,
+        MatToolbarModule,
+        ReactiveFormsModule,
+        MatFormFieldModule,
+        MatInputModule,
+        MatSelectModule,
+        MatOptionModule,
+        MatButtonModule,
+        MatSnackBarModule
+    ]
 })
 export class ProductFormComponent {
   images: string[] = [];

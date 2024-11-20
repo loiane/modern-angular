@@ -9,11 +9,10 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatFormFieldModule } from '@angular/material/form-field';
 
 @Component({
-  selector: 'app-cart-item',
-  templateUrl: './cart-item.component.html',
-  styleUrls: ['./cart-item.component.scss'],
-  standalone: true,
-  imports: [MatFormFieldModule, MatSelectModule, MatOptionModule, MatButtonModule, MatIconModule, CurrencyPipe]
+    selector: 'app-cart-item',
+    templateUrl: './cart-item.component.html',
+    styleUrls: ['./cart-item.component.scss'],
+    imports: [MatFormFieldModule, MatSelectModule, MatOptionModule, MatButtonModule, MatIconModule, CurrencyPipe]
 })
 export class CartItemComponent {
 
