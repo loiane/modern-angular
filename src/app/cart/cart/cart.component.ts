@@ -7,7 +7,6 @@ import { MatToolbarModule } from '@angular/material/toolbar';
     selector: 'app-cart',
     templateUrl: './cart.component.html',
     styleUrls: ['./cart.component.scss'],
-    standalone: true,
     imports: [MatToolbarModule, CartListComponent, CartTotalSummaryComponent]
 })
 export class CartComponent {
