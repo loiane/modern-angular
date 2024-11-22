@@ -8,11 +8,10 @@ import { RouterLink } from '@angular/router';
 import { CartService } from './../../cart/cart.service';
 
 @Component({
-  selector: 'app-header',
-  templateUrl: './header.component.html',
-  styleUrls: ['./header.component.scss'],
-  standalone: true,
-  imports: [MatToolbarModule, MatButtonModule, RouterLink, MatIconModule, AsyncPipe]
+    selector: 'app-header',
+    templateUrl: './header.component.html',
+    styleUrls: ['./header.component.scss'],
+    imports: [MatToolbarModule, MatButtonModule, RouterLink, MatIconModule, AsyncPipe]
 })
 export class HeaderComponent {
 

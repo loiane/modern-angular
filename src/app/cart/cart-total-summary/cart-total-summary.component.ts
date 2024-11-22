@@ -6,11 +6,10 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 
 @Component({
-  selector: 'app-cart-total-summary',
-  templateUrl: './cart-total-summary.component.html',
-  styleUrls: ['./cart-total-summary.component.scss'],
-  standalone: true,
-  imports: [MatCardModule, MatButtonModule, AsyncPipe, CurrencyPipe]
+    selector: 'app-cart-total-summary',
+    templateUrl: './cart-total-summary.component.html',
+    styleUrls: ['./cart-total-summary.component.scss'],
+    imports: [MatCardModule, MatButtonModule, AsyncPipe, CurrencyPipe]
 })
 export class CartTotalSummaryComponent {
 
