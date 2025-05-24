@@ -1,11 +1,12 @@
-import { Injectable, signal } from '@angular/core';
+import { Injectable } from '@angular/core';
+import { httpResource } from '@angular/common/http';
 import { Product } from './product';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ProductService {
-  private _products = signal<Product[]>([
+  private mockProductsData: Product[] = [
     {
       id: 1,
       name: 'Premium Wireless Headphones',
@@ -72,11 +73,24 @@ export class ProductService {
       category: 'Home & Garden',
       isOnSale: true
     }
-  ]);
+  ];
+
+  // Simulate HTTP resource for products
+  productsResource = httpResource<Product[]>(() => ({
+    url: '/api/products',
+    loader: () => {
+      // Simulate API delay
+      return new Promise<Product[]>(resolve => {
+        setTimeout(() => {
+          resolve(this.mockProductsData);
+        }, 500); // 500ms delay to simulate network request
+      });
+    }
+  }));
 
   constructor() { }
 
   getProducts() {
-    return this._products.asReadonly();
+    return this.productsResource;
   }
 }

@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, computed } from '@angular/core';
 import { ProductCardComponent } from '../product-card/product-card';
 import { Product } from '../product';
 import { ProductService } from '../product-service';
@@ -11,7 +11,12 @@ import { ProductService } from '../product-service';
 })
 export class ProductList {
   private productService = inject(ProductService);
-  products = this.productService.getProducts();
+  private productsResource = this.productService.getProducts();
+
+  // Create computed signals for easier template access
+  products = computed(() => this.productsResource.value() ?? []);
+  isLoading = computed(() => this.productsResource.isLoading());
+  hasError = computed(() => this.productsResource.error() !== undefined);
 
   addToCart(product: Product): void {
     console.log('Added to cart:', product.name);
