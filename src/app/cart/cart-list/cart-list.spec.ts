@@ -51,18 +51,18 @@ describe('CartListComponent', () => {
   });  it('should update quantity when input changes', () => {
     cartService.addToCart(mockProduct, 1);
     jest.spyOn(cartService, 'updateQuantity');
-    
+
     component.updateQuantity(1, '3');
-    
+
     expect(cartService.updateQuantity).toHaveBeenCalledWith(1, 3);
   });
 
   it('should remove item when remove button is clicked', () => {
     cartService.addToCart(mockProduct, 1);
     jest.spyOn(cartService, 'removeFromCart');
-    
+
     component.removeItem(1);
-    
+
     expect(cartService.removeFromCart).toHaveBeenCalledWith(1);
   });
 });

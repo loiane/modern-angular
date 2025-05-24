@@ -52,17 +52,17 @@ describe('CartTotalSummaryComponent', () => {
   });  it('should clear cart when clear button is clicked', () => {
     cartService.addToCart(mockProduct, 1);
     jest.spyOn(cartService, 'clearCart');
-    
+
     component.clearCart();
-    
+
     expect(cartService.clearCart).toHaveBeenCalled();
   });
 
   it('should log checkout message when checkout button is clicked', () => {
     jest.spyOn(console, 'log');
-    
+
     component.proceedToCheckout();
-    
+
     expect(console.log).toHaveBeenCalledWith('Proceeding to checkout...');
   });
 });

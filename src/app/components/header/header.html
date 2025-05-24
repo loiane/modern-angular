@@ -9,7 +9,7 @@
     Products
   </button>
   <button matButton routerLink="/cart">
-    <mat-icon [matBadge]="cartService.totalItems()" 
+    <mat-icon [matBadge]="cartService.totalItems()"
               [matBadgeHidden]="cartService.totalItems() === 0"
               matBadgeColor="accent">shopping_cart</mat-icon>
   </button>

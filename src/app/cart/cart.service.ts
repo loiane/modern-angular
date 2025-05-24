@@ -10,23 +10,23 @@ export class CartService {
 
   // Computed signals for derived state
   items = this.cartItems.asReadonly();
-  
-  totalItems = computed(() => 
+
+  totalItems = computed(() =>
     this.cartItems().reduce((total, item) => total + item.quantity, 0)
   );
 
-  subtotal = computed(() => 
+  subtotal = computed(() =>
     this.cartItems().reduce((total, item) => total + (item.product.price * item.quantity), 0)
   );
 
   tax = computed(() => this.subtotal() * 0.1); // 10% tax
-  
+
   total = computed(() => this.subtotal() + this.tax());
 
   addToCart(product: Product, quantity: number = 1): void {
     const currentItems = this.cartItems();
     const existingItemIndex = currentItems.findIndex(item => item.product.id === product.id);
-    
+
     if (existingItemIndex > -1) {
       // Update existing item
       const updatedItems = [...currentItems];
@@ -55,7 +55,7 @@ export class CartService {
 
     const currentItems = this.cartItems();
     const itemIndex = currentItems.findIndex(item => item.product.id === productId);
-    
+
     if (itemIndex > -1) {
       const updatedItems = [...currentItems];
       updatedItems[itemIndex] = {

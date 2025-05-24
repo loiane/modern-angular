@@ -18,7 +18,7 @@
               <div class="item-image">
                 <img [src]="item.product.image" [alt]="item.product.name">
               </div>
-              
+
               <div class="item-details">
                 <h3>{{ item.product.name }}</h3>
                 <p class="item-description">{{ item.product.description }}</p>
@@ -26,26 +26,26 @@
                   {{ item.product.price | currency }}
                 </div>
               </div>
-              
+
               <div class="item-actions">
                 <div class="quantity-controls">
                   <mat-form-field appearance="outline" class="quantity-field">
                     <mat-label>Qty</mat-label>
-                    <input 
-                      matInput 
-                      type="number" 
-                      min="1" 
+                    <input
+                      matInput
+                      type="number"
+                      min="1"
                       [value]="item.quantity"
                       (change)="updateQuantity(item.product.id, $any($event.target).value)">
                   </mat-form-field>
                 </div>
-                
+
                 <div class="item-total">
                   <strong>{{ (item.product.price * item.quantity) | currency }}</strong>
                 </div>
-                
-                <button 
-                  mat-icon-button 
+
+                <button
+                  mat-icon-button
                   color="warn"
                   (click)="removeItem(item.product.id)"
                   aria-label="Remove item">
