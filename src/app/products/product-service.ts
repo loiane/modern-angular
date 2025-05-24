@@ -11,8 +11,6 @@ export class ProductService {
     url: '/api/products.json'
   }));
 
-  constructor() { }
-
   getProducts() {
     return this.productsResource;
   }
