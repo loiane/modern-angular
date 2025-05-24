@@ -10,13 +10,6 @@ Sample project created to showcase the latest and modern Angular features:
 - Input Validation (Angular v16)
 - New Control Flow (Angular v17)
 
-## Branches
-
-- [classic](https://github.com/loiane/angular-shop/tree/classic): code with ngModules and RxJS for computed properties
-- [main](https://github.com/loiane/angular-shop/tree/main): latest code with all features mentioned above
-- [standalone-components](https://github.com/loiane/angular-shop/tree/standalone-components): standalone components and types forms
-- [signals](https://github.com/loiane/angular-shop/tree/signals): standalone + signals
-
 ## ⌨️ Editor / IDE
 
 - Visual Studio Code
