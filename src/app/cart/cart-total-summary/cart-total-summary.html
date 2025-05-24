@@ -1,0 +1,53 @@
+<mat-card class="cart-summary-card">
+  <mat-card-header>
+    <mat-card-title>Order Summary</mat-card-title>
+  </mat-card-header>
+  
+  <mat-card-content>
+    @if (cartService.items().length > 0) {
+      <div class="summary-details">
+        <div class="summary-row">
+          <span>Items ({{ cartService.totalItems() }})</span>
+          <span>{{ cartService.subtotal() | currency }}</span>
+        </div>
+        
+        <div class="summary-row">
+          <span>Tax</span>
+          <span>{{ cartService.tax() | currency }}</span>
+        </div>
+        
+        <mat-divider></mat-divider>
+        
+        <div class="summary-row total-row">
+          <span><strong>Total</strong></span>
+          <span><strong>{{ cartService.total() | currency }}</strong></span>
+        </div>
+      </div>
+    } @else {
+      <div class="empty-summary">
+        <p>No items in cart</p>
+      </div>
+    }
+  </mat-card-content>
+  
+  <mat-card-actions>
+    @if (cartService.items().length > 0) {
+      <div class="cart-actions">
+        <button 
+          mat-raised-button 
+          color="primary" 
+          class="checkout-btn"
+          (click)="proceedToCheckout()">
+          Proceed to Checkout
+        </button>
+        
+        <button 
+          mat-stroked-button 
+          color="warn"
+          (click)="clearCart()">
+          Clear Cart
+        </button>
+      </div>
+    }
+  </mat-card-actions>
+</mat-card>

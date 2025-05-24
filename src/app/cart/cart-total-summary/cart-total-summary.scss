@@ -1,0 +1,46 @@
+.cart-summary-card {
+  position: sticky;
+  top: 1rem;
+
+  .summary-details {
+    .summary-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0.5rem 0;
+      
+      &.total-row {
+        font-size: 1.1rem;
+        padding: 1rem 0 0.5rem 0;
+      }
+    }
+    
+    mat-divider {
+      margin: 0.5rem 0;
+    }
+  }
+
+  .empty-summary {
+    text-align: center;
+    color: #666;
+    padding: 1rem 0;
+  }
+
+  .cart-actions {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    width: 100%;
+
+    .checkout-btn {
+      width: 100%;
+      padding: 0.75rem;
+      font-size: 1rem;
+      font-weight: 500;
+    }
+
+    button {
+      width: 100%;
+    }
+  }
+}

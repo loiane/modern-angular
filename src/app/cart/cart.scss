@@ -1,0 +1,31 @@
+.cart-summary {
+  display: flex;
+  gap: 2rem;
+  padding: 1rem;
+  max-width: 1200px;
+  margin: 0 auto;
+
+  @media (max-width: 768px) {
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .cart-items {
+    flex: 2;
+  }
+
+  .cart-total {
+    flex: 1;
+    min-width: 300px;
+  }
+}
+
+mat-toolbar {
+  background-color: #1976d2;
+  color: white;
+  
+  span {
+    font-size: 1.5rem;
+    font-weight: 500;
+  }
+}

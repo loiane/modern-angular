@@ -1,0 +1,61 @@
+<div class="cart-list-container">
+  @if (cartService.items().length === 0) {
+    <mat-card class="empty-cart">
+      <mat-card-content>
+        <div class="empty-cart-content">
+          <mat-icon class="empty-cart-icon">shopping_cart</mat-icon>
+          <h2>Your cart is empty</h2>
+          <p>Add some products to get started!</p>
+        </div>
+      </mat-card-content>
+    </mat-card>
+  } @else {
+    <div class="cart-items">
+      @for (item of cartService.items(); track item.product.id) {
+        <mat-card class="cart-item">
+          <mat-card-content>
+            <div class="item-content">
+              <div class="item-image">
+                <img [src]="item.product.image" [alt]="item.product.name">
+              </div>
+              
+              <div class="item-details">
+                <h3>{{ item.product.name }}</h3>
+                <p class="item-description">{{ item.product.description }}</p>
+                <div class="item-price">
+                  {{ item.product.price | currency }}
+                </div>
+              </div>
+              
+              <div class="item-actions">
+                <div class="quantity-controls">
+                  <mat-form-field appearance="outline" class="quantity-field">
+                    <mat-label>Qty</mat-label>
+                    <input 
+                      matInput 
+                      type="number" 
+                      min="1" 
+                      [value]="item.quantity"
+                      (change)="updateQuantity(item.product.id, $any($event.target).value)">
+                  </mat-form-field>
+                </div>
+                
+                <div class="item-total">
+                  <strong>{{ (item.product.price * item.quantity) | currency }}</strong>
+                </div>
+                
+                <button 
+                  mat-icon-button 
+                  color="warn"
+                  (click)="removeItem(item.product.id)"
+                  aria-label="Remove item">
+                  <mat-icon>delete</mat-icon>
+                </button>
+              </div>
+            </div>
+          </mat-card-content>
+        </mat-card>
+      }
+    </div>
+  }
+</div>
