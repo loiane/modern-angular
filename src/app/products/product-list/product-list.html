@@ -1,11 +1,11 @@
 <div class="product-list-container">
   <div class="product-grid">
     @for (product of products(); track product.id) {
-      <app-product
+      <app-product-card
         [product]="product"
         (addToCart)="addToCart($event)"
         (addToWishlist)="addToWishlist($event)">
-      </app-product>
+      </app-product-card>
     }
   </div>
 </div>

@@ -19,7 +19,7 @@ export interface Product {
 }
 
 @Component({
-  selector: 'app-product',
+  selector: 'app-product-card',
   imports: [
     MatCardModule,
     MatButtonModule,
@@ -27,10 +27,10 @@ export interface Product {
     MatChipsModule,
     CurrencyPipe
   ],
-  templateUrl: './product.html',
-  styleUrl: './product.scss'
+  templateUrl: './product-card.html',
+  styleUrl: './product-card.scss'
 })
-export class ProductComponent {
+export class ProductCardComponent {
   product = input.required<Product>();
 
   addToCart = output<Product>();

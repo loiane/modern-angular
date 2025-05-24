@@ -1,10 +1,10 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { ProductComponent, Product } from './product';
+import { ProductCardComponent, Product } from './product-card';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 
-describe('ProductComponent', () => {
-  let component: ProductComponent;
-  let fixture: ComponentFixture<ProductComponent>;
+describe('ProductCardComponent', () => {
+  let component: ProductCardComponent;
+  let fixture: ComponentFixture<ProductCardComponent>;
 
   const mockProduct: Product = {
     id: 1,
@@ -21,11 +21,11 @@ describe('ProductComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [ProductComponent],
+      imports: [ProductCardComponent],
       providers: [provideAnimationsAsync()]
     }).compileComponents();
 
-    fixture = TestBed.createComponent(ProductComponent);
+    fixture = TestBed.createComponent(ProductCardComponent);
     component = fixture.componentInstance;
     fixture.componentRef.setInput('product', mockProduct);
     fixture.detectChanges();
