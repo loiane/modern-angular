@@ -25,11 +25,6 @@ describe('ProductList', () => {
     expect(component.products().length).toBeGreaterThan(0);
   });
 
-  it('should generate correct star ratings', () => {
-    const stars = component.getStars(4.5);
-    expect(stars).toEqual(['star', 'star', 'star', 'star', 'star_half']);
-  });
-
   it('should handle add to cart', () => {
     const consoleSpy = jest.spyOn(console, 'log');
     const product = component.products()[0];

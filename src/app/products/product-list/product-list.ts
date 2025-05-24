@@ -1,34 +1,9 @@
 import { Component, signal } from '@angular/core';
-import { MatCardModule } from '@angular/material/card';
-import { MatButtonModule } from '@angular/material/button';
-import { MatIconModule } from '@angular/material/icon';
-import { MatChipsModule } from '@angular/material/chips';
-import { MatBadgeModule } from '@angular/material/badge';
-import { CurrencyPipe } from '@angular/common';
-
-export interface Product {
-  id: number;
-  name: string;
-  description: string;
-  price: number;
-  originalPrice?: number;
-  image: string;
-  rating: number;
-  reviewCount: number;
-  category: string;
-  isOnSale?: boolean;
-}
+import { ProductComponent, type Product } from '../product/product';
 
 @Component({
   selector: 'app-product-list',
-  imports: [
-    MatCardModule,
-    MatButtonModule,
-    MatIconModule,
-    MatChipsModule,
-    MatBadgeModule,
-    CurrencyPipe
-  ],
+  imports: [ProductComponent],
   templateUrl: './product-list.html',
   styleUrl: './product-list.scss'
 })
@@ -101,26 +76,6 @@ export class ProductList {
       isOnSale: true
     }
   ]);
-
-  getStars(rating: number): string[] {
-    const fullStars = Math.floor(rating);
-    const hasHalfStar = rating % 1 !== 0;
-    const stars: string[] = [];
-
-    for (let i = 0; i < fullStars; i++) {
-      stars.push('star');
-    }
-
-    if (hasHalfStar) {
-      stars.push('star_half');
-    }
-
-    while (stars.length < 5) {
-      stars.push('star_border');
-    }
-
-    return stars;
-  }
 
   addToCart(product: Product): void {
     console.log('Added to cart:', product.name);

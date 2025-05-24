@@ -1,0 +1,55 @@
+<mat-card class="product-card" appearance="outlined">
+  <div class="card-header">
+    @if (product().isOnSale) {
+      <mat-chip class="sale-chip">Sale</mat-chip>
+    }
+    <button mat-icon-button class="wishlist-btn" (click)="onAddToWishlist()">
+      <mat-icon>favorite_border</mat-icon>
+    </button>
+  </div>
+
+  <div class="product-image-container">
+    <img
+      [src]="product().image"
+      [alt]="product().name"
+      class="product-image"
+      loading="lazy">
+  </div>
+
+  <mat-card-content class="product-content">
+    <div class="product-category">
+      <mat-chip>{{ product().category }}</mat-chip>
+    </div>
+
+    <h3 class="product-title">{{ product().name }}</h3>
+
+    <p class="product-description">{{ product().description }}</p>
+
+    <div class="rating-container">
+      <div class="stars">
+        @for (star of getStars(product().rating); track $index) {
+          <mat-icon class="star-icon">{{ star }}</mat-icon>
+        }
+      </div>
+      <span class="rating-text">{{ product().rating }} ({{ product().reviewCount }} reviews)</span>
+    </div>
+
+    <div class="price-container">
+      @if (product().originalPrice && product().isOnSale) {
+        <span class="original-price">{{ product().originalPrice | currency }}</span>
+      }
+      <span class="current-price">{{ product().price | currency }}</span>
+    </div>
+  </mat-card-content>
+
+  <mat-card-actions class="card-actions">
+    <button mat-raised-button color="primary" (click)="onAddToCart()">
+      <mat-icon>shopping_cart</mat-icon>
+      Add to Cart
+    </button>
+    <button mat-button>
+      <mat-icon>visibility</mat-icon>
+      View Details
+    </button>
+  </mat-card-actions>
+</mat-card>
