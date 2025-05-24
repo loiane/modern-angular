@@ -4,19 +4,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatChipsModule } from '@angular/material/chips';
 import { CurrencyPipe } from '@angular/common';
-
-export interface Product {
-  id: number;
-  name: string;
-  description: string;
-  price: number;
-  originalPrice?: number;
-  image: string;
-  rating: number;
-  reviewCount: number;
-  category: string;
-  isOnSale?: boolean;
-}
+import { Product } from '../product';
 
 @Component({
   selector: 'app-product-card',

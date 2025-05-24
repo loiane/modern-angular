@@ -1,5 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { ProductCardComponent, Product } from './product-card';
+import { ProductCardComponent } from './product-card';
+import { Product } from '../product';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 
 describe('ProductCardComponent', () => {
