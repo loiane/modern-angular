@@ -1,4 +1,4 @@
-# Modern Angular Coffee Shop 🚀☕
+# Modern Angular Shop 🚀🛒
 
 ![Angular Build](https://github.com/loiane/angular-shop/actions/workflows/angular.yml/badge.svg?branch=main)
 ![Angular Version](https://img.shields.io/badge/Angular-v20-red)
