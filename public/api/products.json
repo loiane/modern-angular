@@ -22,18 +22,6 @@
     "category": "Electronics"
   },
   {
-    "id": 3,
-    "name": "Ergonomic Office Chair",
-    "description": "Comfortable ergonomic office chair designed for long working hours with lumbar support.",
-    "price": 349.99,
-    "originalPrice": 399.99,
-    "image": "https://images.unsplash.com/photo-1586023492125-27b2c045efd7?w=400&h=300&fit=crop",
-    "rating": 4.3,
-    "reviewCount": 89,
-    "category": "Furniture",
-    "isOnSale": true
-  },
-  {
     "id": 4,
     "name": "Wireless Keyboard & Mouse Set",
     "description": "Sleek wireless keyboard and mouse combo perfect for productivity and gaming.",
@@ -44,25 +32,59 @@
     "category": "Electronics"
   },
   {
-    "id": 5,
-    "name": "Professional Camera Lens",
-    "description": "High-quality camera lens for professional photography with exceptional clarity.",
-    "price": 599.99,
-    "image": "https://images.unsplash.com/photo-1606983340126-99ab4feaa64a?w=400&h=300&fit=crop",
-    "rating": 4.9,
-    "reviewCount": 45,
-    "category": "Photography"
+    "id": 7,
+    "name": "4K Ultra HD Monitor",
+    "description": "27-inch 4K UHD monitor with HDR support and ultra-thin bezels for immersive viewing.",
+    "price": 449.99,
+    "originalPrice": 549.99,
+    "image": "https://images.unsplash.com/photo-1527443224154-c4a3942d3acf?w=400&h=300&fit=crop",
+    "rating": 4.7,
+    "reviewCount": 312,
+    "category": "Electronics",
+    "isOnSale": true
   },
   {
-    "id": 6,
-    "name": "Minimalist Desk Lamp",
-    "description": "Modern LED desk lamp with adjustable brightness and sleek minimalist design.",
+    "id": 9,
+    "name": "Gaming Mechanical Keyboard",
+    "description": "RGB backlit mechanical gaming keyboard with customizable keys and macro support.",
+    "price": 129.99,
+    "image": "https://images.unsplash.com/photo-1595044426077-d36d9236d54a?w=400&h=300&fit=crop",
+    "rating": 4.6,
+    "reviewCount": 278,
+    "category": "Electronics"
+  },
+  {
+    "id": 10,
+    "name": "Bluetooth Speaker",
+    "description": "Portable waterproof Bluetooth speaker with 360-degree sound and 12-hour battery life.",
     "price": 89.99,
     "originalPrice": 119.99,
-    "image": "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&h=300&fit=crop",
+    "image": "https://images.unsplash.com/photo-1608043152269-423dbba4e7e1?w=400&h=300&fit=crop",
     "rating": 4.4,
-    "reviewCount": 203,
-    "category": "Home & Garden",
+    "reviewCount": 156,
+    "category": "Electronics",
+    "isOnSale": true
+  },
+  {
+    "id": 11,
+    "name": "USB-C Hub",
+    "description": "7-in-1 USB-C hub with HDMI, USB 3.0, SD card reader, and power delivery support.",
+    "price": 59.99,
+    "image": "https://images.unsplash.com/photo-1625842268584-8f3296236761?w=400&h=300&fit=crop",
+    "rating": 4.2,
+    "reviewCount": 134,
+    "category": "Electronics"
+  },
+  {
+    "id": 15,
+    "name": "Tablet 10-inch",
+    "description": "Android tablet with 10-inch display, 64GB storage, and long-lasting battery.",
+    "price": 249.99,
+    "originalPrice": 299.99,
+    "image": "https://images.unsplash.com/photo-1544244015-0df4b3ffc6b0?w=400&h=300&fit=crop",
+    "rating": 4.2,
+    "reviewCount": 156,
+    "category": "Electronics",
     "isOnSale": true
   }
 ]
