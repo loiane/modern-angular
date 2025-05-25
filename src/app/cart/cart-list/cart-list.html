@@ -1,6 +1,6 @@
 <div class="cart-list-container">
   @if (cartService.items().length === 0) {
-    <mat-card class="empty-cart">
+    <mat-card class="empty-cart" appearance="outlined">
       <mat-card-content>
         <div class="empty-cart-content">
           <mat-icon class="empty-cart-icon">shopping_cart</mat-icon>
@@ -12,7 +12,7 @@
   } @else {
     <div class="cart-items">
       @for (item of cartService.items(); track item.product.id) {
-        <mat-card class="cart-item">
+        <mat-card class="cart-item" appearance="outlined">
           <mat-card-content>
             <div class="item-content">
               <div class="item-image">

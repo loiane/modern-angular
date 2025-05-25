@@ -1,3 +1,5 @@
+@use '@angular/material' as mat;
+
 .product-card {
   position: relative;
   height: 100%;
@@ -20,21 +22,6 @@
   justify-content: space-between;
   align-items: flex-start;
   z-index: 2;
-}
-
-.sale-chip {
-  background-color: #f44336;
-  color: white;
-  font-weight: 500;
-}
-
-.wishlist-btn {
-  background-color: rgba(255, 255, 255, 0.9);
-  backdrop-filter: blur(4px);
-
-  &:hover {
-    background-color: rgba(255, 255, 255, 1);
-  }
 }
 
 .product-image-container {
@@ -62,13 +49,6 @@
 
 .product-category {
   margin-bottom: 8px;
-
-  mat-chip {
-    font-size: 12px;
-    height: 24px;
-    background-color: #e3f2fd;
-    color: #1976d2;
-  }
 }
 
 .product-title {
@@ -130,7 +110,7 @@
 .current-price {
   font-size: 20px;
   font-weight: 600;
-  color: #1976d2;
+  color: var(--mat-sys-primary);
 }
 
 .card-actions {

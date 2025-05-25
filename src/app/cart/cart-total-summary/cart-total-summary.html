@@ -1,4 +1,4 @@
-<mat-card class="cart-summary-card">
+<mat-card class="cart-summary-card" appearance="outlined">
   <mat-card-header>
     <mat-card-title>Order Summary</mat-card-title>
   </mat-card-header>
@@ -34,16 +34,14 @@
     @if (cartService.items().length > 0) {
       <div class="cart-actions">
         <button
-          mat-raised-button
-          color="primary"
+          matButton="filled"
           class="checkout-btn"
           (click)="proceedToCheckout()">
           Proceed to Checkout
         </button>
 
         <button
-          mat-stroked-button
-          color="warn"
+          matButton="tonal"
           (click)="clearCart()">
           Clear Cart
         </button>

@@ -1,16 +1,15 @@
 <mat-toolbar class="main-header">
   <button matButton routerLink="/">
-    <mat-icon>local_cafe</mat-icon>
+    <mat-icon>store</mat-icon>
   </button>
   <div class="branding">{{ appTitle() }}</div>
   <span class="example-spacer"></span>
   <button matButton routerLink="/products">
-    <mat-icon>store</mat-icon>
     Products
   </button>
   <button matButton routerLink="/cart">
     <mat-icon [matBadge]="cartService.totalItems()"
               [matBadgeHidden]="cartService.totalItems() === 0"
-              matBadgeColor="accent">shopping_cart</mat-icon>
+              >shopping_cart</mat-icon>
   </button>
 </mat-toolbar>

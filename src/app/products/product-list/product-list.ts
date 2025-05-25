@@ -1,8 +1,8 @@
-import { Component, inject, computed } from '@angular/core';
-import { ProductCardComponent } from '../product-card/product-card';
-import { Product } from '../product';
-import { ProductService } from '../product-service';
+import { Component, computed, inject } from '@angular/core';
 import { CartService } from '../../cart/cart.service';
+import { Product } from '../product';
+import { ProductCardComponent } from '../product-card/product-card';
+import { ProductService } from '../product-service';
 
 @Component({
   selector: 'app-product-list',

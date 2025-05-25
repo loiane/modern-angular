@@ -1,11 +1,8 @@
 <mat-card class="product-card" appearance="outlined">
   <div class="card-header">
     @if (product().isOnSale) {
-      <mat-chip class="sale-chip">Sale</mat-chip>
+      <mat-chip>Sale</mat-chip>
     }
-    <button mat-icon-button class="wishlist-btn" (click)="onAddToWishlist()">
-      <mat-icon>favorite_border</mat-icon>
-    </button>
   </div>
 
   <div class="product-image-container">
@@ -43,11 +40,11 @@
   </mat-card-content>
 
   <mat-card-actions class="card-actions">
-    <button mat-raised-button color="primary" (click)="onAddToCart()">
+    <button matButton="filled" (click)="onAddToCart()">
       <mat-icon>shopping_cart</mat-icon>
       Add to Cart
     </button>
-    <button mat-button>
+    <button matButton>
       <mat-icon>visibility</mat-icon>
       View Details
     </button>

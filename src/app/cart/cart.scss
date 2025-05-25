@@ -1,3 +1,5 @@
+@use '@angular/material' as mat;
+
 .cart-summary {
   display: flex;
   gap: 2rem;
@@ -21,7 +23,7 @@
 }
 
 mat-toolbar {
-  background-color: #1976d2;
+  background-color: var(--mat-sys-primary);
   color: white;
 
   span {

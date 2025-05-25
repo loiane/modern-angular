@@ -8,4 +8,9 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
     container-background-color: var(--mat-sys-primary-container),
     container-text-color: var(--mat-sys-primary),
   ));
+
+  @include mat.card-overrides((
+    filled-container-color: white,
+    outlined-container-color: white
+  ));
 }
