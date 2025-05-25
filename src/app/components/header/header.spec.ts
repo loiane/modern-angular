@@ -30,11 +30,11 @@ describe('Header', () => {
     expect(compiled.querySelector('.branding')?.textContent).toContain('Test App');
   });
 
-  it('should render home button with coffee icon', () => {
+  it('should render home button with store icon', () => {
     const compiled = fixture.nativeElement as HTMLElement;
     const homeButton = compiled.querySelector('button[routerLink="/"]');
     expect(homeButton).toBeTruthy();
-    expect(homeButton?.querySelector('mat-icon')?.textContent).toContain('local_cafe');
+    expect(homeButton?.querySelector('mat-icon')?.textContent).toContain('store');
   });
 
   it('should render cart button with shopping cart icon', () => {
