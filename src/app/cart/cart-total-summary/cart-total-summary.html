@@ -4,23 +4,23 @@
   </mat-card-header>
 
   <mat-card-content>
-    @if (cartService.items().length > 0) {
+    @if (!cart.isEmpty()) {
       <div class="summary-details">
         <div class="summary-row">
-          <span>Items ({{ cartService.totalItems() }})</span>
-          <span>{{ cartService.subtotal() | currency }}</span>
+          <span>Items ({{ cart.totalItems() }})</span>
+          <span>{{ cart.subtotal() | currency }}</span>
         </div>
 
         <div class="summary-row">
           <span>Tax</span>
-          <span>{{ cartService.tax() | currency }}</span>
+          <span>{{ cart.tax() | currency }}</span>
         </div>
 
         <mat-divider></mat-divider>
 
         <div class="summary-row total-row">
           <span><strong>Total</strong></span>
-          <span><strong>{{ cartService.total() | currency }}</strong></span>
+          <span><strong>{{ cart.total() | currency }}</strong></span>
         </div>
       </div>
     } @else {
@@ -31,7 +31,7 @@
   </mat-card-content>
 
   <mat-card-actions>
-    @if (cartService.items().length > 0) {
+    @if (cart.items().length > 0) {
       <div class="cart-actions">
         <button
           matButton="filled"

@@ -1,11 +1,24 @@
 <div class="product-list-container">
   @if (isLoading()) {
     <div class="loading-container">
+      <mat-spinner></mat-spinner>
       <p>Loading products...</p>
     </div>
   } @else if (hasError()) {
     <div class="error-container">
-      <p>Error loading products. Please try again later.</p>
+      <mat-icon class="error-icon">error_outline</mat-icon>
+      <h3>Oops! Something went wrong</h3>
+      <p>{{ errorMessage() }}</p>
+      <button mat-raised-button color="primary" (click)="retryLoading()">
+        <mat-icon>refresh</mat-icon>
+        Try Again
+      </button>
+    </div>
+  } @else if (products().length === 0) {
+    <div class="empty-container">
+      <mat-icon class="empty-icon">inventory_2</mat-icon>
+      <h3>No products available</h3>
+      <p>Check back later for new products!</p>
     </div>
   } @else {
     <div class="product-grid">

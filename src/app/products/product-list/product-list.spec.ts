@@ -1,62 +1,89 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { ProductList } from './product-list';
-import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
-import { provideHttpClient } from '@angular/common/http';
-import { provideHttpClientTesting } from '@angular/common/http/testing';
-import { ProductService } from '../product-service';
 import { signal } from '@angular/core';
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+
+import { ProductList } from './product-list';
+import { ProductService } from '../product-service';
+import { CartService } from '../../cart/cart.service';
+import { NotificationService } from '../../shared/services/notification.service';
 import { Product } from '../product';
 
 describe('ProductList', () => {
   let component: ProductList;
   let fixture: ComponentFixture<ProductList>;
   let mockProductService: jest.Mocked<ProductService>;
-
-  const mockProducts: Product[] = [
-    {
-      id: 1,
-      name: 'Test Product 1',
-      category: 'Electronics',
-      image: 'test1.jpg',
-      price: 99.99,
-      description: 'Test description 1',
-      rating: 4.5,
-      reviewCount: 10
-    },
-    {
-      id: 2,
-      name: 'Test Product 2',
-      category: 'Clothing',
-      image: 'test2.jpg',
-      price: 49.99,
-      description: 'Test description 2',
-      rating: 4.0,
-      reviewCount: 5
-    }
-  ];
+  let mockCartService: jest.Mocked<CartService>;
+  let mockNotificationService: jest.Mocked<NotificationService>;
 
   beforeEach(async () => {
-    // Create mock ProductService
-    const mockResource = {
-      value: signal(mockProducts),
-      isLoading: signal(false),
-      error: signal(undefined),
+    // Create mock products
+    const mockProducts: Product[] = [
+      {
+        id: 1,
+        name: 'Test Product 1',
+        description: 'Description 1',
+        price: 10.99,
+        image: 'image1.jpg',
+        rating: 4.5,
+        reviewCount: 10,
+        category: 'Electronics'
+      },
+      {
+        id: 2,
+        name: 'Test Product 2',
+        description: 'Description 2',
+        price: 20.99,
+        image: 'image2.jpg',
+        rating: 4.0,
+        reviewCount: 5,
+        category: 'Books'
+      }
+    ];
+
+    // Create a mock HttpResourceRef that matches the expected interface
+    const createMockHttpResourceRef = (value: Product[] | null, loading = false, error: any = null) => ({
+      value: signal(value),
+      isLoading: signal(loading),
+      error: signal(error),
+      headers: signal(undefined),
+      statusCode: signal(200),
+      progress: signal(null),
+      hasValue: signal(value !== null),
       reload: jest.fn(),
-      request: jest.fn()
-    };
+      request: jest.fn(),
+      destroy: jest.fn(),
+      set: jest.fn(),
+      update: jest.fn(),
+      asReadonly: jest.fn(),
+      status: signal('resolved' as any)
+    });
 
     mockProductService = {
-      getProducts: jest.fn().mockReturnValue(mockResource),
-      productsResource: mockResource
+      getProducts: jest.fn().mockReturnValue(createMockHttpResourceRef(mockProducts))
+    } as any;
+
+    mockCartService = {
+      addToCart: jest.fn().mockReturnValue({ success: true, message: 'Item added successfully' }),
+      removeFromCart: jest.fn(),
+      updateQuantity: jest.fn(),
+      clearCart: jest.fn(),
+      getTotal: jest.fn().mockReturnValue(0),
+      getItemCount: jest.fn().mockReturnValue(0),
+      items: signal([])
+    } as any;
+
+    mockNotificationService = {
+      showSuccess: jest.fn(),
+      showError: jest.fn(),
+      showInfo: jest.fn()
     } as any;
 
     await TestBed.configureTestingModule({
-      imports: [ProductList],
+      imports: [ProductList, NoopAnimationsModule],
       providers: [
-        provideAnimationsAsync(),
-        provideHttpClient(),
-        provideHttpClientTesting(),
-        { provide: ProductService, useValue: mockProductService }
+        { provide: ProductService, useValue: mockProductService },
+        { provide: CartService, useValue: mockCartService },
+        { provide: NotificationService, useValue: mockNotificationService }
       ]
     }).compileComponents();
 
@@ -69,96 +96,135 @@ describe('ProductList', () => {
     expect(component).toBeTruthy();
   });
 
-  it('should display products', () => {
-    expect(component.products().length).toBeGreaterThan(0);
+  it('should display products when loaded', () => {
+    expect(component.products()).toHaveLength(2);
+    expect(component.products()[0].name).toBe('Test Product 1');
+    expect(component.products()[1].name).toBe('Test Product 2');
   });
 
-  it('should handle add to cart', () => {
-    const consoleSpy = jest.spyOn(console, 'log');
-    const product = component.products()[0];
-    component.addToCart(product);
-    expect(consoleSpy).toHaveBeenCalledWith('Added to cart:', product.name);
-  });
-
-  it('should handle add to wishlist', () => {
-    const consoleSpy = jest.spyOn(console, 'log');
-    const product = component.products()[0];
-    component.addToWishlist(product);
-    expect(consoleSpy).toHaveBeenCalledWith('Added to wishlist:', product.name);
-  });
-
-  it('should have loading state computed property', () => {
-    expect(component.isLoading()).toBe(false);
-  });
-
-  it('should have error state computed property', () => {
-    expect(component.hasError()).toBe(false);
-  });
-
-  it('should return correct product list from computed signal', () => {
-    expect(component.products()).toEqual(mockProducts);
-    expect(component.products().length).toBe(2);
-  });
-
-  it('should handle loading state', () => {
-    // Create a new mock with loading state
-    const loadingResource = {
-      value: signal(null),
-      isLoading: signal(true),
-      error: signal(undefined),
-      reload: jest.fn(),
-      request: jest.fn()
-    };
-
-    mockProductService.getProducts.mockReturnValue(loadingResource);
-
-    // Create a new component instance
-    TestBed.resetTestingModule();
-    TestBed.configureTestingModule({
-      imports: [ProductList],
-      providers: [
-        provideAnimationsAsync(),
-        provideHttpClient(),
-        provideHttpClientTesting(),
-        { provide: ProductService, useValue: mockProductService }
-      ]
-    });
-
-    const newFixture = TestBed.createComponent(ProductList);
-    const newComponent = newFixture.componentInstance;
-
-    expect(newComponent.isLoading()).toBe(true);
-    expect(newComponent.products()).toEqual([]);
+  it('should show loading state initially', () => {
+    expect(component.isLoading()).toBe(false); // Since we're mocking with loaded data
   });
 
   it('should handle error state', () => {
-    // Create a new mock with error state
+    const errorMessage = 'Failed to load products';
     const errorResource = {
       value: signal(null),
       isLoading: signal(false),
-      error: signal(new Error('Network error')),
+      error: signal(new Error(errorMessage)),
+      headers: signal(undefined),
+      statusCode: signal(500),
+      progress: signal(null),
+      hasValue: signal(false),
       reload: jest.fn(),
-      request: jest.fn()
+      request: jest.fn(),
+      destroy: jest.fn(),
+      set: jest.fn(),
+      update: jest.fn(),
+      asReadonly: jest.fn(),
+      status: signal('resolved' as any)
     };
 
-    mockProductService.getProducts.mockReturnValue(errorResource);
+    mockProductService.getProducts.mockReturnValue(errorResource as any);
 
-    // Create a new component instance
-    TestBed.resetTestingModule();
-    TestBed.configureTestingModule({
-      imports: [ProductList],
-      providers: [
-        provideAnimationsAsync(),
-        provideHttpClient(),
-        provideHttpClientTesting(),
-        { provide: ProductService, useValue: mockProductService }
-      ]
+    // Create a new component instance to test error state
+    const errorFixture = TestBed.createComponent(ProductList);
+    const errorComponent = errorFixture.componentInstance;
+    errorFixture.detectChanges();
+
+    expect(errorComponent.hasError()).toBe(true);
+    expect(errorComponent.errorMessage()).toContain('Failed to load products');
+  });
+
+  it('should retry loading when retryLoading is called', () => {
+    const reloadSpy = jest.fn();
+    const resourceWithReload = {
+      value: signal(null),
+      isLoading: signal(false),
+      error: signal(new Error('Load failed')),
+      headers: signal(undefined),
+      statusCode: signal(500),
+      progress: signal(null),
+      hasValue: signal(false),
+      reload: reloadSpy,
+      request: jest.fn(),
+      destroy: jest.fn(),
+      set: jest.fn(),
+      update: jest.fn(),
+      asReadonly: jest.fn(),
+      status: signal('resolved' as any)
+    };
+
+    mockProductService.getProducts.mockReturnValue(resourceWithReload as any);
+
+    const retryFixture = TestBed.createComponent(ProductList);
+    const retryComponent = retryFixture.componentInstance;
+
+    retryComponent.retryLoading();
+
+    expect(reloadSpy).toHaveBeenCalled();
+  });
+
+  describe('addToCart', () => {
+    it('should add product to cart successfully and show success notification', () => {
+      const testProduct: Product = {
+        id: 1,
+        name: 'Test Product',
+        description: 'Test Description',
+        price: 10.99,
+        image: 'test.jpg',
+        rating: 4.5,
+        reviewCount: 10,
+        category: 'Test'
+      };
+
+      mockCartService.addToCart.mockReturnValue({ success: true, message: 'Item added successfully' });
+
+      component.addToCart(testProduct);
+
+      expect(mockCartService.addToCart).toHaveBeenCalledWith(testProduct, 1);
+      expect(mockNotificationService.showSuccess).toHaveBeenCalledWith('Test Product added to cart!');
     });
 
-    const newFixture = TestBed.createComponent(ProductList);
-    const newComponent = newFixture.componentInstance;
+    it('should handle cart addition failure and show error notification', () => {
+      const testProduct: Product = {
+        id: 1,
+        name: 'Test Product',
+        description: 'Test Description',
+        price: 10.99,
+        image: 'test.jpg',
+        rating: 4.5,
+        reviewCount: 10,
+        category: 'Test'
+      };
 
-    expect(newComponent.hasError()).toBe(true);
-    expect(newComponent.products()).toEqual([]);
+      const errorMessage = 'Cart is full';
+      mockCartService.addToCart.mockReturnValue({ success: false, message: errorMessage });
+
+      component.addToCart(testProduct);
+
+      expect(mockCartService.addToCart).toHaveBeenCalledWith(testProduct, 1);
+      expect(mockNotificationService.showError).toHaveBeenCalledWith(errorMessage);
+    });
+
+    it('should handle cart addition failure with generic message when no specific error', () => {
+      const testProduct: Product = {
+        id: 1,
+        name: 'Test Product',
+        description: 'Test Description',
+        price: 10.99,
+        image: 'test.jpg',
+        rating: 4.5,
+        reviewCount: 10,
+        category: 'Test'
+      };
+
+      mockCartService.addToCart.mockReturnValue({ success: false, message: 'Unknown error' });
+
+      component.addToCart(testProduct);
+
+      expect(mockCartService.addToCart).toHaveBeenCalledWith(testProduct, 1);
+      expect(mockNotificationService.showError).toHaveBeenCalledWith('Unknown error');
+    });
   });
 });

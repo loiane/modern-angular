@@ -29,20 +29,45 @@
   }
 }
 
-.loading-container, .error-container {
+.loading-container, .error-container, .empty-container {
   text-align: center;
   padding: 48px 24px;
   margin-top: 24px;
-}
 
-.loading-container p {
-  font-size: 1.1rem;
-  color: #666;
-  margin: 0;
-}
+  mat-spinner {
+    margin: 0 auto 16px auto;
+  }
 
-.error-container p {
-  font-size: 1.1rem;
-  color: #d32f2f;
-  margin: 0;
+  .error-icon, .empty-icon {
+    font-size: 4rem;
+    width: 4rem;
+    height: 4rem;
+    color: #666;
+    margin-bottom: 16px;
+  }
+
+  .error-icon {
+    color: #d32f2f;
+  }
+
+  h3 {
+    margin: 0 0 8px 0;
+    color: #333;
+    font-weight: 500;
+  }
+
+  p {
+    font-size: 1rem;
+    color: #666;
+    margin: 0 0 24px 0;
+    line-height: 1.5;
+  }
+
+  button {
+    min-width: 120px;
+
+    mat-icon {
+      margin-right: 8px;
+    }
+  }
 }

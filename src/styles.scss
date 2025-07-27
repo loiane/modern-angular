@@ -14,3 +14,19 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
     outlined-container-color: white
   ));
 }
+
+// Custom snackbar styles for notifications
+.success-snackbar {
+  --mdc-snackbar-container-color: #4caf50;
+  --mdc-snackbar-supporting-text-color: white;
+}
+
+.error-snackbar {
+  --mdc-snackbar-container-color: #f44336;
+  --mdc-snackbar-supporting-text-color: white;
+}
+
+.info-snackbar {
+  --mdc-snackbar-container-color: #2196f3;
+  --mdc-snackbar-supporting-text-color: white;
+}

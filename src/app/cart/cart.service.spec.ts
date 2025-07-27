@@ -29,24 +29,189 @@ describe('CartService', () => {
     expect(service.items()).toEqual([]);
     expect(service.totalItems()).toBe(0);
     expect(service.subtotal()).toBe(0);
+    expect(service.isEmpty()).toBe(true);
   });
 
-  it('should add product to cart', () => {
-    service.addToCart(mockProduct, 2);
+  describe('addToCart', () => {
+    it('should add product to cart successfully', () => {
+      const result = service.addToCart(mockProduct, 2);
 
-    expect(service.items().length).toBe(1);
-    expect(service.items()[0].product.id).toBe(1);
-    expect(service.items()[0].quantity).toBe(2);
-    expect(service.totalItems()).toBe(2);
+      expect(result.success).toBe(true);
+      expect(result.message).toBe('Item added to cart successfully');
+      expect(service.items().length).toBe(1);
+      expect(service.items()[0].product.id).toBe(1);
+      expect(service.items()[0].quantity).toBe(2);
+      expect(service.totalItems()).toBe(2);
+      expect(service.isEmpty()).toBe(false);
+    });
+
+    it('should update quantity of existing product', () => {
+      service.addToCart(mockProduct, 1);
+      const result = service.addToCart(mockProduct, 2);
+
+      expect(result.success).toBe(true);
+      expect(service.items().length).toBe(1);
+      expect(service.items()[0].quantity).toBe(3);
+      expect(service.totalItems()).toBe(3);
+    });
+
+    it('should reject invalid product', () => {
+      const result = service.addToCart(null as any, 1);
+
+      expect(result.success).toBe(false);
+      expect(result.message).toBe('Invalid product');
+      expect(service.items().length).toBe(0);
+    });
+
+    it('should reject product without id', () => {
+      const invalidProduct = { ...mockProduct, id: undefined as any };
+      const result = service.addToCart(invalidProduct, 1);
+
+      expect(result.success).toBe(false);
+      expect(result.message).toBe('Invalid product');
+    });
+
+    it('should reject zero quantity', () => {
+      const result = service.addToCart(mockProduct, 0);
+
+      expect(result.success).toBe(false);
+      expect(result.message).toBe('Quantity must be greater than 0');
+    });
+
+    it('should reject negative quantity', () => {
+      const result = service.addToCart(mockProduct, -1);
+
+      expect(result.success).toBe(false);
+      expect(result.message).toBe('Quantity must be greater than 0');
+    });
+
+    it('should reject quantity exceeding maximum', () => {
+      const result = service.addToCart(mockProduct, 100);
+
+      expect(result.success).toBe(false);
+      expect(result.message).toBe('Cannot add more than 99 items');
+    });
+
+    it('should reject adding to existing item if total exceeds maximum', () => {
+      service.addToCart(mockProduct, 95);
+      const result = service.addToCart(mockProduct, 10);
+
+      expect(result.success).toBe(false);
+      expect(result.message).toBe('Cannot add more than 99 items of the same product');
+    });
+
+    it('should reject when cart is full (50 items)', () => {
+      // Add 50 different products
+      for (let i = 1; i <= 50; i++) {
+        const product = { ...mockProduct, id: i };
+        service.addToCart(product, 1);
+      }
+
+      const newProduct = { ...mockProduct, id: 51 };
+      const result = service.addToCart(newProduct, 1);
+
+      expect(result.success).toBe(false);
+      expect(result.message).toBe('Cart is full. Remove items to add new ones.');
+    });
   });
 
-  it('should update quantity of existing product', () => {
-    service.addToCart(mockProduct, 1);
-    service.addToCart(mockProduct, 2);
+  describe('removeFromCart', () => {
+    beforeEach(() => {
+      service.addToCart(mockProduct, 2);
+    });
 
-    expect(service.items().length).toBe(1);
-    expect(service.items()[0].quantity).toBe(3);
-    expect(service.totalItems()).toBe(3);
+    it('should remove item from cart successfully', () => {
+      const result = service.removeFromCart(1);
+
+      expect(result.success).toBe(true);
+      expect(result.message).toBe('Item removed from cart');
+      expect(service.items().length).toBe(0);
+      expect(service.isEmpty()).toBe(true);
+    });
+
+    it('should handle removing non-existent item', () => {
+      const result = service.removeFromCart(999);
+
+      expect(result.success).toBe(false);
+      expect(result.message).toBe('Item not found in cart');
+      expect(service.items().length).toBe(1);
+    });
+
+    it('should reject invalid product ID', () => {
+      const result = service.removeFromCart(null as any);
+
+      expect(result.success).toBe(false);
+      expect(result.message).toBe('Invalid product ID');
+    });
+  });
+
+  describe('updateQuantity', () => {
+    beforeEach(() => {
+      service.addToCart(mockProduct, 5);
+    });
+
+    it('should update quantity successfully', () => {
+      const result = service.updateQuantity(1, 3);
+
+      expect(result.success).toBe(true);
+      expect(result.message).toBe('Quantity updated successfully');
+      expect(service.items()[0].quantity).toBe(3);
+      expect(service.totalItems()).toBe(3);
+    });
+
+    it('should remove item when quantity is 0', () => {
+      const result = service.updateQuantity(1, 0);
+
+      expect(result.success).toBe(true);
+      expect(result.message).toBe('Item removed from cart');
+      expect(service.items().length).toBe(0);
+    });
+
+    it('should remove item when quantity is negative', () => {
+      const result = service.updateQuantity(1, -1);
+
+      expect(result.success).toBe(true);
+      expect(result.message).toBe('Item removed from cart');
+      expect(service.items().length).toBe(0);
+    });
+
+    it('should reject quantity exceeding maximum', () => {
+      const result = service.updateQuantity(1, 100);
+
+      expect(result.success).toBe(false);
+      expect(result.message).toBe('Quantity cannot exceed 99');
+      expect(service.items()[0].quantity).toBe(5); // Should remain unchanged
+    });
+
+    it('should handle updating non-existent item', () => {
+      const result = service.updateQuantity(999, 3);
+
+      expect(result.success).toBe(false);
+      expect(result.message).toBe('Item not found in cart');
+    });
+
+    it('should reject invalid product ID', () => {
+      const result = service.updateQuantity(null as any, 3);
+
+      expect(result.success).toBe(false);
+      expect(result.message).toBe('Invalid product ID');
+    });
+  });
+
+  describe('utility methods', () => {
+    beforeEach(() => {
+      service.addToCart(mockProduct, 3);
+    });
+
+    it('should return correct item quantity', () => {
+      expect(service.getItemQuantity(1)).toBe(3);
+      expect(service.getItemQuantity(999)).toBe(0);
+    });
+
+    it('should check if item is in cart', () => {
+      expect(service.isInCart(1)).toBe(true);
+      expect(service.isInCart(999)).toBe(false);
+    });
   });
 
   it('should calculate correct subtotal', () => {
