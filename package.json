@@ -28,7 +28,7 @@
   "devDependencies": {
     "@angular/build": "^20.1.4",
     "@angular/cli": "^20.1.4",
-    "@angular/compiler-cli": "^20.1.4",
+    "@angular/compiler-cli": "^20.1.6",
     "@angular/platform-browser-dynamic": "^20.1.4",
     "@types/jest": "^30.0.0",
     "jest": "^30.0.5",
