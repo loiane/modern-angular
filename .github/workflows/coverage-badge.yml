@@ -35,6 +35,9 @@ jobs:
           if [ -f coverage/lcov.info ]; then
             echo "First 40 lines of lcov.info:";
             head -n 40 coverage/lcov.info;
+            echo "File size:"; wc -c coverage/lcov.info;
+            echo "Show first non-empty character codes:";
+            awk 'NF { for (i=1;i<=length($0)&&i<=5;i++){printf "%s ",substr($0,i,1)}; print ""; exit }' coverage/lcov.info;
           else
             echo "coverage/lcov.info missing"; ls -R . | head -n 100;
           fi
@@ -45,6 +48,24 @@ jobs:
           badge: true
           format: 'markdown'
           output: 'both'
+      - name: Fallback summary (json-summary)
+        if: failure()
+        run: |
+          if [ -f coverage/coverage-summary.json ]; then
+            echo "Using json-summary fallback";
+            LINES=$(jq '.total.lines.pct' coverage/coverage-summary.json);
+            FUNCTIONS=$(jq '.total.functions.pct' coverage/coverage-summary.json);
+            BRANCHES=$(jq '.total.branches.pct' coverage/coverage-summary.json);
+            STATEMENTS=$(jq '.total.statements.pct' coverage/coverage-summary.json);
+            echo "# Code Coverage Summary (Fallback)" > code-coverage-results.md
+            echo "Lines: ${LINES}%" >> code-coverage-results.md
+            echo "Statements: ${STATEMENTS}%" >> code-coverage-results.md
+            echo "Functions: ${FUNCTIONS}%" >> code-coverage-results.md
+            echo "Branches: ${BRANCHES}%" >> code-coverage-results.md
+            node -e "const fs=require('fs');const pct=parseFloat('${LINES}');function c(p){return p>=90?'brightgreen':p>=80?'green':p>=70?'yellow':p>=60?'orange':'red'};fs.writeFileSync('code-coverage-badge.svg', '<svg xmlns=\\'http://www.w3.org/2000/svg\\' width=\\'110\\' height=\\'20\\'><rect rx=\\'3\\' width=\\'110\\' height=\\'20\\' fill=\\'#555\\'/><rect rx=\\'3\\' x=\\'62\\' width=\\'48\\' height=\\'20\\' fill=\\'#'+c(pct)+'\\'/><g fill=\\'#fff\\' text-anchor=\\'middle\\' font-family=\\'Verdana\\' font-size=\\'11\\'><text x=\\'31\\' y=\\'14\\'>coverage</text><text x=\\'85\\' y=\\'14\\'>'+pct+'%</text></g></svg>');" || true
+          else
+            echo "json-summary fallback not available"; exit 1;
+          fi
 
       - name: Update README with coverage
         if: github.ref == 'refs/heads/main'
