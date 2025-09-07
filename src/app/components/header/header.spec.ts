@@ -48,4 +48,17 @@ describe('Header', () => {
     expect(component.appTitle).toBeDefined();
     expect(component.appTitle()).toBe('Test App');
   });
+
+  it('should have accessible aria-label on cart button', () => {
+    const compiled = fixture.nativeElement as HTMLElement;
+    const cartButton = compiled.querySelector('button[routerLink="/cart"]');
+    expect(cartButton?.getAttribute('aria-label')).toMatch(/Cart with 0 items?\. Open cart/);
+  });
+
+  it('should include live region for cart updates', () => {
+    const compiled = fixture.nativeElement as HTMLElement;
+    const liveRegion = compiled.querySelector('span.sr-only[aria-live="polite"]');
+    expect(liveRegion).toBeTruthy();
+    expect(liveRegion?.textContent?.trim()).toBe('Cart is empty');
+  });
 });

@@ -1,15 +1,20 @@
 <mat-toolbar class="main-header">
   <button matButton routerLink="/">
-    <mat-icon>store</mat-icon>
+    <mat-icon aria-label="Home">store</mat-icon>
   </button>
   <div class="branding">{{ appTitle() }}</div>
   <span class="example-spacer"></span>
   <button matButton routerLink="/products">
     Products
   </button>
-  <button matButton routerLink="/cart">
-    <mat-icon [matBadge]="cartService.totalItems()"
-              [matBadgeHidden]="cartService.totalItems() === 0"
-              >shopping_cart</mat-icon>
+  <button matButton routerLink="/cart"
+          [matBadge]="cartService.totalItems()"
+          [matBadgeHidden]="cartService.totalItems() === 0"
+          matBadgeDescription="Number of items in cart"
+          [attr.aria-label]="'Cart with ' + cartService.totalItems() + ' item' + (cartService.totalItems() === 1 ? '' : 's') + '. Open cart'">
+    <mat-icon aria-hidden="true">shopping_cart</mat-icon>
   </button>
+  <span class="sr-only" aria-live="polite" aria-atomic="true">
+    {{ cartService.totalItems() === 0 ? 'Cart is empty' : (cartService.totalItems() + ' item' + (cartService.totalItems() === 1 ? '' : 's') + ' in cart') }}
+  </span>
 </mat-toolbar>
