@@ -1,4 +1,5 @@
 import { Component, inject } from '@angular/core';
+import { Router } from '@angular/router';
 import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDividerModule } from '@angular/material/divider';
@@ -20,6 +21,7 @@ import { NotificationService } from '../../shared/services/notification.service'
 export class CartTotalSummaryComponent {
   private readonly cartService = inject(CartService);
   private readonly notificationService = inject(NotificationService);
+  private readonly router = inject(Router);
 
   // Expose cart service for template
   get cart() {
@@ -32,8 +34,8 @@ export class CartTotalSummaryComponent {
       return;
     }
 
-    // Placeholder for checkout logic
-    this.notificationService.showInfo('Checkout functionality will be implemented soon!');
+    // Navigate to checkout page
+    this.router.navigate(['/checkout']);
   }
 
   clearCart(): void {

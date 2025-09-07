@@ -1,5 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { signal } from '@angular/core';
+import { Router } from '@angular/router';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 
 import { CartTotalSummaryComponent } from './cart-total-summary';
@@ -12,6 +13,7 @@ describe('CartTotalSummaryComponent', () => {
   let fixture: ComponentFixture<CartTotalSummaryComponent>;
   let mockCartService: jest.Mocked<CartService>;
   let mockNotificationService: jest.Mocked<NotificationService>;
+  let mockRouter: jest.Mocked<Router>;
 
   beforeEach(async () => {
     const mockCartItems: CartItem[] = [
@@ -51,11 +53,16 @@ describe('CartTotalSummaryComponent', () => {
       showInfo: jest.fn()
     } as any;
 
+    mockRouter = {
+      navigate: jest.fn()
+    } as any;
+
     await TestBed.configureTestingModule({
       imports: [CartTotalSummaryComponent, NoopAnimationsModule],
       providers: [
         { provide: CartService, useValue: mockCartService },
-        { provide: NotificationService, useValue: mockNotificationService }
+        { provide: NotificationService, useValue: mockNotificationService },
+        { provide: Router, useValue: mockRouter }
       ]
     }).compileComponents();
 
@@ -73,12 +80,12 @@ describe('CartTotalSummaryComponent', () => {
   });
 
   describe('proceedToCheckout', () => {
-    it('should show info message when proceeding to checkout with items', () => {
+    it('should navigate to checkout when cart has items', () => {
       mockCartService.isEmpty.mockReturnValue(false);
 
       component.proceedToCheckout();
 
-      expect(mockNotificationService.showInfo).toHaveBeenCalledWith('Checkout functionality will be implemented soon!');
+      expect(mockRouter.navigate).toHaveBeenCalledWith(['/checkout']);
     });
 
     it('should show error message when trying to checkout with empty cart', () => {
@@ -87,7 +94,7 @@ describe('CartTotalSummaryComponent', () => {
       component.proceedToCheckout();
 
       expect(mockNotificationService.showError).toHaveBeenCalledWith('Your cart is empty. Add some items before checkout.');
-      expect(mockNotificationService.showInfo).not.toHaveBeenCalled();
+      expect(mockRouter.navigate).not.toHaveBeenCalled();
     });
   });
 

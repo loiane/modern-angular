@@ -1,0 +1,314 @@
+<div class="checkout-container">
+  @if (!orderConfirmed()) {
+    <mat-card class="checkout-card">
+      <mat-card-header>
+        <mat-card-title>
+          <mat-icon>shopping_cart_checkout</mat-icon>
+          Checkout
+        </mat-card-title>
+        <mat-card-subtitle>Complete your order</mat-card-subtitle>
+      </mat-card-header>
+
+      <mat-card-content>
+        <div class="checkout-layout">
+          <!-- Order Summary Section -->
+          <div class="order-summary">
+            <mat-card appearance="outlined">
+              <mat-card-header>
+                <mat-card-title>Order Summary</mat-card-title>
+              </mat-card-header>
+              <mat-card-content>
+                <div class="order-items">
+                  @for (item of cart.items(); track item.product.id) {
+                    <div class="order-item">
+                      <div class="item-info">
+                        <span class="item-name">{{ item.product.name }}</span>
+                        <span class="item-quantity">× {{ item.quantity }}</span>
+                      </div>
+                      <span class="item-price">{{ (item.product.price * item.quantity) | currency }}</span>
+                    </div>
+                  }
+                </div>
+
+                <mat-divider></mat-divider>
+
+                <div class="order-totals">
+                  <div class="total-row">
+                    <span>Subtotal</span>
+                    <span>{{ cart.subtotal() | currency }}</span>
+                  </div>
+                  <div class="total-row">
+                    <span>Tax</span>
+                    <span>{{ cart.tax() | currency }}</span>
+                  </div>
+                  <div class="total-row total-final">
+                    <span><strong>Total</strong></span>
+                    <span><strong>{{ cart.total() | currency }}</strong></span>
+                  </div>
+                </div>
+              </mat-card-content>
+            </mat-card>
+          </div>
+
+          <!-- Checkout Form Section -->
+          <div class="checkout-form">
+            <form [formGroup]="checkoutForm" (ngSubmit)="onSubmit()">
+              <mat-stepper linear #stepper>
+                <!-- Customer Information Step -->
+                <mat-step formGroupName="customerInfo" [stepControl]="customerInfo">
+                  <ng-template matStepLabel>Customer Information</ng-template>
+
+                  <div class="form-section">
+                    <div class="form-row">
+                      <mat-form-field appearance="outline" class="form-field">
+                        <mat-label>First Name</mat-label>
+                        <input matInput formControlName="firstName" required>
+                        @if (getErrorMessage('firstName', 'customerInfo')) {
+                          <mat-error>{{ getErrorMessage('firstName', 'customerInfo') }}</mat-error>
+                        }
+                      </mat-form-field>
+
+                      <mat-form-field appearance="outline" class="form-field">
+                        <mat-label>Last Name</mat-label>
+                        <input matInput formControlName="lastName" required>
+                        @if (getErrorMessage('lastName', 'customerInfo')) {
+                          <mat-error>{{ getErrorMessage('lastName', 'customerInfo') }}</mat-error>
+                        }
+                      </mat-form-field>
+                    </div>
+
+                    <div class="form-row">
+                      <mat-form-field appearance="outline" class="form-field-full">
+                        <mat-label>Email</mat-label>
+                        <input matInput type="email" formControlName="email" required>
+                        <mat-icon matSuffix>email</mat-icon>
+                        @if (getErrorMessage('email', 'customerInfo')) {
+                          <mat-error>{{ getErrorMessage('email', 'customerInfo') }}</mat-error>
+                        }
+                      </mat-form-field>
+                    </div>
+
+                    <div class="form-row">
+                      <mat-form-field appearance="outline" class="form-field-full">
+                        <mat-label>Phone Number</mat-label>
+                        <input matInput type="tel" formControlName="phone" required>
+                        <mat-icon matSuffix>phone</mat-icon>
+                        @if (getErrorMessage('phone', 'customerInfo')) {
+                          <mat-error>{{ getErrorMessage('phone', 'customerInfo') }}</mat-error>
+                        }
+                      </mat-form-field>
+                    </div>
+                  </div>
+
+                  <div class="step-actions">
+                    <button mat-raised-button matStepperNext type="button">Next</button>
+                  </div>
+                </mat-step>
+
+                <!-- Shipping Address Step -->
+                <mat-step formGroupName="shippingAddress" [stepControl]="shippingAddress">
+                  <ng-template matStepLabel>Shipping Address</ng-template>
+
+                  <div class="form-section">
+                    <div class="form-row">
+                      <mat-form-field appearance="outline" class="form-field-full">
+                        <mat-label>Street Address</mat-label>
+                        <input matInput formControlName="street" required>
+                        <mat-icon matSuffix>home</mat-icon>
+                        @if (getErrorMessage('street', 'shippingAddress')) {
+                          <mat-error>{{ getErrorMessage('street', 'shippingAddress') }}</mat-error>
+                        }
+                      </mat-form-field>
+                    </div>
+
+                    <div class="form-row">
+                      <mat-form-field appearance="outline" class="form-field">
+                        <mat-label>City</mat-label>
+                        <input matInput formControlName="city" required>
+                        @if (getErrorMessage('city', 'shippingAddress')) {
+                          <mat-error>{{ getErrorMessage('city', 'shippingAddress') }}</mat-error>
+                        }
+                      </mat-form-field>
+
+                      <mat-form-field appearance="outline" class="form-field">
+                        <mat-label>State</mat-label>
+                        <mat-select formControlName="state" required>
+                          @for (state of states; track state) {
+                            <mat-option [value]="state">{{ state }}</mat-option>
+                          }
+                        </mat-select>
+                        @if (getErrorMessage('state', 'shippingAddress')) {
+                          <mat-error>{{ getErrorMessage('state', 'shippingAddress') }}</mat-error>
+                        }
+                      </mat-form-field>
+                    </div>
+
+                    <div class="form-row">
+                      <mat-form-field appearance="outline" class="form-field">
+                        <mat-label>ZIP Code</mat-label>
+                        <input matInput formControlName="zipCode" required>
+                        @if (getErrorMessage('zipCode', 'shippingAddress')) {
+                          <mat-error>{{ getErrorMessage('zipCode', 'shippingAddress') }}</mat-error>
+                        }
+                      </mat-form-field>
+
+                      <mat-form-field appearance="outline" class="form-field">
+                        <mat-label>Country</mat-label>
+                        <mat-select formControlName="country" required>
+                          @for (country of countries; track country.code) {
+                            <mat-option [value]="country.code">{{ country.name }}</mat-option>
+                          }
+                        </mat-select>
+                        @if (getErrorMessage('country', 'shippingAddress')) {
+                          <mat-error>{{ getErrorMessage('country', 'shippingAddress') }}</mat-error>
+                        }
+                      </mat-form-field>
+                    </div>
+                  </div>
+
+                  <div class="step-actions">
+                    <button mat-button matStepperPrevious type="button">Back</button>
+                    <button mat-raised-button matStepperNext type="button">Next</button>
+                  </div>
+                </mat-step>
+
+                <!-- Payment Information Step -->
+                <mat-step formGroupName="paymentInfo" [stepControl]="paymentInfo">
+                  <ng-template matStepLabel>Payment Information</ng-template>
+
+                  <div class="form-section">
+                    <div class="form-row">
+                      <mat-form-field appearance="outline" class="form-field-full">
+                        <mat-label>Card Number</mat-label>
+                        <input
+                          matInput
+                          formControlName="cardNumber"
+                          placeholder="1234 5678 9012 3456"
+                          maxlength="19"
+                          (input)="onCardNumberChange($event)"
+                          required>
+                        <mat-icon matSuffix>credit_card</mat-icon>
+                        @if (getErrorMessage('cardNumber', 'paymentInfo')) {
+                          <mat-error>{{ getErrorMessage('cardNumber', 'paymentInfo') }}</mat-error>
+                        }
+                      </mat-form-field>
+                    </div>
+
+                    <div class="form-row">
+                      <mat-form-field appearance="outline" class="form-field-full">
+                        <mat-label>Cardholder Name</mat-label>
+                        <input matInput formControlName="cardName" required>
+                        <mat-icon matSuffix>person</mat-icon>
+                        @if (getErrorMessage('cardName', 'paymentInfo')) {
+                          <mat-error>{{ getErrorMessage('cardName', 'paymentInfo') }}</mat-error>
+                        }
+                      </mat-form-field>
+                    </div>
+
+                    <div class="form-row">
+                      <mat-form-field appearance="outline" class="form-field">
+                        <mat-label>Expiry Month</mat-label>
+                        <mat-select formControlName="expiryMonth" required>
+                          @for (month of months; track month.value) {
+                            <mat-option [value]="month.value">{{ month.name }}</mat-option>
+                          }
+                        </mat-select>
+                        @if (getErrorMessage('expiryMonth', 'paymentInfo')) {
+                          <mat-error>{{ getErrorMessage('expiryMonth', 'paymentInfo') }}</mat-error>
+                        }
+                      </mat-form-field>
+
+                      <mat-form-field appearance="outline" class="form-field">
+                        <mat-label>Expiry Year</mat-label>
+                        <mat-select formControlName="expiryYear" required>
+                          @for (year of years; track year.value) {
+                            <mat-option [value]="year.value">{{ year.name }}</mat-option>
+                          }
+                        </mat-select>
+                        @if (getErrorMessage('expiryYear', 'paymentInfo')) {
+                          <mat-error>{{ getErrorMessage('expiryYear', 'paymentInfo') }}</mat-error>
+                        }
+                      </mat-form-field>
+
+                      <mat-form-field appearance="outline" class="form-field-small">
+                        <mat-label>CVV</mat-label>
+                        <input matInput formControlName="cvv" maxlength="4" required>
+                        <mat-icon matSuffix>lock</mat-icon>
+                        @if (getErrorMessage('cvv', 'paymentInfo')) {
+                          <mat-error>{{ getErrorMessage('cvv', 'paymentInfo') }}</mat-error>
+                        }
+                      </mat-form-field>
+                    </div>
+                  </div>
+
+                  <div class="step-actions">
+                    <button mat-button matStepperPrevious type="button">Back</button>
+                    <button
+                      mat-raised-button
+                      color="primary"
+                      type="submit"
+                      [disabled]="checkoutForm.invalid || isSubmitting()">>
+                      @if (isSubmitting()) {
+                        <mat-spinner diameter="20"></mat-spinner>
+                        Processing...
+                      } @else {
+                        <mat-icon>payment</mat-icon>
+                        Place Order ({{ cart.total() | currency }})
+                      }
+                    </button>
+                  </div>
+                </mat-step>
+              </mat-stepper>
+            </form>
+          </div>
+        </div>
+      </mat-card-content>
+
+      <mat-card-actions>
+        <button mat-button (click)="goBackToCart()">
+          <mat-icon>arrow_back</mat-icon>
+          Back to Cart
+        </button>
+        <button mat-button (click)="continueShopping()">
+          <mat-icon>shopping_bag</mat-icon>
+          Continue Shopping
+        </button>
+      </mat-card-actions>
+    </mat-card>
+  } @else {
+    <!-- Order Confirmation -->
+    <mat-card class="confirmation-card">
+      <mat-card-header>
+        <mat-card-title>
+          <mat-icon color="primary">check_circle</mat-icon>
+          Order Confirmed!
+        </mat-card-title>
+        <mat-card-subtitle>Thank you for your purchase</mat-card-subtitle>
+      </mat-card-header>
+
+      <mat-card-content>
+        <div class="confirmation-content">
+          <p>Your order has been successfully placed and is being processed.</p>
+          <p>You will receive a confirmation email shortly with your order details and tracking information.</p>
+
+          <div class="order-details">
+            <h3>What's next?</h3>
+            <ul>
+              <li>You'll receive an email confirmation within the next few minutes</li>
+              <li>Your order will be processed within 1-2 business days</li>
+              <li>You'll receive tracking information once your order ships</li>
+              <li>Estimated delivery: 3-5 business days</li>
+            </ul>
+          </div>
+        </div>
+      </mat-card-content>
+
+      <mat-card-actions>
+        <button mat-raised-button color="primary" (click)="continueShopping()">
+          <mat-icon>shopping_bag</mat-icon>
+          Continue Shopping
+        </button>
+      </mat-card-actions>
+    </mat-card>
+  }
+</div>
