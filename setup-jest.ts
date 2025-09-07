@@ -1,6 +1,7 @@
-import { setupZoneTestEnv } from 'jest-preset-angular/setup-env/zone';
+// Zoneless Angular test environment
+import { setupZonelessTestEnv } from 'jest-preset-angular/setup-env/zoneless';
 
-setupZoneTestEnv();
+setupZonelessTestEnv();
 
 // Optional: Global test setup
 Object.defineProperty(window, 'CSS', {value: null});

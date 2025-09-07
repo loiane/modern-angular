@@ -61,6 +61,23 @@ Current test coverage includes:
 
 ## 🔧 Technical Details
 
+### Zoneless Change Detection (Angular v20)
+
+This project runs Angular in **zoneless mode** using the built-in `provideZonelessChangeDetection()` API.
+
+Benefits:
+- ⚡ Fewer unnecessary change detection cycles
+- 🧪 Faster and more predictable unit tests (no async Zone stabilization overhead)
+- 🧼 Smaller runtime surface (Zone.js removed)
+
+Implementation details:
+- `provideZonelessChangeDetection()` is configured in `app.config.ts`.
+- `zone.js` dependency has been removed from `package.json`.
+- Jest test environment uses `setupZonelessTestEnv()` from `jest-preset-angular` (see `setup-jest.ts`).
+
+If you need to temporarily re-enable Zone.js (e.g. for a library that still relies on it), reinstall `zone.js` and switch the test setup back to `setupZoneTestEnv()`.
+
+
 ### Project Structure
 ```
 src/
