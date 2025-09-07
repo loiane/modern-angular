@@ -1,5 +1,5 @@
 import { CommonModule, CurrencyPipe } from '@angular/common';
-import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, OnInit, signal } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
@@ -58,7 +58,7 @@ interface PaymentInfo {
   styleUrl: './checkout.scss',
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class CheckoutComponent {
+export class CheckoutComponent implements OnInit {
   private readonly fb = inject(FormBuilder);
   private readonly cartService = inject(CartService);
   private readonly notificationService = inject(NotificationService);
@@ -141,7 +141,9 @@ export class CheckoutComponent {
         cvv: ['', [Validators.required, Validators.pattern(/^\d{3,4}$/)]]
       })
     });
+  }
 
+  ngOnInit() {
     // Check if cart is empty and redirect if needed
     if (this.cartService.isEmpty()) {
       this.notificationService.showError('Your cart is empty. Add some items before checkout.');
