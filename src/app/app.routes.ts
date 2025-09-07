@@ -4,7 +4,7 @@ export const routes: Routes = [
   { path: '', redirectTo: '/products', pathMatch: 'full'  },
   {
     path: 'products',
-    loadComponent: () => import('./products/product-list/product-list').then(m => m.ProductList)
+    loadComponent: () => import('./products/products-page/products-page').then(m => m.ProductsPage)
   },
   {
     path: 'cart',

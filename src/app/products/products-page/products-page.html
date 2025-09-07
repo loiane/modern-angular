@@ -1,0 +1,14 @@
+<section class="products-page" aria-labelledby="productsHeading">
+
+  @defer (on viewport) {
+    <app-products-grid />
+  } @placeholder {
+    <app-products-skeleton />
+  } @loading {
+    <app-products-skeleton />
+  } @error {
+    <div class="error-fallback" role="alert">
+      Failed to load products. Please try again later.
+    </div>
+  }
+</section>

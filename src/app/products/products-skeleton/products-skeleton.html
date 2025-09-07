@@ -1,0 +1,13 @@
+<div class="products-skeleton">
+  <output class="skeleton-grid" aria-live="polite">
+    @for (i of [1,2,3,4,5,6]; track i) {
+      <div class="skeleton-card">
+        <div class="skeleton-image shimmer"></div>
+        <div class="skeleton-line shimmer" style="width:70%"></div>
+        <div class="skeleton-line shimmer" style="width:50%"></div>
+        <div class="skeleton-line shimmer" style="width:40%"></div>
+      </div>
+    }
+    <span class="sr-only">Loading product catalog...</span>
+  </output>
+</div>

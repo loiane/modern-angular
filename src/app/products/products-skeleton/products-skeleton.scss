@@ -1,0 +1,42 @@
+.products-skeleton {
+  padding: 16px;
+  .skeleton-grid {
+    display: grid;
+    gap: 16px;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  }
+  .skeleton-card {
+    background: var(--mat-sys-surface-container-high, #f6f6f6);
+    border-radius: 8px;
+    padding: 12px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  .skeleton-image {
+    height: 120px;
+    background: #e0e0e0;
+    border-radius: 4px;
+  }
+  .skeleton-line {
+    height: 14px;
+    background: #e0e0e0;
+    border-radius: 4px;
+  }
+  .shimmer {
+    position: relative;
+    overflow: hidden;
+  }
+  .shimmer::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    transform: translateX(-100%);
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.5), transparent);
+    animation: shimmer 1.6s infinite;
+  }
+}
+
+@keyframes shimmer {
+  100% { transform: translateX(100%); }
+}
