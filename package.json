@@ -11,6 +11,7 @@
     "test:coverage": "jest --coverage"
   },
   "private": true,
+  "license": "MIT",
   "dependencies": {
     "@angular/animations": "^20.2.4",
     "@angular/cdk": "^20.2.2",
