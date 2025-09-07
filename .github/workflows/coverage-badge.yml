@@ -28,8 +28,16 @@ jobs:
         run: npm ci
 
       - name: Run tests with coverage
-        run: npm run test:coverage -- --coverageReporters=lcov --coverageReporters=text-summary
+        run: npm run test:coverage
 
+      - name: Debug LCOV file (if present)
+        run: |
+          if [ -f coverage/lcov.info ]; then
+            echo "First 40 lines of lcov.info:";
+            head -n 40 coverage/lcov.info;
+          else
+            echo "coverage/lcov.info missing"; ls -R . | head -n 100;
+          fi
       - name: Generate coverage summary & badge
         uses: irongut/CodeCoverageSummary@v1.3.0
         with:
