@@ -7,10 +7,13 @@
 
   <div class="product-image-container">
     <img
-      [src]="product().image"
+      [ngSrc]="product().image"
       [alt]="product().name"
-      class="product-image"
-      loading="lazy">
+      width="300"
+      height="200"
+      fetchpriority="low"
+      decoding="async"
+      class="product-image" />
   </div>
 
   <mat-card-content class="product-content">

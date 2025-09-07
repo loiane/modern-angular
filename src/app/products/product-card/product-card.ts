@@ -3,7 +3,7 @@ import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatChipsModule } from '@angular/material/chips';
-import { CurrencyPipe } from '@angular/common';
+import { CurrencyPipe, NgOptimizedImage } from '@angular/common';
 import { Product } from '../product';
 
 @Component({
@@ -13,7 +13,8 @@ import { Product } from '../product';
     MatButtonModule,
     MatIconModule,
     MatChipsModule,
-    CurrencyPipe
+    CurrencyPipe,
+    NgOptimizedImage
   ],
   templateUrl: './product-card.html',
   styleUrl: './product-card.scss'

@@ -1,5 +1,5 @@
 import { Component, inject } from '@angular/core';
-import { CommonModule , CurrencyPipe } from '@angular/common';
+import { CommonModule, CurrencyPipe, NgOptimizedImage } from '@angular/common';
 import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
@@ -13,6 +13,7 @@ import { NotificationService } from '../../shared/services/notification.service'
   selector: 'app-cart-list',
   imports: [
     CommonModule,
+    NgOptimizedImage,
     MatCardModule,
     MatButtonModule,
     MatIconModule,
