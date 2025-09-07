@@ -19,7 +19,8 @@ module.exports = {
     '!src/app/app.routes.ts'
   ],
   coverageDirectory: 'coverage',
-  coverageReporters: ['html', 'text-summary', 'lcov'],
+  // Added json-summary to allow workflow script to read structured coverage metrics
+  coverageReporters: ['html', 'text-summary', 'lcov', 'json-summary'],
   moduleNameMapper: {
     '^@/(.*)$': '<rootDir>/src/$1'
   },

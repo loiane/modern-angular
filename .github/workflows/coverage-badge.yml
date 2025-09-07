@@ -1,0 +1,108 @@
+name: Test & Coverage Badge
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+  workflow_dispatch:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pull-requests: write
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Run tests with coverage
+        run: npm run test:coverage
+
+      - name: Debug LCOV file (if present)
+        run: |
+          if [ -f coverage/lcov.info ]; then
+            echo "First 40 lines of lcov.info:";
+            head -n 40 coverage/lcov.info;
+            echo "File size:"; wc -c coverage/lcov.info;
+            echo "Show first non-empty character codes:";
+            awk 'NF { for (i=1;i<=length($0)&&i<=5;i++){printf "%s ",substr($0,i,1)}; print ""; exit }' coverage/lcov.info;
+          else
+            echo "coverage/lcov.info missing"; ls -R . | head -n 100;
+          fi
+      - name: Generate coverage summary & badge (custom)
+        run: |
+          if [ ! -f coverage/coverage-summary.json ]; then echo "coverage-summary.json missing"; ls -l coverage || true; exit 1; fi
+          LINES=$(jq '.total.lines.pct' coverage/coverage-summary.json)
+          STATEMENTS=$(jq '.total.statements.pct' coverage/coverage-summary.json)
+          FUNCTIONS=$(jq '.total.functions.pct' coverage/coverage-summary.json)
+          BRANCHES=$(jq '.total.branches.pct' coverage/coverage-summary.json)
+          {
+            echo "# Code Coverage Summary"; echo;
+            echo "| Metric | % |";
+            echo "|--------|----|";
+            echo "| Lines | ${LINES}% |";
+            echo "| Statements | ${STATEMENTS}% |";
+            echo "| Functions | ${FUNCTIONS}% |";
+            echo "| Branches | ${BRANCHES}% |";
+            echo;
+          } > code-coverage-results.md
+          pct_int=$(printf '%.0f' "$LINES")
+          COLOR=red
+          if [ $pct_int -ge 90 ]; then COLOR=4c1; elif [ $pct_int -ge 80 ]; then COLOR=2c7; elif [ $pct_int -ge 70 ]; then COLOR=dfb317; elif [ $pct_int -ge 60 ]; then COLOR=fe7d37; fi
+          printf '<svg xmlns="http://www.w3.org/2000/svg" width="118" height="20" role="img" aria-label="coverage: %s%%"><linearGradient id="s" x2="0" y2="100%%"><stop offset="0" stop-color="#bbb" stop-opacity=".1"/><stop offset="1" stop-opacity=".1"/></linearGradient><rect rx="3" width="118" height="20" fill="#555"/><rect rx="3" x="62" width="56" height="20" fill="#%s"/><path fill="#%s" d="M62 0h4v20h-4z"/><rect rx="3" width="118" height="20" fill="url(#s)"/><g fill="#fff" text-anchor="middle" font-family="Verdana,Geneva,DejaVu Sans,sans-serif" font-size="11"><text x="31" y="15" fill="#010101" fill-opacity=".3">coverage</text><text x="31" y="14">coverage</text><text x="89" y="15" fill="#010101" fill-opacity=".3">%s%%</text><text x="89" y="14">%s%%</text></g></svg>' "$pct_int" "$COLOR" "$COLOR" "$pct_int" "$pct_int" > code-coverage-badge.svg
+          echo "Generated badge with ${pct_int}% coverage"
+          # Optional threshold enforcement (uncomment to enable)
+          # THRESH=80; if [ $pct_int -lt $THRESH ]; then echo "Coverage below threshold"; exit 1; fi
+
+      - name: Update README with coverage
+        if: github.ref == 'refs/heads/main'
+        run: |
+          echo "Updating README with coverage results"
+          SUMMARY_FILE=code-coverage-results.md
+          BADGE_SVG=code-coverage-badge.svg
+
+          if [ ! -f "$SUMMARY_FILE" ]; then echo "Summary file missing"; exit 1; fi
+          if [ ! -f "$BADGE_SVG" ]; then echo "Badge file missing"; exit 1; fi
+
+          # Strip the top heading from summary (first line) for cleaner embed
+          tail -n +2 "$SUMMARY_FILE" > coverage-body.md
+
+          # Replace block between markers
+          awk '1' README.md > README.tmp
+          awk 'BEGIN{p=1} /<!-- COVERAGE-START -->/{print;print "![Coverage](code-coverage-badge.svg)";print "";system("cat coverage-body.md");p=0} /<!-- COVERAGE-END -->/{p=1} p' README.tmp > README.md
+
+          rm README.tmp coverage-body.md || true
+
+          git config user.name "github-actions"
+            git config user.email "actions@users.noreply.github.com"
+            git add README.md code-coverage-badge.svg code-coverage-results.md || true
+            git commit -m "chore: update coverage badge" || echo "No changes to commit"
+            git push || true
+
+      - name: Add PR comment with coverage
+        if: github.event_name == 'pull_request'
+        uses: marocchino/sticky-pull-request-comment@v2
+        with:
+          recreate: true
+          path: code-coverage-results.md
+
+      - name: Upload coverage artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: coverage-report
+          path: |
+            coverage/lcov.info
+            code-coverage-results.md
+            code-coverage-badge.svg
