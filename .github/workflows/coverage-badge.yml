@@ -41,31 +41,30 @@ jobs:
           else
             echo "coverage/lcov.info missing"; ls -R . | head -n 100;
           fi
-      - name: Generate coverage summary & badge
-        uses: irongut/CodeCoverageSummary@v1.3.0
-        with:
-          filename: coverage/lcov.info
-          badge: true
-          format: 'markdown'
-          output: 'both'
-      - name: Fallback summary (json-summary)
-        if: failure()
+      - name: Generate coverage summary & badge (custom)
         run: |
-          if [ -f coverage/coverage-summary.json ]; then
-            echo "Using json-summary fallback";
-            LINES=$(jq '.total.lines.pct' coverage/coverage-summary.json);
-            FUNCTIONS=$(jq '.total.functions.pct' coverage/coverage-summary.json);
-            BRANCHES=$(jq '.total.branches.pct' coverage/coverage-summary.json);
-            STATEMENTS=$(jq '.total.statements.pct' coverage/coverage-summary.json);
-            echo "# Code Coverage Summary (Fallback)" > code-coverage-results.md
-            echo "Lines: ${LINES}%" >> code-coverage-results.md
-            echo "Statements: ${STATEMENTS}%" >> code-coverage-results.md
-            echo "Functions: ${FUNCTIONS}%" >> code-coverage-results.md
-            echo "Branches: ${BRANCHES}%" >> code-coverage-results.md
-            node -e "const fs=require('fs');const pct=parseFloat('${LINES}');function c(p){return p>=90?'brightgreen':p>=80?'green':p>=70?'yellow':p>=60?'orange':'red'};fs.writeFileSync('code-coverage-badge.svg', '<svg xmlns=\\'http://www.w3.org/2000/svg\\' width=\\'110\\' height=\\'20\\'><rect rx=\\'3\\' width=\\'110\\' height=\\'20\\' fill=\\'#555\\'/><rect rx=\\'3\\' x=\\'62\\' width=\\'48\\' height=\\'20\\' fill=\\'#'+c(pct)+'\\'/><g fill=\\'#fff\\' text-anchor=\\'middle\\' font-family=\\'Verdana\\' font-size=\\'11\\'><text x=\\'31\\' y=\\'14\\'>coverage</text><text x=\\'85\\' y=\\'14\\'>'+pct+'%</text></g></svg>');" || true
-          else
-            echo "json-summary fallback not available"; exit 1;
-          fi
+          if [ ! -f coverage/coverage-summary.json ]; then echo "coverage-summary.json missing"; ls -l coverage || true; exit 1; fi
+          LINES=$(jq '.total.lines.pct' coverage/coverage-summary.json)
+          STATEMENTS=$(jq '.total.statements.pct' coverage/coverage-summary.json)
+          FUNCTIONS=$(jq '.total.functions.pct' coverage/coverage-summary.json)
+          BRANCHES=$(jq '.total.branches.pct' coverage/coverage-summary.json)
+          {
+            echo "# Code Coverage Summary"; echo;
+            echo "| Metric | % |";
+            echo "|--------|----|";
+            echo "| Lines | ${LINES}% |";
+            echo "| Statements | ${STATEMENTS}% |";
+            echo "| Functions | ${FUNCTIONS}% |";
+            echo "| Branches | ${BRANCHES}% |";
+            echo;
+          } > code-coverage-results.md
+          pct_int=$(printf '%.0f' "$LINES")
+          COLOR=red
+          if [ $pct_int -ge 90 ]; then COLOR=4c1; elif [ $pct_int -ge 80 ]; then COLOR=2c7; elif [ $pct_int -ge 70 ]; then COLOR=dfb317; elif [ $pct_int -ge 60 ]; then COLOR=fe7d37; fi
+          printf '<svg xmlns="http://www.w3.org/2000/svg" width="118" height="20" role="img" aria-label="coverage: %s%%"><linearGradient id="s" x2="0" y2="100%%"><stop offset="0" stop-color="#bbb" stop-opacity=".1"/><stop offset="1" stop-opacity=".1"/></linearGradient><rect rx="3" width="118" height="20" fill="#555"/><rect rx="3" x="62" width="56" height="20" fill="#%s"/><path fill="#%s" d="M62 0h4v20h-4z"/><rect rx="3" width="118" height="20" fill="url(#s)"/><g fill="#fff" text-anchor="middle" font-family="Verdana,Geneva,DejaVu Sans,sans-serif" font-size="11"><text x="31" y="15" fill="#010101" fill-opacity=".3">coverage</text><text x="31" y="14">coverage</text><text x="89" y="15" fill="#010101" fill-opacity=".3">%s%%</text><text x="89" y="14">%s%%</text></g></svg>' "$pct_int" "$COLOR" "$COLOR" "$pct_int" "$pct_int" > code-coverage-badge.svg
+          echo "Generated badge with ${pct_int}% coverage"
+          # Optional threshold enforcement (uncomment to enable)
+          # THRESH=80; if [ $pct_int -lt $THRESH ]; then echo "Coverage below threshold"; exit 1; fi
 
       - name: Update README with coverage
         if: github.ref == 'refs/heads/main'
