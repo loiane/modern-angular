@@ -84,7 +84,7 @@ All components include comprehensive unit tests:
 - **Angular Material** for UI components
 - **Angular Signals** for reactive state management
 - **TypeScript** for type safety
-- **Jest** for unit testing
+- **Vitest** for unit testing
 - **SCSS** for styling
 
 ## Key Benefits

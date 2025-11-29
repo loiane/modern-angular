@@ -3,7 +3,7 @@
 ![Angular Build](https://github.com/loiane/angular-shop/actions/workflows/angular.yml/badge.svg?branch=main)
 ![Angular Version](https://img.shields.io/badge/Angular-v20-red)
 ![Node Version](https://img.shields.io/badge/Node.js-v22+-green)
-![Test Framework](https://img.shields.io/badge/Tests-Jest-orange)
+![Test Framework](https://img.shields.io/badge/Tests-Vitest-yellow)
 <!-- COVERAGE-START -->
 <!-- Coverage badge and summary will be inserted here by CI -->
 <!-- COVERAGE-END -->
@@ -12,13 +12,13 @@ A modern Angular sample project showcasing the latest features and best practice
 
 ## 🎯 Featured Angular Technologies
 
-- **Angular v20** (Release Candidate) - Latest Angular features
+- **Angular v21** -Latest Angular features
 - **Standalone Components** (v14+) - No NgModule dependencies
 - **Angular Signals** (v16+) - Modern reactive primitives
 - **New Control Flow** (v17+) - @if, @for, @switch syntax
 - **Modern inject()** function - Dependency injection
 - **Angular Material** - UI component library
-- **Jest Testing** - Modern testing framework
+- **Vitest Testing** - Modern and fast testing framework (v21+)
 
 ## 🛠️ Development Tools & Extensions
 
@@ -44,11 +44,10 @@ This project includes comprehensive documentation in the `/docs` folder:
 - **[Angular Signals Guide](./docs/signals.md)** - Modern reactive programming
 - **[Control Flow Syntax](./docs/control-flow.md)** - New @if, @for syntax
 - **[Cart Implementation](./docs/cart-implementation.md)** - State management patterns
-- **[Jest Migration](./docs/JEST_MIGRATION.md)** - Testing framework migration
 
 ## 🧪 Testing Strategy
 
-The project uses **Jest** instead of Karma for faster test execution:
+The project uses **Vitest** instead of Karma for faster test execution:
 
 - **Unit Tests**: Component and service testing
 - **Coverage Reports**: Available in `/coverage` directory
@@ -63,23 +62,6 @@ Current test coverage includes:
 - ✅ Application bootstrap
 
 ## 🔧 Technical Details
-
-### Zoneless Change Detection (Angular v20)
-
-This project runs Angular in **zoneless mode** using the built-in `provideZonelessChangeDetection()` API.
-
-Benefits:
-- ⚡ Fewer unnecessary change detection cycles
-- 🧪 Faster and more predictable unit tests (no async Zone stabilization overhead)
-- 🧼 Smaller runtime surface (Zone.js removed)
-
-Implementation details:
-- `provideZonelessChangeDetection()` is configured in `app.config.ts`.
-- `zone.js` dependency has been removed from `package.json`.
-- Jest test environment uses `setupZonelessTestEnv()` from `jest-preset-angular` (see `setup-jest.ts`).
-
-If you need to temporarily re-enable Zone.js (e.g. for a library that still relies on it), reinstall `zone.js` and switch the test setup back to `setupZoneTestEnv()`.
-
 
 ### Project Structure
 ```
@@ -99,7 +81,6 @@ src/
 1. **Standalone Components**: No NgModule dependencies
    ```typescript
    @Component({
-     standalone: true,
      imports: [CommonModule, MatButtonModule],
      // ...
    })
@@ -187,7 +168,7 @@ This application demonstrates modern Angular architecture patterns:
 - 🛍️ **Product Catalog** - Browse coffee products with filtering
 - 🛒 **Shopping Cart** - Add/remove items with real-time updates
 - 📱 **Responsive Design** - Mobile-first Material Design
-- 🧪 **Comprehensive Testing** - Jest unit tests with coverage
+- 🧪 **Comprehensive Testing** - Vitest unit tests with coverage
 
 ## 🚀 Quick Start Guide
 
@@ -214,8 +195,6 @@ This application demonstrates modern Angular architecture patterns:
 3. **Run tests:**
    ```bash
    npm run test           # Run all tests
-   npm run test:watch     # Watch mode
-   npm run test:coverage  # Generate coverage report
    ```
 
 4. **Build for production:**
@@ -229,7 +208,5 @@ This application demonstrates modern Angular architecture patterns:
 |---------|-------------|
 | `npm run start` | Start dev server with auto-reload |
 | `npm run build` | Production build |
-| `npm run test` | Run Jest tests once |
-| `npm run test:watch` | Run tests in watch mode |
-| `npm run test:coverage` | Generate test coverage report |
+| `npm run test` | Run Vitest tests |
 | `npm run watch` | Build in watch mode |

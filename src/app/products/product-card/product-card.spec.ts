@@ -1,7 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ProductCardComponent } from './product-card';
 import { Product } from '../product';
-import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 
 describe('ProductCardComponent', () => {
   let component: ProductCardComponent;
@@ -22,8 +21,7 @@ describe('ProductCardComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [ProductCardComponent],
-      providers: [provideAnimationsAsync()]
+      imports: [ProductCardComponent]
     }).compileComponents();
 
     fixture = TestBed.createComponent(ProductCardComponent);
@@ -46,13 +44,13 @@ describe('ProductCardComponent', () => {
   });
 
   it('should emit addToCart event', () => {
-    const addToCartSpy = jest.spyOn(component.addToCart, 'emit');
+    const addToCartSpy = vi.spyOn(component.addToCart, 'emit');
     component.onAddToCart();
     expect(addToCartSpy).toHaveBeenCalledWith(mockProduct);
   });
 
   it('should emit addToWishlist event', () => {
-    const addToWishlistSpy = jest.spyOn(component.addToWishlist, 'emit');
+    const addToWishlistSpy = vi.spyOn(component.addToWishlist, 'emit');
     component.onAddToWishlist();
     expect(addToWishlistSpy).toHaveBeenCalledWith(mockProduct);
   });

@@ -4,13 +4,13 @@ import { NotificationService } from './notification.service';
 
 describe('GlobalErrorHandler', () => {
   let service: GlobalErrorHandler;
-  let mockNotificationService: jest.Mocked<NotificationService>;
+  let mockNotificationService: any;
 
   beforeEach(() => {
     const notificationSpy = {
-      showError: jest.fn(),
-      showSuccess: jest.fn(),
-      showInfo: jest.fn()
+      showError: vi.fn(),
+      showSuccess: vi.fn(),
+      showInfo: vi.fn()
     };
 
     TestBed.configureTestingModule({
@@ -21,7 +21,7 @@ describe('GlobalErrorHandler', () => {
     });
 
     service = TestBed.inject(GlobalErrorHandler);
-    mockNotificationService = TestBed.inject(NotificationService) as jest.Mocked<NotificationService>;
+    mockNotificationService = TestBed.inject(NotificationService);
   });
 
   it('should be created', () => {
@@ -30,11 +30,11 @@ describe('GlobalErrorHandler', () => {
 
   describe('handleError', () => {
     beforeEach(() => {
-      jest.spyOn(console, 'error').mockImplementation(() => {});
+      vi.spyOn(console, 'error').mockImplementation(() => {});
     });
 
     afterEach(() => {
-      jest.restoreAllMocks();
+      vi.restoreAllMocks();
     });
 
     it('should log error to console and show notification', () => {
