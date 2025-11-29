@@ -35,7 +35,7 @@ describe('CartListComponent', () => {
           description: 'Description 2',
           price: 20.99,
           image: 'image2.jpg',
-          rating: 4.0,
+          rating: 4,
           reviewCount: 5,
           category: 'Books'
         },

@@ -47,7 +47,7 @@ describe('CheckoutComponent', () => {
       isEmpty: vi.fn().mockReturnValue(false),
       items: signal(mockCartItems),
       subtotal: signal(21.98),
-      tax: signal(2.20),
+      tax: signal(2.2),
       total: signal(24.18),
       totalItems: signal(2),
       clearCart: vi.fn(),

@@ -35,7 +35,7 @@ describe('CartTotalSummaryComponent', () => {
       items: signal(mockCartItems),
       totalItems: signal(3),
       subtotal: signal(21.98),
-      tax: signal(2.20),
+      tax: signal(2.2),
       total: signal(24.18),
       isEmpty: vi.fn().mockReturnValue(false),
       clearCart: vi.fn(),
