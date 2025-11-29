@@ -1,6 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { signal } from '@angular/core';
-import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 
 import { ProductList } from './product-list';
 import { ProductService } from '../product-service';
@@ -11,9 +10,9 @@ import { Product } from '../product';
 describe('ProductList', () => {
   let component: ProductList;
   let fixture: ComponentFixture<ProductList>;
-  let mockProductService: jest.Mocked<ProductService>;
-  let mockCartService: jest.Mocked<CartService>;
-  let mockNotificationService: jest.Mocked<NotificationService>;
+  let mockProductService: any;
+  let mockCartService: any;
+  let mockNotificationService: any;
 
   beforeEach(async () => {
     // Create mock products
@@ -34,7 +33,7 @@ describe('ProductList', () => {
         description: 'Description 2',
         price: 20.99,
         image: 'image2.jpg',
-        rating: 4.0,
+        rating: 4,
         reviewCount: 5,
         category: 'Books'
       }
@@ -49,37 +48,37 @@ describe('ProductList', () => {
       statusCode: signal(200),
       progress: signal(null),
       hasValue: signal(value !== null),
-      reload: jest.fn(),
-      request: jest.fn(),
-      destroy: jest.fn(),
-      set: jest.fn(),
-      update: jest.fn(),
-      asReadonly: jest.fn(),
+      reload: vi.fn(),
+      request: vi.fn(),
+      destroy: vi.fn(),
+      set: vi.fn(),
+      update: vi.fn(),
+      asReadonly: vi.fn(),
       status: signal('resolved' as any)
     });
 
     mockProductService = {
-      getProducts: jest.fn().mockReturnValue(createMockHttpResourceRef(mockProducts))
+      getProducts: vi.fn().mockReturnValue(createMockHttpResourceRef(mockProducts))
     } as any;
 
     mockCartService = {
-      addToCart: jest.fn().mockReturnValue({ success: true, message: 'Item added successfully' }),
-      removeFromCart: jest.fn(),
-      updateQuantity: jest.fn(),
-      clearCart: jest.fn(),
-      getTotal: jest.fn().mockReturnValue(0),
-      getItemCount: jest.fn().mockReturnValue(0),
+      addToCart: vi.fn().mockReturnValue({ success: true, message: 'Item added successfully' }),
+      removeFromCart: vi.fn(),
+      updateQuantity: vi.fn(),
+      clearCart: vi.fn(),
+      getTotal: vi.fn().mockReturnValue(0),
+      getItemCount: vi.fn().mockReturnValue(0),
       items: signal([])
     } as any;
 
     mockNotificationService = {
-      showSuccess: jest.fn(),
-      showError: jest.fn(),
-      showInfo: jest.fn()
+      showSuccess: vi.fn(),
+      showError: vi.fn(),
+      showInfo: vi.fn()
     } as any;
 
     await TestBed.configureTestingModule({
-      imports: [ProductList, NoopAnimationsModule],
+      imports: [ProductList],
       providers: [
         { provide: ProductService, useValue: mockProductService },
         { provide: CartService, useValue: mockCartService },
@@ -116,12 +115,12 @@ describe('ProductList', () => {
       statusCode: signal(500),
       progress: signal(null),
       hasValue: signal(false),
-      reload: jest.fn(),
-      request: jest.fn(),
-      destroy: jest.fn(),
-      set: jest.fn(),
-      update: jest.fn(),
-      asReadonly: jest.fn(),
+      reload: vi.fn(),
+      request: vi.fn(),
+      destroy: vi.fn(),
+      set: vi.fn(),
+      update: vi.fn(),
+      asReadonly: vi.fn(),
       status: signal('resolved' as any)
     };
 
@@ -137,7 +136,7 @@ describe('ProductList', () => {
   });
 
   it('should retry loading when retryLoading is called', () => {
-    const reloadSpy = jest.fn();
+    const reloadSpy = vi.fn();
     const resourceWithReload = {
       value: signal(null),
       isLoading: signal(false),
@@ -147,11 +146,11 @@ describe('ProductList', () => {
       progress: signal(null),
       hasValue: signal(false),
       reload: reloadSpy,
-      request: jest.fn(),
-      destroy: jest.fn(),
-      set: jest.fn(),
-      update: jest.fn(),
-      asReadonly: jest.fn(),
+      request: vi.fn(),
+      destroy: vi.fn(),
+      set: vi.fn(),
+      update: vi.fn(),
+      asReadonly: vi.fn(),
       status: signal('resolved' as any)
     };
 

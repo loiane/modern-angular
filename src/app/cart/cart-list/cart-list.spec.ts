@@ -1,6 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { signal } from '@angular/core';
-import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { FormsModule } from '@angular/forms';
 
 import { CartListComponent } from './cart-list';
@@ -11,8 +10,8 @@ import { CartItem } from '../cart-item';
 describe('CartListComponent', () => {
   let component: CartListComponent;
   let fixture: ComponentFixture<CartListComponent>;
-  let mockCartService: jest.Mocked<CartService>;
-  let mockNotificationService: jest.Mocked<NotificationService>;
+  let mockCartService: any;
+  let mockNotificationService: any;
 
   beforeEach(async () => {
     const mockCartItems: CartItem[] = [
@@ -36,7 +35,7 @@ describe('CartListComponent', () => {
           description: 'Description 2',
           price: 20.99,
           image: 'image2.jpg',
-          rating: 4.0,
+          rating: 4,
           reviewCount: 5,
           category: 'Books'
         },
@@ -47,22 +46,22 @@ describe('CartListComponent', () => {
     mockCartService = {
       items: signal(mockCartItems),
       isEmpty: signal(false), // Add the missing isEmpty signal
-      addToCart: jest.fn().mockReturnValue({ success: true, message: 'Item added successfully' }),
-      removeFromCart: jest.fn().mockReturnValue({ success: true, message: 'Item removed successfully' }),
-      updateQuantity: jest.fn().mockReturnValue({ success: true, message: 'Quantity updated successfully' }),
-      clearCart: jest.fn(),
-      getTotal: jest.fn().mockReturnValue(42.97),
-      getItemCount: jest.fn().mockReturnValue(3)
+      addToCart: vi.fn().mockReturnValue({ success: true, message: 'Item added successfully' }),
+      removeFromCart: vi.fn().mockReturnValue({ success: true, message: 'Item removed successfully' }),
+      updateQuantity: vi.fn().mockReturnValue({ success: true, message: 'Quantity updated successfully' }),
+      clearCart: vi.fn(),
+      getTotal: vi.fn().mockReturnValue(42.97),
+      getItemCount: vi.fn().mockReturnValue(3)
     } as any;
 
     mockNotificationService = {
-      showSuccess: jest.fn(),
-      showError: jest.fn(),
-      showInfo: jest.fn()
+      showSuccess: vi.fn(),
+      showError: vi.fn(),
+      showInfo: vi.fn()
     } as any;
 
     await TestBed.configureTestingModule({
-      imports: [CartListComponent, NoopAnimationsModule, FormsModule],
+      imports: [CartListComponent, FormsModule],
       providers: [
         { provide: CartService, useValue: mockCartService },
         { provide: NotificationService, useValue: mockNotificationService }

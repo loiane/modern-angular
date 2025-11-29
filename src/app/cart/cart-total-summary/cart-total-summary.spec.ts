@@ -1,7 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { signal } from '@angular/core';
 import { Router } from '@angular/router';
-import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 
 import { CartTotalSummaryComponent } from './cart-total-summary';
 import { CartService } from '../cart.service';
@@ -11,9 +10,9 @@ import { CartItem } from '../cart-item';
 describe('CartTotalSummaryComponent', () => {
   let component: CartTotalSummaryComponent;
   let fixture: ComponentFixture<CartTotalSummaryComponent>;
-  let mockCartService: jest.Mocked<CartService>;
-  let mockNotificationService: jest.Mocked<NotificationService>;
-  let mockRouter: jest.Mocked<Router>;
+  let mockCartService: any;
+  let mockNotificationService: any;
+  let mockRouter: any;
 
   beforeEach(async () => {
     const mockCartItems: CartItem[] = [
@@ -36,29 +35,29 @@ describe('CartTotalSummaryComponent', () => {
       items: signal(mockCartItems),
       totalItems: signal(3),
       subtotal: signal(21.98),
-      tax: signal(2.20),
+      tax: signal(2.2),
       total: signal(24.18),
-      isEmpty: jest.fn().mockReturnValue(false),
-      clearCart: jest.fn(),
-      getTotal: jest.fn().mockReturnValue(21.98),
-      getItemCount: jest.fn().mockReturnValue(2),
-      addToCart: jest.fn(),
-      removeFromCart: jest.fn(),
-      updateQuantity: jest.fn()
+      isEmpty: vi.fn().mockReturnValue(false),
+      clearCart: vi.fn(),
+      getTotal: vi.fn().mockReturnValue(21.98),
+      getItemCount: vi.fn().mockReturnValue(2),
+      addToCart: vi.fn(),
+      removeFromCart: vi.fn(),
+      updateQuantity: vi.fn()
     } as any;
 
     mockNotificationService = {
-      showSuccess: jest.fn(),
-      showError: jest.fn(),
-      showInfo: jest.fn()
+      showSuccess: vi.fn(),
+      showError: vi.fn(),
+      showInfo: vi.fn()
     } as any;
 
     mockRouter = {
-      navigate: jest.fn()
+      navigate: vi.fn()
     } as any;
 
     await TestBed.configureTestingModule({
-      imports: [CartTotalSummaryComponent, NoopAnimationsModule],
+      imports: [CartTotalSummaryComponent],
       providers: [
         { provide: CartService, useValue: mockCartService },
         { provide: NotificationService, useValue: mockNotificationService },

@@ -21,9 +21,9 @@ import { CartItem } from '../cart/cart-item';
 describe('CheckoutComponent', () => {
   let component: CheckoutComponent;
   let fixture: ComponentFixture<CheckoutComponent>;
-  let mockCartService: jest.Mocked<CartService>;
-  let mockNotificationService: jest.Mocked<NotificationService>;
-  let mockRouter: jest.Mocked<Router>;
+  let mockCartService: any;
+  let mockNotificationService: any;
+  let mockRouter: any;
 
   const mockProduct: Product = {
     id: 1,
@@ -44,28 +44,28 @@ describe('CheckoutComponent', () => {
 
   beforeEach(async () => {
     mockCartService = {
-      isEmpty: jest.fn().mockReturnValue(false),
+      isEmpty: vi.fn().mockReturnValue(false),
       items: signal(mockCartItems),
       subtotal: signal(21.98),
-      tax: signal(2.20),
+      tax: signal(2.2),
       total: signal(24.18),
       totalItems: signal(2),
-      clearCart: jest.fn(),
-      addToCart: jest.fn(),
-      removeFromCart: jest.fn(),
-      updateQuantity: jest.fn(),
-      getItemQuantity: jest.fn(),
-      isInCart: jest.fn()
+      clearCart: vi.fn(),
+      addToCart: vi.fn(),
+      removeFromCart: vi.fn(),
+      updateQuantity: vi.fn(),
+      getItemQuantity: vi.fn(),
+      isInCart: vi.fn()
     } as any;
 
     mockNotificationService = {
-      showError: jest.fn(),
-      showSuccess: jest.fn(),
-      showInfo: jest.fn()
+      showError: vi.fn(),
+      showSuccess: vi.fn(),
+      showInfo: vi.fn()
     } as any;
 
     mockRouter = {
-      navigate: jest.fn()
+      navigate: vi.fn()
     } as any;
 
     await TestBed.configureTestingModule({
@@ -321,7 +321,7 @@ describe('CheckoutComponent', () => {
   });
 
   describe('Empty Cart Handling', () => {
-    it('should redirect to products if cart is empty on initialization', () => {
+    it('should redirect to products if cart is empty on initialization', async () => {
       mockCartService.isEmpty.mockReturnValue(true);
 
       fixture.detectChanges();
@@ -330,10 +330,10 @@ describe('CheckoutComponent', () => {
         'Your cart is empty. Add some items before checkout.'
       );
 
-      // Check if navigation will be called after timeout
-      setTimeout(() => {
+      // Wait for navigation to be called after timeout
+      await vi.waitFor(() => {
         expect(mockRouter.navigate).toHaveBeenCalledWith(['/products']);
-      }, 10);
+      });
     });
   });
 

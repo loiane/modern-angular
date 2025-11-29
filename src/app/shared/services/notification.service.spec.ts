@@ -4,11 +4,11 @@ import { NotificationService } from './notification.service';
 
 describe('NotificationService', () => {
   let service: NotificationService;
-  let mockSnackBar: jest.Mocked<MatSnackBar>;
+  let mockSnackBar: any;
 
   beforeEach(() => {
     const snackBarSpy = {
-      open: jest.fn()
+      open: vi.fn()
     };
 
     TestBed.configureTestingModule({
@@ -18,7 +18,7 @@ describe('NotificationService', () => {
     });
 
     service = TestBed.inject(NotificationService);
-    mockSnackBar = TestBed.inject(MatSnackBar) as jest.Mocked<MatSnackBar>;
+    mockSnackBar = TestBed.inject(MatSnackBar);
   });
 
   it('should be created', () => {
