@@ -1,12 +1,9 @@
 # Modern Angular Shop 🚀🛒
 
 ![Angular Build](https://github.com/loiane/angular-shop/actions/workflows/angular.yml/badge.svg?branch=main)
-![Angular Version](https://img.shields.io/badge/Angular-v20-red)
+![Angular Version](https://img.shields.io/badge/Angular-v21-red)
 ![Node Version](https://img.shields.io/badge/Node.js-v22+-green)
 ![Test Framework](https://img.shields.io/badge/Tests-Vitest-yellow)
-<!-- COVERAGE-START -->
-<!-- Coverage badge and summary will be inserted here by CI -->
-<!-- COVERAGE-END -->
 
 A modern Angular sample project showcasing the latest features and best practices, built as an interactive coffee shop application.
 
