@@ -252,8 +252,10 @@
                         <mat-spinner diameter="20"></mat-spinner>
                         Processing...
                       } @else {
-                        <mat-icon>payment</mat-icon>
-                        Place Order ({{ cart.total() | currency }})
+                        <ng-container>
+                          <mat-icon>payment</mat-icon>
+                          Place Order ({{ cart.total() | currency }})
+                        </ng-container>
                       }
                     </button>
                   </div>

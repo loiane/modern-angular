@@ -155,7 +155,7 @@ export class CheckoutComponent implements OnInit {
   // Custom validators
   private phoneValidator(control: AbstractControl): { [key: string]: any } | null {
     const phonePattern = /^[+]?[1-9]\d{0,15}$/;
-    if (control.value && !phonePattern.test(control.value.replace(/\s/g, ''))) {
+    if (control.value && !phonePattern.test(control.value.replaceAll(/\s/g, ''))) {
       return { invalidPhone: true };
     }
     return null;
@@ -173,7 +173,7 @@ export class CheckoutComponent implements OnInit {
     if (!control.value) return null;
 
     // Remove spaces and dashes
-    const cardNumber = control.value.replace(/[\s-]/g, '');
+    const cardNumber = control.value.replaceAll(/[\s-]/g, '');
 
     // Check if it's all digits
     if (!/^\d+$/.test(cardNumber)) {
@@ -190,7 +190,7 @@ export class CheckoutComponent implements OnInit {
     let shouldDouble = false;
 
     for (let i = cardNumber.length - 1; i >= 0; i--) {
-      let digit = parseInt(cardNumber.charAt(i), 10);
+      let digit = Number.parseInt(cardNumber.charAt(i), 10);
 
       if (shouldDouble) {
         digit *= 2;
@@ -225,7 +225,7 @@ export class CheckoutComponent implements OnInit {
 
   // Format card number display
   formatCardNumber(value: string): string {
-    const v = value.replace(/\s+/g, '').replace(/\D/gi, '');
+    const v = value.replaceAll(/\s+/g, '').replaceAll(/\D/gi, '');
     const matches = v.match(/\d{4,16}/g);
     const match = matches?.[0] || '';
     const parts = [];

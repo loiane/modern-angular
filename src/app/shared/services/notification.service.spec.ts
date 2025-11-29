@@ -34,7 +34,7 @@ describe('NotificationService', () => {
       expect(mockSnackBar.open).toHaveBeenCalledWith(message, 'Close', {
         duration: 3000,
         panelClass: ['success-snackbar'],
-        horizontalPosition: 'end',
+        horizontalPosition: 'center',
         verticalPosition: 'top'
       });
     });
@@ -48,7 +48,7 @@ describe('NotificationService', () => {
       expect(mockSnackBar.open).toHaveBeenCalledWith(message, 'Close', {
         duration: 5000,
         panelClass: ['success-snackbar'],
-        horizontalPosition: 'end',
+        horizontalPosition: 'center',
         verticalPosition: 'top'
       });
     });
@@ -63,7 +63,7 @@ describe('NotificationService', () => {
       expect(mockSnackBar.open).toHaveBeenCalledWith(message, 'Close', {
         duration: 5000,
         panelClass: ['error-snackbar'],
-        horizontalPosition: 'end',
+        horizontalPosition: 'center',
         verticalPosition: 'top'
       });
     });
@@ -77,7 +77,7 @@ describe('NotificationService', () => {
       expect(mockSnackBar.open).toHaveBeenCalledWith(message, 'Close', {
         duration: 10000,
         panelClass: ['error-snackbar'],
-        horizontalPosition: 'end',
+        horizontalPosition: 'center',
         verticalPosition: 'top'
       });
     });
@@ -92,7 +92,7 @@ describe('NotificationService', () => {
       expect(mockSnackBar.open).toHaveBeenCalledWith(message, 'Close', {
         duration: 3000,
         panelClass: ['info-snackbar'],
-        horizontalPosition: 'end',
+        horizontalPosition: 'center',
         verticalPosition: 'top'
       });
     });
@@ -106,7 +106,7 @@ describe('NotificationService', () => {
       expect(mockSnackBar.open).toHaveBeenCalledWith(message, 'Close', {
         duration: 4000,
         panelClass: ['info-snackbar'],
-        horizontalPosition: 'end',
+        horizontalPosition: 'center',
         verticalPosition: 'top'
       });
     });
