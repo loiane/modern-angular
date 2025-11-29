@@ -13,6 +13,6 @@ import { CartService } from '../../cart/cart.service';
   styleUrl: './header.scss'
 })
 export class Header {
-  appTitle = input.required<string>();
-  cartService = inject(CartService);
+  readonly appTitle = input.required<string>();
+  protected readonly cartService = inject(CartService);
 }
