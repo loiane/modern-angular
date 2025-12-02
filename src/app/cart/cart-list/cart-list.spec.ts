@@ -92,6 +92,22 @@ describe('CartListComponent', () => {
       expect(mockNotificationService.showSuccess).not.toHaveBeenCalled();
     });
 
+    it('should update quantity via input change event', () => {
+      fixture.detectChanges();
+      mockCartService.updateQuantity.mockReturnValue({ success: true, message: 'Quantity updated' });
+
+      const compiled = fixture.nativeElement as HTMLElement;
+      const quantityInput = compiled.querySelector('input[type="number"]') as HTMLInputElement;
+
+      expect(quantityInput).toBeTruthy();
+
+      quantityInput.value = '5';
+      quantityInput.dispatchEvent(new Event('change'));
+      fixture.detectChanges();
+
+      expect(mockCartService.updateQuantity).toHaveBeenCalledWith(1, 5);
+    });
+
     it('should handle invalid quantity input and show error notification', () => {
       component.updateQuantity(1, 'invalid');
 
@@ -122,6 +138,22 @@ describe('CartListComponent', () => {
       mockCartService.removeFromCart.mockReturnValue({ success: true, message: 'Item removed' });
 
       component.removeItem(1);
+
+      expect(mockCartService.removeFromCart).toHaveBeenCalledWith(1);
+      expect(mockNotificationService.showSuccess).toHaveBeenCalledWith('Item removed from cart');
+    });
+
+    it('should remove item via delete button click', () => {
+      fixture.detectChanges();
+      mockCartService.removeFromCart.mockReturnValue({ success: true, message: 'Item removed' });
+
+      const compiled = fixture.nativeElement as HTMLElement;
+      const deleteButton = compiled.querySelector('button[aria-label="Remove item"]') as HTMLButtonElement;
+
+      expect(deleteButton).toBeTruthy();
+
+      deleteButton.click();
+      fixture.detectChanges();
 
       expect(mockCartService.removeFromCart).toHaveBeenCalledWith(1);
       expect(mockNotificationService.showSuccess).toHaveBeenCalledWith('Item removed from cart');
