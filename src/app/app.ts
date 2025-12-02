@@ -9,5 +9,5 @@ import { Header } from './components/header/header';
   styleUrl: './app.scss'
 })
 export class App {
-  readonly title = 'Angular Shop';
+  protected readonly title = 'Angular Shop';
 }

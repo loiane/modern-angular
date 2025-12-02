@@ -20,12 +20,6 @@ describe('App', () => {
     expect(app).toBeTruthy();
   });
 
-  it('should have the correct title', () => {
-    const fixture = TestBed.createComponent(App);
-    const app = fixture.componentInstance;
-    expect(app.title).toBe('Angular Shop');
-  });
-
   it('should render header with title', () => {
     const fixture = TestBed.createComponent(App);
     fixture.detectChanges();
