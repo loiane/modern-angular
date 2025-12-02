@@ -49,9 +49,49 @@ describe('ProductCardComponent', () => {
     expect(addToCartSpy).toHaveBeenCalledWith(mockProduct);
   });
 
+  it('should emit addToCart event via button click', () => {
+    const addToCartSpy = vi.spyOn(component.addToCart, 'emit');
+
+    const compiled = fixture.nativeElement as HTMLElement;
+    const buttons = compiled.querySelectorAll('button');
+    const addToCartButton = Array.from(buttons).find(btn => btn.textContent?.includes('Add to Cart')) as HTMLButtonElement;
+
+    expect(addToCartButton).toBeTruthy();
+
+    addToCartButton.click();
+    fixture.detectChanges();
+
+    expect(addToCartSpy).toHaveBeenCalledWith(mockProduct);
+  });
+
   it('should emit addToWishlist event', () => {
     const addToWishlistSpy = vi.spyOn(component.addToWishlist, 'emit');
     component.onAddToWishlist();
     expect(addToWishlistSpy).toHaveBeenCalledWith(mockProduct);
+  });
+
+  it('should display sale chip when product is on sale', () => {
+    const compiled = fixture.nativeElement as HTMLElement;
+    const cardHeader = compiled.querySelector('.card-header');
+    const saleChip = cardHeader?.querySelector('mat-chip');
+
+    expect(saleChip).toBeTruthy();
+    expect(saleChip?.textContent?.trim()).toBe('Sale');
+  });
+
+  it('should not display sale chip when product is not on sale', () => {
+    const productNotOnSale: Product = {
+      ...mockProduct,
+      isOnSale: false
+    };
+
+    fixture.componentRef.setInput('product', productNotOnSale);
+    fixture.detectChanges();
+
+    const compiled = fixture.nativeElement as HTMLElement;
+    const cardHeader = compiled.querySelector('.card-header');
+    const saleChip = cardHeader?.querySelector('mat-chip');
+
+    expect(saleChip).toBeNull();
   });
 });
