@@ -9,7 +9,7 @@ describe('CartService', () => {
     id: 1,
     name: 'Test Product',
     description: 'Test Description',
-    price: 50.00,
+    price: 50,
     image: 'test-image.jpg',
     rating: 4.5,
     reviewCount: 10,
@@ -113,6 +113,23 @@ describe('CartService', () => {
       expect(result.success).toBe(false);
       expect(result.message).toBe('Cart is full. Remove items to add new ones.');
     });
+
+    it('should handle unexpected errors during addToCart', () => {
+      const consoleErrorSpy = vi.spyOn(console, 'error').mockImplementation(() => {});
+      
+      // Force an error by making the signal throw
+      vi.spyOn(service['cartItems'], 'set').mockImplementationOnce(() => {
+        throw new Error('Simulated error');
+      });
+
+      const result = service.addToCart(mockProduct, 1);
+
+      expect(result.success).toBe(false);
+      expect(result.message).toBe('Failed to add item to cart');
+      expect(consoleErrorSpy).toHaveBeenCalledWith('Error adding item to cart:', expect.any(Error));
+
+      consoleErrorSpy.mockRestore();
+    });
   });
 
   describe('removeFromCart', () => {
@@ -142,6 +159,23 @@ describe('CartService', () => {
 
       expect(result.success).toBe(false);
       expect(result.message).toBe('Invalid product ID');
+    });
+
+    it('should handle unexpected errors during removeFromCart', () => {
+      const consoleErrorSpy = vi.spyOn(console, 'error').mockImplementation(() => {});
+      
+      // Force an error by making the signal throw
+      vi.spyOn(service['cartItems'], 'set').mockImplementationOnce(() => {
+        throw new Error('Simulated error');
+      });
+
+      const result = service.removeFromCart(1);
+
+      expect(result.success).toBe(false);
+      expect(result.message).toBe('Failed to remove item from cart');
+      expect(consoleErrorSpy).toHaveBeenCalledWith('Error removing item from cart:', expect.any(Error));
+
+      consoleErrorSpy.mockRestore();
     });
   });
 
@@ -196,6 +230,23 @@ describe('CartService', () => {
       expect(result.success).toBe(false);
       expect(result.message).toBe('Invalid product ID');
     });
+
+    it('should handle unexpected errors during updateQuantity', () => {
+      const consoleErrorSpy = vi.spyOn(console, 'error').mockImplementation(() => {});
+      
+      // Force an error by making the signal throw
+      vi.spyOn(service['cartItems'], 'set').mockImplementationOnce(() => {
+        throw new Error('Simulated error');
+      });
+
+      const result = service.updateQuantity(1, 3);
+
+      expect(result.success).toBe(false);
+      expect(result.message).toBe('Failed to update quantity');
+      expect(consoleErrorSpy).toHaveBeenCalledWith('Error updating cart quantity:', expect.any(Error));
+
+      consoleErrorSpy.mockRestore();
+    });
   });
 
   describe('utility methods', () => {
@@ -217,19 +268,19 @@ describe('CartService', () => {
   it('should calculate correct subtotal', () => {
     service.addToCart(mockProduct, 2);
 
-    expect(service.subtotal()).toBe(100.00);
+    expect(service.subtotal()).toBe(100);
   });
 
   it('should calculate correct tax (10%)', () => {
     service.addToCart(mockProduct, 2);
 
-    expect(service.tax()).toBe(10.00);
+    expect(service.tax()).toBe(10);
   });
 
   it('should calculate correct total', () => {
     service.addToCart(mockProduct, 2);
 
-    expect(service.total()).toBe(110.00);
+    expect(service.total()).toBe(110);
   });
 
   it('should remove product from cart', () => {
