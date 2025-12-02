@@ -43,6 +43,16 @@ describe('ProductCardComponent', () => {
     expect(stars).toEqual(['star', 'star', 'star', 'star', 'star_half']);
   });
 
+  it('should generate star ratings without half star for whole numbers', () => {
+    const stars = component.getStars(4);
+    expect(stars).toEqual(['star', 'star', 'star', 'star', 'star_border']);
+  });
+
+  it('should generate star ratings with empty stars for low ratings', () => {
+    const stars = component.getStars(2);
+    expect(stars).toEqual(['star', 'star', 'star_border', 'star_border', 'star_border']);
+  });
+
   it('should emit addToCart event', () => {
     const addToCartSpy = vi.spyOn(component.addToCart, 'emit');
     component.onAddToCart();
