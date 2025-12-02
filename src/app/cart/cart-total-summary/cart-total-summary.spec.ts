@@ -87,6 +87,20 @@ describe('CartTotalSummaryComponent', () => {
       expect(mockRouter.navigate).toHaveBeenCalledWith(['/checkout']);
     });
 
+    it('should navigate to checkout via button click', () => {
+      mockCartService.isEmpty.mockReturnValue(false);
+
+      const compiled = fixture.nativeElement as HTMLElement;
+      const checkoutButton = compiled.querySelector('.checkout-btn') as HTMLButtonElement;
+
+      expect(checkoutButton).toBeTruthy();
+
+      checkoutButton.click();
+      fixture.detectChanges();
+
+      expect(mockRouter.navigate).toHaveBeenCalledWith(['/checkout']);
+    });
+
     it('should show error message when trying to checkout with empty cart', () => {
       mockCartService.isEmpty.mockReturnValue(true);
 
@@ -102,6 +116,22 @@ describe('CartTotalSummaryComponent', () => {
       mockCartService.isEmpty.mockReturnValue(false);
 
       component.clearCart();
+
+      expect(mockCartService.clearCart).toHaveBeenCalled();
+      expect(mockNotificationService.showSuccess).toHaveBeenCalledWith('Cart cleared successfully!');
+    });
+
+    it('should clear cart via button click', () => {
+      mockCartService.isEmpty.mockReturnValue(false);
+
+      const compiled = fixture.nativeElement as HTMLElement;
+      const clearButton = compiled.querySelector('button[matbutton="tonal"]') as HTMLButtonElement;
+
+      expect(clearButton).toBeTruthy();
+      expect(clearButton.textContent?.trim()).toBe('Clear Cart');
+
+      clearButton.click();
+      fixture.detectChanges();
 
       expect(mockCartService.clearCart).toHaveBeenCalled();
       expect(mockNotificationService.showSuccess).toHaveBeenCalledWith('Cart cleared successfully!');
