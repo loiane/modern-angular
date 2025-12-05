@@ -25,7 +25,7 @@ export class ProductCardComponent {
   addToCart = output<Product>();
   addToWishlist = output<Product>();
 
-  getStars(rating: number): string[] {
+  protected getStars(rating: number): string[] {
     const fullStars = Math.floor(rating);
     const hasHalfStar = rating % 1 !== 0;
     const stars: string[] = [];
@@ -45,11 +45,11 @@ export class ProductCardComponent {
     return stars;
   }
 
-  onAddToCart(): void {
+  protected onAddToCart(): void {
     this.addToCart.emit(this.product());
   }
 
-  onAddToWishlist(): void {
+  protected onAddToWishlist(): void {
     this.addToWishlist.emit(this.product());
   }
 }

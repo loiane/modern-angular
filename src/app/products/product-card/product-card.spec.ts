@@ -38,25 +38,56 @@ describe('ProductCardComponent', () => {
     expect(component.product()).toEqual(mockProduct);
   });
 
-  it('should generate correct star ratings', () => {
-    const stars = component.getStars(4.5);
-    expect(stars).toEqual(['star', 'star', 'star', 'star', 'star_half']);
+  it('should display correct star ratings for 4.5 rating', () => {
+    const compiled = fixture.nativeElement as HTMLElement;
+    const starIcons = compiled.querySelectorAll('mat-icon.star-icon');
+
+    expect(starIcons.length).toBe(5);
+    expect(starIcons[0].textContent?.trim()).toBe('star');
+    expect(starIcons[1].textContent?.trim()).toBe('star');
+    expect(starIcons[2].textContent?.trim()).toBe('star');
+    expect(starIcons[3].textContent?.trim()).toBe('star');
+    expect(starIcons[4].textContent?.trim()).toBe('star_half');
   });
 
-  it('should generate star ratings without half star for whole numbers', () => {
-    const stars = component.getStars(4);
-    expect(stars).toEqual(['star', 'star', 'star', 'star', 'star_border']);
+  it('should display star ratings without half star for whole numbers', () => {
+    const productWithWholeRating: Product = {
+      ...mockProduct,
+      rating: 4
+    };
+
+    fixture.componentRef.setInput('product', productWithWholeRating);
+    fixture.detectChanges();
+
+    const compiled = fixture.nativeElement as HTMLElement;
+    const starIcons = compiled.querySelectorAll('mat-icon.star-icon');
+
+    expect(starIcons.length).toBe(5);
+    expect(starIcons[0].textContent?.trim()).toBe('star');
+    expect(starIcons[1].textContent?.trim()).toBe('star');
+    expect(starIcons[2].textContent?.trim()).toBe('star');
+    expect(starIcons[3].textContent?.trim()).toBe('star');
+    expect(starIcons[4].textContent?.trim()).toBe('star_border');
   });
 
-  it('should generate star ratings with empty stars for low ratings', () => {
-    const stars = component.getStars(2);
-    expect(stars).toEqual(['star', 'star', 'star_border', 'star_border', 'star_border']);
-  });
+  it('should display star ratings with empty stars for low ratings', () => {
+    const productWithLowRating: Product = {
+      ...mockProduct,
+      rating: 2
+    };
 
-  it('should emit addToCart event', () => {
-    const addToCartSpy = vi.spyOn(component.addToCart, 'emit');
-    component.onAddToCart();
-    expect(addToCartSpy).toHaveBeenCalledWith(mockProduct);
+    fixture.componentRef.setInput('product', productWithLowRating);
+    fixture.detectChanges();
+
+    const compiled = fixture.nativeElement as HTMLElement;
+    const starIcons = compiled.querySelectorAll('mat-icon.star-icon');
+
+    expect(starIcons.length).toBe(5);
+    expect(starIcons[0].textContent?.trim()).toBe('star');
+    expect(starIcons[1].textContent?.trim()).toBe('star');
+    expect(starIcons[2].textContent?.trim()).toBe('star_border');
+    expect(starIcons[3].textContent?.trim()).toBe('star_border');
+    expect(starIcons[4].textContent?.trim()).toBe('star_border');
   });
 
   it('should emit addToCart event via button click', () => {
@@ -74,9 +105,16 @@ describe('ProductCardComponent', () => {
     expect(addToCartSpy).toHaveBeenCalledWith(mockProduct);
   });
 
-  it('should emit addToWishlist event', () => {
+  it('should emit addToWishlist event via button click', () => {
     const addToWishlistSpy = vi.spyOn(component.addToWishlist, 'emit');
-    component.onAddToWishlist();
+
+    const compiled = fixture.nativeElement as HTMLElement;
+    const wishlistButton = compiled.querySelector('mat-card-actions button[aria-label="Add to wishlist"]') as HTMLButtonElement;
+
+    expect(wishlistButton).toBeTruthy();
+
+    wishlistButton.click();
+
     expect(addToWishlistSpy).toHaveBeenCalledWith(mockProduct);
   });
 

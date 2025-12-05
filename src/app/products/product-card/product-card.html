@@ -43,6 +43,9 @@
   </mat-card-content>
 
   <mat-card-actions class="card-actions">
+    <button mat-icon-button aria-label="Add to wishlist" (click)="onAddToWishlist()">
+      <mat-icon>favorite_border</mat-icon>
+    </button>
     <button matButton="filled" (click)="onAddToCart()">
       <mat-icon>shopping_cart</mat-icon>
       Add to Cart
