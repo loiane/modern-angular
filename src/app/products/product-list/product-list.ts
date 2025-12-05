@@ -21,15 +21,15 @@ export class ProductList {
   private readonly productsResource = this.productService.getProducts();
 
   // Create computed signals for easier template access
-  products = computed(() => this.productsResource.value() ?? []);
-  isLoading = computed(() => this.productsResource.isLoading());
-  hasError = computed(() => this.productsResource.error() !== undefined);
-  errorMessage = computed(() => {
+  protected products = computed(() => this.productsResource.value() ?? []);
+  protected isLoading = computed(() => this.productsResource.isLoading());
+  protected hasError = computed(() => this.productsResource.error() !== undefined);
+  protected errorMessage = computed(() => {
     const error = this.productsResource.error();
     return error ? `Failed to load products: ${error.message}` : '';
   });
 
-  addToCart(product: Product): void {
+  protected addToCart(product: Product): void {
     const result = this.cartService.addToCart(product, 1);
 
     if (result.success) {
@@ -39,12 +39,12 @@ export class ProductList {
     }
   }
 
-  addToWishlist(product: Product): void {
+  protected addToWishlist(product: Product): void {
     // Placeholder for wishlist functionality
     this.notificationService.showInfo(`${product.name} will be added to wishlist when feature is implemented.`);
   }
 
-  retryLoading(): void {
+  protected retryLoading(): void {
     this.productsResource.reload();
   }
 }

@@ -98,9 +98,10 @@ describe('ProductList', () => {
   });
 
   it('should display products when loaded', () => {
-    expect(component.products()).toHaveLength(2);
-    expect(component.products()[0].name).toBe('Test Product 1');
-    expect(component.products()[1].name).toBe('Test Product 2');
+    const compiled = fixture.nativeElement as HTMLElement;
+    const productCards = compiled.querySelectorAll('app-product-card');
+
+    expect(productCards.length).toBe(2);
   });
 
   it('should render product grid with product cards', () => {
@@ -113,31 +114,32 @@ describe('ProductList', () => {
   });
 
   it('should handle addToCart event from product card', () => {
-    const testProduct = component.products()[0];
+    const debugElements: DebugElement[] = fixture.debugElement.queryAll(By.directive(ProductCardComponent));
+    const firstCardComponent = debugElements[0].componentInstance as ProductCardComponent;
 
-    component.addToCart(testProduct);
+    // Emit the addToCart event
+    firstCardComponent.addToCart.emit(firstCardComponent.product());
 
-    expect(mockCartService.addToCart).toHaveBeenCalledWith(testProduct, 1);
+    expect(mockCartService.addToCart).toHaveBeenCalledWith(firstCardComponent.product(), 1);
     expect(mockNotificationService.showSuccess).toHaveBeenCalledWith('Test Product 1 added to cart!');
   });
 
   it('should handle addToCart event emission from product-card template', () => {
     const debugElements: DebugElement[] = fixture.debugElement.queryAll(By.directive(ProductCardComponent));
     const firstCardComponent = debugElements[0].componentInstance as ProductCardComponent;
-    const testProduct = component.products()[0];
-
-    // Spy on the component's addToCart method to verify the event binding
-    vi.spyOn(component, 'addToCart');
 
     // Trigger the addToCart output event from the child component
-    firstCardComponent.addToCart.emit(testProduct);
+    firstCardComponent.addToCart.emit(firstCardComponent.product());
     fixture.detectChanges();
 
-    expect(component.addToCart).toHaveBeenCalledWith(testProduct);
+    expect(mockCartService.addToCart).toHaveBeenCalled();
   });
 
-  it('should show loading state initially', () => {
-    expect(component.isLoading()).toBe(false); // Since we're mocking with loaded data
+  it('should not show loading spinner when data is loaded', () => {
+    const compiled = fixture.nativeElement as HTMLElement;
+    const spinner = compiled.querySelector('mat-spinner');
+
+    expect(spinner).toBeNull();
   });
 
   it('should display empty state when no products are available', () => {
@@ -161,12 +163,7 @@ describe('ProductList', () => {
     mockProductService.getProducts.mockReturnValue(emptyResource as any);
 
     const emptyFixture = TestBed.createComponent(ProductList);
-    const emptyComponent = emptyFixture.componentInstance;
     emptyFixture.detectChanges();
-
-    expect(emptyComponent.products()).toHaveLength(0);
-    expect(emptyComponent.isLoading()).toBe(false);
-    expect(emptyComponent.hasError()).toBe(false);
 
     const compiled = emptyFixture.nativeElement as HTMLElement;
     const emptyContainer = compiled.querySelector('.empty-container');
@@ -201,42 +198,52 @@ describe('ProductList', () => {
 
     mockProductService.getProducts.mockReturnValue(errorResource as any);
 
-    // Create a new component instance to test error state
     const errorFixture = TestBed.createComponent(ProductList);
-    const errorComponent = errorFixture.componentInstance;
     errorFixture.detectChanges();
 
-    expect(errorComponent.hasError()).toBe(true);
-    expect(errorComponent.errorMessage()).toContain('Failed to load products');
+    const compiled = errorFixture.nativeElement as HTMLElement;
+    const errorContainer = compiled.querySelector('.error-container');
+    const errorIcon = compiled.querySelector('.error-icon');
+    const heading = compiled.querySelector('h3');
+    const errorText = compiled.querySelector('p');
+
+    expect(errorContainer).toBeTruthy();
+    expect(errorIcon?.textContent?.trim()).toBe('error_outline');
+    expect(heading?.textContent?.trim()).toBe('Oops! Something went wrong');
+    expect(errorText?.textContent?.trim()).toContain('Failed to load products');
   });
 
-  it('should retry loading when retryLoading is called', () => {
-    const reloadSpy = vi.fn();
-    const resourceWithReload = {
+  it('should show loading spinner when products are loading', () => {
+    const loadingResource = {
       value: signal(null),
-      isLoading: signal(false),
-      error: signal(new Error('Load failed')),
+      isLoading: signal(true),
+      error: signal(undefined),
       headers: signal(undefined),
-      statusCode: signal(500),
+      statusCode: signal(200),
       progress: signal(null),
       hasValue: signal(false),
-      reload: reloadSpy,
+      reload: vi.fn(),
       request: vi.fn(),
       destroy: vi.fn(),
       set: vi.fn(),
       update: vi.fn(),
       asReadonly: vi.fn(),
-      status: signal('resolved' as any)
+      status: signal('loading' as any)
     };
 
-    mockProductService.getProducts.mockReturnValue(resourceWithReload as any);
+    mockProductService.getProducts.mockReturnValue(loadingResource as any);
 
-    const retryFixture = TestBed.createComponent(ProductList);
-    const retryComponent = retryFixture.componentInstance;
+    const loadingFixture = TestBed.createComponent(ProductList);
+    loadingFixture.detectChanges();
 
-    retryComponent.retryLoading();
+    const compiled = loadingFixture.nativeElement as HTMLElement;
+    const loadingContainer = compiled.querySelector('.loading-container');
+    const spinner = compiled.querySelector('mat-spinner');
+    const loadingText = compiled.querySelector('p');
 
-    expect(reloadSpy).toHaveBeenCalled();
+    expect(loadingContainer).toBeTruthy();
+    expect(spinner).toBeTruthy();
+    expect(loadingText?.textContent?.trim()).toBe('Loading products...');
   });
 
   it('should retry loading via button click', () => {
@@ -276,104 +283,45 @@ describe('ProductList', () => {
   });
 
   describe('addToCart', () => {
-    it('should add product to cart successfully and show success notification', () => {
-      const testProduct: Product = {
-        id: 1,
-        name: 'Test Product',
-        description: 'Test Description',
-        price: 10.99,
-        image: 'test.jpg',
-        rating: 4.5,
-        reviewCount: 10,
-        category: 'Test'
-      };
-
+    it('should add product to cart successfully via product card interaction', () => {
       mockCartService.addToCart.mockReturnValue({ success: true, message: 'Item added successfully' });
 
-      component.addToCart(testProduct);
+      const debugElements: DebugElement[] = fixture.debugElement.queryAll(By.directive(ProductCardComponent));
+      const firstCardComponent = debugElements[0].componentInstance as ProductCardComponent;
 
-      expect(mockCartService.addToCart).toHaveBeenCalledWith(testProduct, 1);
-      expect(mockNotificationService.showSuccess).toHaveBeenCalledWith('Test Product added to cart!');
+      // Trigger the addToCart event as if the user clicked the button in the template
+      firstCardComponent.addToCart.emit(firstCardComponent.product());
+      fixture.detectChanges();
+
+      expect(mockCartService.addToCart).toHaveBeenCalledWith(firstCardComponent.product(), 1);
+      expect(mockNotificationService.showSuccess).toHaveBeenCalled();
     });
 
     it('should handle cart addition failure and show error notification', () => {
-      const testProduct: Product = {
-        id: 1,
-        name: 'Test Product',
-        description: 'Test Description',
-        price: 10.99,
-        image: 'test.jpg',
-        rating: 4.5,
-        reviewCount: 10,
-        category: 'Test'
-      };
-
       const errorMessage = 'Cart is full';
       mockCartService.addToCart.mockReturnValue({ success: false, message: errorMessage });
 
-      component.addToCart(testProduct);
+      const debugElements: DebugElement[] = fixture.debugElement.queryAll(By.directive(ProductCardComponent));
+      const firstCardComponent = debugElements[0].componentInstance as ProductCardComponent;
 
-      expect(mockCartService.addToCart).toHaveBeenCalledWith(testProduct, 1);
+      firstCardComponent.addToCart.emit(firstCardComponent.product());
+      fixture.detectChanges();
+
+      expect(mockCartService.addToCart).toHaveBeenCalled();
       expect(mockNotificationService.showError).toHaveBeenCalledWith(errorMessage);
-    });
-
-    it('should handle cart addition failure with generic message when no specific error', () => {
-      const testProduct: Product = {
-        id: 1,
-        name: 'Test Product',
-        description: 'Test Description',
-        price: 10.99,
-        image: 'test.jpg',
-        rating: 4.5,
-        reviewCount: 10,
-        category: 'Test'
-      };
-
-      mockCartService.addToCart.mockReturnValue({ success: false, message: 'Unknown error' });
-
-      component.addToCart(testProduct);
-
-      expect(mockCartService.addToCart).toHaveBeenCalledWith(testProduct, 1);
-      expect(mockNotificationService.showError).toHaveBeenCalledWith('Unknown error');
     });
   });
 
   describe('addToWishlist', () => {
-    it('should show info notification with product name', () => {
-      const testProduct: Product = {
-        id: 1,
-        name: 'Test Product',
-        description: 'Test Description',
-        price: 10.99,
-        image: 'test.jpg',
-        rating: 4.5,
-        reviewCount: 10,
-        category: 'Test'
-      };
+    it('should show info notification when adding to wishlist', () => {
+      const debugElements: DebugElement[] = fixture.debugElement.queryAll(By.directive(ProductCardComponent));
+      const firstCardComponent = debugElements[0].componentInstance as ProductCardComponent;
 
-      component.addToWishlist(testProduct);
+      firstCardComponent.addToWishlist.emit(firstCardComponent.product());
+      fixture.detectChanges();
 
       expect(mockNotificationService.showInfo).toHaveBeenCalledWith(
-        'Test Product will be added to wishlist when feature is implemented.'
-      );
-    });
-
-    it('should handle different product names', () => {
-      const testProduct: Product = {
-        id: 2,
-        name: 'Another Product',
-        description: 'Another Description',
-        price: 20.99,
-        image: 'test2.jpg',
-        rating: 4,
-        reviewCount: 5,
-        category: 'Test'
-      };
-
-      component.addToWishlist(testProduct);
-
-      expect(mockNotificationService.showInfo).toHaveBeenCalledWith(
-        'Another Product will be added to wishlist when feature is implemented.'
+        expect.stringContaining('will be added to wishlist when feature is implemented')
       );
     });
   });
