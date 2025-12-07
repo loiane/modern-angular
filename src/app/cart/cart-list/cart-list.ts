@@ -35,8 +35,8 @@ export class CartListComponent {
   }
 
   updateQuantity(productId: number, quantity: string): void {
-    const qty = parseInt(quantity, 10);
-    if (isNaN(qty) || qty < 0) {
+    const qty = Number.parseInt(quantity, 10);
+    if (Number.isNaN(qty) || qty < 0) {
       this.notificationService.showError('Please enter a valid quantity');
       return;
     }
