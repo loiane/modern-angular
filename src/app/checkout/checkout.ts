@@ -14,30 +14,6 @@ import { Router } from '@angular/router';
 import { CartService } from '../cart/cart.service';
 import { NotificationService } from '../shared/services/notification.service';
 
-// Strongly typed interfaces
-interface CustomerInfo {
-  firstName: string;
-  lastName: string;
-  email: string;
-  phone: string;
-}
-
-interface ShippingAddress {
-  street: string;
-  city: string;
-  state: string;
-  zipCode: string;
-  country: string;
-}
-
-interface PaymentInfo {
-  cardNumber: string;
-  cardName: string;
-  expiryMonth: string;
-  expiryYear: string;
-  cvv: string;
-}
-
 @Component({
   selector: 'app-checkout',
   imports: [
