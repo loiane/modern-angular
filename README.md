@@ -15,9 +15,9 @@ This project follows **modern Angular best practices**, including:
 
 ## 🧭 Course Progression
 
-- 01: [Getting Started]()
-- 02: [Environment Setup]()
-- 03: [Creating the First Component]()
+- 01: [Getting Started](https://youtu.be/cMi3mNWjtyY)
+- 02: [Environment Setup](https://youtu.be/GxTBDSiKNeY)
+- 03: Creating the First Component
 
 ## 🛠️ Prerequisites
 
