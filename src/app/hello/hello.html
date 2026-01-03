@@ -5,7 +5,9 @@
 <button [disabled]="isDisabled"
   (click)="onClick()">Toggle</button>
 
-<h1>{{ count() }}</h1>
+<h1>Count: {{ count() }}</h1>
+<h1>Double {{ doubleCount() }}</h1>
+<!-- <h1>Double Method: {{ getDoubleCount() }}</h1> -->
 
 <button (click)="increateCounter()">+</button>
 <button (click)="decreaseCounter()">-</button>
