@@ -7,17 +7,5 @@
   <button matButton routerLink="/products">
     Products
   </button>
-  <button matButton routerLink="/cart"
-          [attr.aria-label]="'Cart with ' + cartService.totalItems() + ' item' + (cartService.totalItems() === 1 ? '' : 's') + '. Open cart'">
-    <mat-icon
-      [matBadge]="cartService.totalItems()"
-      [matBadgeHidden]="cartService.totalItems() === 0"
-      matBadgeDescription="Number of items in cart"
-      aria-hidden="false"
-      aria-label="Shopping cart with badge"
-    >shopping_cart</mat-icon>
-  </button>
-  <span class="sr-only" aria-live="polite" aria-atomic="true">
-    {{ cartService.totalItems() === 0 ? 'Cart is empty' : (cartService.totalItems() + ' item' + (cartService.totalItems() === 1 ? '' : 's') + ' in cart') }}
-  </span>
+  <app-cart-button />
 </mat-toolbar>
