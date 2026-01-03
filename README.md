@@ -15,9 +15,18 @@ This project follows **modern Angular best practices**, including:
 
 ## 🧭 Course Progression
 
+<details>
+<summary>1: Angular Building Blocks</summary>
+
 - 01: [Getting Started](https://youtu.be/cMi3mNWjtyY)
 - 02: [Environment Setup](https://youtu.be/GxTBDSiKNeY)
-- 03: Creating the First Component
+- 03: [Creating the First Component](https://youtu.be/oJJNTyFcsN4)
+- 04: [Component Templates and Interactions](https://youtu.be/E9Q1yn3h9d0)
+- 05: Writable Signals
+- 06: Computed Signals
+- 07: Effects
+
+</details>
 
 ## 🛠️ Prerequisites
 
