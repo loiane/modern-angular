@@ -20,7 +20,7 @@ export class Hello {
   protected count = signal(0);
 
   increateCounter() {
-   // count = count + 1;
+   // same as: count = count + 1;
    this.count.update(value => value + 1);
   }
 
