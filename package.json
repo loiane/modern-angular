@@ -24,7 +24,7 @@
   "packageManager": "npm@10.9.4",
   "dependencies": {
     "@angular/common": "^21.0.0",
-    "@angular/compiler": "^21.0.0",
+    "@angular/compiler": "^21.0.7",
     "@angular/core": "^21.0.0",
     "@angular/forms": "^21.0.0",
     "@angular/platform-browser": "^21.0.0",
