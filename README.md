@@ -22,9 +22,9 @@ This project follows **modern Angular best practices**, including:
 - 02: [Environment Setup](https://youtu.be/GxTBDSiKNeY)
 - 03: [Creating the First Component](https://youtu.be/oJJNTyFcsN4)
 - 04: [Component Templates and Interactions](https://youtu.be/E9Q1yn3h9d0)
-- 05: Writable Signals
-- 06: Computed Signals
-- 07: Effects
+- 05: [Introducing Signals](https://youtu.be/j1diBkWLk1k)
+- 06: [Computed Signals](https://youtu.be/KTSkMvRT6zs)
+- 07: [Effects](https://youtu.be/jjGT7EwdH9o)
 
 </details>
 
