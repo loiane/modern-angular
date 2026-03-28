@@ -1,8 +1,28 @@
-<div class="grid">
-  <app-product-card />
-  <app-product-card />
-  <app-product-card />
-  <app-product-card />
-  <app-product-card />
-  <app-product-card />
+<div class="products-container">
+  <p>Total products: {{ products().length }}</p>
+
+  <div class="products-grid">
+    @for (product of products(); track product.id) {
+      <app-product-card />
+    } @empty {
+      <div class="empty-state">
+        <mat-icon>inventory_2</mat-icon>
+        <h3>No products available</h3>
+        <p>Check back later for new arrivals!</p>
+      </div>
+    }
+  </div>
 </div>
+
+<ul>
+  @for (label of ['Product 1', 'Product 2', 'Product 3', 'Product 4']; track $index; let i = $index; let total = $count; let isFirst = $first; let isLast = $last; let isEven = $even; let isOdd = $odd) {
+    <li
+      class="demo-item"
+      [class.first-item]="isFirst"
+      [class.last-item]="isLast"
+      [class.even-row]="isEven"
+      [class.odd-row]="isOdd">
+      {{ i + 1 }} of {{ total }} - {{ label }}
+    </li>
+  }
+</ul>
