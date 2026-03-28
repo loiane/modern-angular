@@ -30,6 +30,7 @@ export class ProductsGrid {
       name: 'Portable Bluetooth Speaker',
       description: 'Compact speaker with powerful bass and 12-hour battery life.',
       price: 79.99,
+      originalPrice: 99.99
     }
   ]);
 
