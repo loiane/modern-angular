@@ -3,6 +3,16 @@
   gap: 1rem;
 }
 
+.search-field {
+  display: block;
+  width: 100%;
+}
+
+.search-preview {
+  margin: 0;
+  color: var(--mat-sys-on-surface-variant);
+}
+
 .products-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
