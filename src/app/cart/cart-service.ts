@@ -16,8 +16,12 @@ export class CartService {
     this.modifyItemQuantity(product, 1);
   }
 
-  removeToCart(product: Product) {
+  decreaseToCart(product: Product) {
     this.modifyItemQuantity(product, -1);
+  }
+
+  removeToCart(product: Product) {
+    this.cartItems.update((items) => items.filter((item) => item.product.id !== product.id));
   }
 
   private modifyItemQuantity(product: Product, delta: number) {

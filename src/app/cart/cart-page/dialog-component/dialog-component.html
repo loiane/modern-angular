@@ -1,0 +1,8 @@
+<h2 mat-dialog-title>Delete item to Cart</h2>
+<mat-dialog-content>
+  Would you like to delete <b>{{ data.product.name }}</b>?
+</mat-dialog-content>
+<mat-dialog-actions>
+  <button matButton mat-dialog-close>No</button>
+  <button matButton mat-dialog-close cdkFocusInitial (click)="onYesClick()">Yes</button>
+</mat-dialog-actions>

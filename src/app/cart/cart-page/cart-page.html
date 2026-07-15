@@ -1,7 +1,7 @@
 <div class="cart-summary">
     @for (product of cartService.cartProducts(); track product.product.id) {
 
-      <app-cart-item [product]="product" (addToCart)="onAddToCart($event)" (removeToCart)="onRemoveToCart($event)" class="items" />
+      <app-cart-item [product]="product" (addToCart)="onAddToCart($event)" (decreaseToCart)="onDecreaseToCart($event)" (removeToCart)="onRemoveToCart($event)" class="items" />
     } @empty {
       <div class="empty-state">
         <p>No products in the cart</p>

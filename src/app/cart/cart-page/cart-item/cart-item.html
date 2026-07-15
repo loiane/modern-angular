@@ -1,5 +1,5 @@
 <div class="cart-item-remove">
-  <button matButton="elevated" aria-label="remove product">
+  <button matButton="elevated" aria-label="remove product" (click)="onRemoveToCart()">
     <mat-icon aria-hidden="false" aria-label="delete">delete</mat-icon>
   </button>
   <h3>{{ product().product.name }}</h3>
@@ -9,7 +9,7 @@
     <mat-icon aria-hidden="false" aria-label="add">add</mat-icon>
   </button>
   <strong>{{ product().quantity }}</strong>
-  <button matButton="elevated" aria-label="remove product" (click)="onRemoveToCart()">
+  <button matButton="elevated" aria-label="remove product" (click)="onDecreaseToCart()">
     <mat-icon aria-hidden="false" aria-label="remove">remove</mat-icon>
   </button>
 </div>

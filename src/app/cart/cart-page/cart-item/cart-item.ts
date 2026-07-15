@@ -12,10 +12,15 @@ import { CartItem as CartItemProp } from '../../cart-item';
 export class CartItem {
   readonly product = input.required<CartItemProp>();
   readonly addToCart = output<Product>();
+  readonly decreaseToCart = output<Product>();
   readonly removeToCart = output<Product>();
 
   protected onAddToCart() {
     this.addToCart.emit(this.product().product);
+  }
+
+  protected onDecreaseToCart() {
+    this.decreaseToCart.emit(this.product().product);
   }
 
   protected onRemoveToCart() {
