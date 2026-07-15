@@ -1,15 +1,19 @@
 <mat-toolbar class="main-header">
-   <button matButton>
+   <button matButton [routerLink]="['']">
     <mat-icon aria-hidden="false" aria-label="Home" fontIcon="store"></mat-icon>
    </button>
 
-   <span class="branding">Modern Angular</span>
+   <span class="branding" [routerLink]="['']">Modern Angular</span>
 
    <span class="spacer"></span>
 
-   <button matButton>Products</button>
+   <button matButton [routerLink]="['products']">Products</button>
 
-   <button matButton>
+   <button matButton [routerLink]="['cart']">
     <mat-icon aria-hidden="false" aria-label="Cart" fontIcon="shopping_cart"></mat-icon>
+    <mat-badge
+    [matBadgeHidden]="cartService.cartItemsCount() === 0"
+    matBadgeDescription="Number of items in the cart"
+    [matBadge]="cartService.cartItemsCount()" overlap="true" color="warn"></mat-badge>
    </button>
 </mat-toolbar>
