@@ -1,0 +1,37 @@
+@mixin line-product {
+  border: 1px solid #ccc;
+  border-radius: 1rem;
+  padding: 2rem;
+  background-color: #efefef;
+}
+
+@mixin flex-center {
+  display: flex;
+  justify-content: start;
+  align-items: center;
+}
+
+.cart-summary {
+  @include line-product;
+
+  .items {
+    @include line-product;
+    display: grid;
+    grid-template-columns: max(80%) 2fr;
+    margin-bottom: 1rem;
+  }
+}
+
+
+.cart-item-remove {
+  @include flex-center;
+
+  button {
+    margin-right: 2rem
+  }
+}
+
+.cart-item-increase {
+  @include flex-center;
+  justify-content: space-between;
+}

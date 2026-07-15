@@ -56,12 +56,4 @@ export class ProductsGrid {
   protected onAddToCart(product: Product) {
     this.cartService.addToCart(product);
   }
-
-  // protected clearSearch() {
-  //   this.searchTerm.set('');
-  // }
-
-  // protected trimSearch() {
-  //   this.searchTerm.update((value) => value.trim());
-  // }
 }

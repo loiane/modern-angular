@@ -1,0 +1,15 @@
+<div class="cart-item-remove">
+  <button matButton="elevated" aria-label="remove product">
+    <mat-icon aria-hidden="false" aria-label="delete">delete</mat-icon>
+  </button>
+  <h3>{{ product().product.name }}</h3>
+</div>
+<div class="cart-item-increase">
+  <button matButton="elevated" aria-label="add product" (click)="onAddToCart()">
+    <mat-icon aria-hidden="false" aria-label="add">add</mat-icon>
+  </button>
+  <strong>{{ product().quantity }}</strong>
+  <button matButton="elevated" aria-label="remove product" (click)="onRemoveToCart()">
+    <mat-icon aria-hidden="false" aria-label="remove">remove</mat-icon>
+  </button>
+</div>
