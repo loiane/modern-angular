@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, ChangeDetectionStrategy } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import {
   MAT_DIALOG_DATA,
@@ -15,6 +15,7 @@ import { CartService } from '../../cart-service';
   selector: 'app-dialog-component',
   imports: [MatButtonModule, MatDialogActions, MatDialogClose, MatDialogTitle, MatDialogContent],
   templateUrl: './dialog-component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './dialog-component.scss',
 })
 export class DialogComponent {

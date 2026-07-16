@@ -1,4 +1,4 @@
-import { Component, input, output } from '@angular/core';
+import { Component, input, output, ChangeDetectionStrategy } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { Product } from '../../../products/product';
@@ -7,6 +7,7 @@ import { CartItem as CartItemProp } from '../../cart-item';
   selector: 'app-cart-item',
   imports: [MatButtonModule, MatIconModule],
   templateUrl: './cart-item.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './cart-item.scss',
 })
 export class CartItem {

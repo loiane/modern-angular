@@ -1,4 +1,4 @@
-import { Component, computed, inject, signal } from '@angular/core';
+import { Component, computed, inject, signal, ChangeDetectionStrategy } from '@angular/core';
 import { ProductCard } from '../product-card/product-card';
 import { Product } from '../product';
 import { MatIcon } from '@angular/material/icon';
@@ -11,6 +11,7 @@ import { CartService } from '../../cart/cart-service';
   selector: 'app-products-grid',
   imports: [ProductCard, MatIcon, MatInputModule, FormsModule, MatFormFieldModule],
   templateUrl: './products-grid.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './products-grid.scss',
 })
 export class ProductsGrid {

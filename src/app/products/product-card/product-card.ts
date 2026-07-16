@@ -1,4 +1,4 @@
-import { Component, input, output } from '@angular/core';
+import { Component, input, output, ChangeDetectionStrategy } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { Product } from '../product';
@@ -7,6 +7,7 @@ import { Product } from '../product';
   selector: 'app-product-card',
   imports: [MatCardModule, MatButtonModule],
   templateUrl: './product-card.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './product-card.scss',
 })
 export class ProductCard {

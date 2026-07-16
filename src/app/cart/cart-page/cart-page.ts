@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, ChangeDetectionStrategy } from '@angular/core';
 import { CartService } from '../cart-service';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
@@ -11,6 +11,7 @@ import { DialogComponent } from './dialog-component/dialog-component';
   selector: 'app-cart-page',
   imports: [MatButtonModule, MatIconModule, CartItem],
   templateUrl: './cart-page.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './cart-page.scss',
 })
 export class CartPage {
